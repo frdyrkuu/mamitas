@@ -48,6 +48,9 @@
                             class="w-full p-2 outline-none rounded-md border border-[#727272] focus:border focus:border-main">
                     </div>
                 </div>
+                <div class="mb-4">
+                    <a class="underline" href="{{ route('admin_forgot_password') }}">Forgot Password?</a>
+                </div>
                 <input type="hidden" name="role" value="admin">
                 <button
                     class="w-full rounded-md py-2 text-main border border-main hover:bg-main hover:text-white ease-in-out duration-100">

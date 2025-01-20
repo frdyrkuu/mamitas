@@ -18,7 +18,7 @@ Route::post('/change_password', [AuthController::class, 'changePassword'])->name
 Route::get('/register', [AuthController::class, 'registerView'])->name('register');
 Route::POST('/register', [AuthController::class, 'register'])->name('register.post');
 
-Route::middleware([isCashierLoggedIn::class])->group(function(){
+Route::middleware([isCashierLoggedIn::class])->group(function () {
     Route::get('/add', [AuthController::class, 'addCashier'])->name('auth_register');
     // Route::get('/dashboard', [POSController::class, 'dashboard'])->middleware(AuthenticateCashier::class)->name('dashboard');
     Route::get('/dashboard', [POSController::class, 'dashboard'])->name('dashboard');
@@ -46,10 +46,14 @@ Route::get('/back-office/login', [OfficeController::class, 'adminLogin'])->name(
 Route::post('/back-office/auth/login', [AuthController::class, 'authLoginAdmin'])->name('office.login.post');
 Route::get('add_admin', [AuthController::class, 'addAdmin']);
 
-Route::middleware([IsAdminLoggedIn::class])->group(function(){
+Route::get('/admin_forgot_password', function () {
+    return view('backoffice/admin_forgot_password');
+})->name('admin_forgot_password');
+
+Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::get('/back-office/dashboard', [OfficeController::class, 'dashboard'])->name('office.dashboard');
     Route::get('/back-office/inventory', [OfficeController::class, 'inventory'])->name('office.inventory');
-    Route::get('back-office/logout', [AuthController::class, 'adminLogout'])->name('office.logout');
+    Route::post('back-office/logout', [AuthController::class, 'adminLogout'])->name('office.logout');
     Route::get('/back-office/purchased_date', [OfficeController::class, 'purchasedDate'])->name('office.purchased_date');
     Route::get('/back-office/stocks_adjustments', [OfficeController::class, 'stocksAdjustment'])->name('office.stocks_adjustment');
     Route::get('/back-office/items_list', [OfficeController::class, 'itemsList'])->name('office.items_list');
@@ -85,5 +89,3 @@ Route::middleware([IsAdminLoggedIn::class])->group(function(){
     Route::get('/back-office/fetch-order-details', [OfficeController::class, 'fetchBatchDetails'])->name('fetchBatchDetails');
     Route::get('/back-office/remove-cashier/{id}', [OfficeController::class, 'resignCashier']);
 });
-
-

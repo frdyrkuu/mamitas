@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,16 @@
     @vite('resources/css/app.css')
     <title>Dashboard</title>
 </head>
+
 <body class="w-full h-screen bg-[#fefefe]">
-    <div id="sale_details" class="hidden w-1/4 p-4 h-[520px] bg-white absolute top-1/2 right-0 transform -translate-y-1/2 z-10">
+    <div id="sale_details"
+        class="hidden w-1/4 p-4 h-[520px] bg-white absolute top-1/2 right-0 transform -translate-y-1/2 z-10">
         <button onclick="shet()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" height="20" width="20"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" height="20"
+                width="20"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                    d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z" />
+            </svg>
         </button>
         <p class="text-3xl text-center font-medium pt-7">&#8369;<span id="total_amount">0</span></p>
         <p class="text-sm text-center text-gray-500 border-b border-[#bebebe] pb-3">Total</p>
@@ -43,33 +50,35 @@
         {{-- navigations --}}
         <div class="w-[5%] pt-10 bg-[#fefefe]">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+                <img src="{{ asset('images/logo-transparent.png') }}" alt="">
             </div>
             <div class="w-full relative">
-                <button onclick="openDashboard()" class="w-full flex items-center justify-center h-auto py-4 bg-[#f5a7a4]">
-                    <img src="{{asset('images/chart-red.png')}}" alt="" class="w-[30px] h-auto">
+                <button onclick="openDashboard()"
+                    class="w-full flex items-center justify-center h-auto py-4 bg-[#f5a7a4]">
+                    <img src="{{ asset('images/chart-red.png') }}" alt="" class="w-[30px] h-auto">
                 </button>
                 <div id="dash_options" class="hidden w-[200px] absolute left-20 top-0 z-10 bg-slate-50 text-sm">
                     <div class="w-full flex flex-col py-2">
-                        <a href="{{route('office.dashboard')}}" class="hover:bg-[#e6e6e6] p-2">Sales summary</a>
-                        <a href="{{route('office.sales_by_item')}}" class="hover:bg-[#e6e6e6] p-2">Sales by item</a>
-                        <a href="{{route('office.sales_history')}}" class="hover:bg-[#e6e6e6] p-2">Sales history</a>
+                        <a href="{{ route('office.dashboard') }}" class="hover:bg-[#e6e6e6] p-2">Sales summary</a>
+                        <a href="{{ route('office.sales_by_item') }}" class="hover:bg-[#e6e6e6] p-2">Sales by item</a>
+                        <a href="{{ route('office.sales_history') }}" class="hover:bg-[#e6e6e6] p-2">Sales history</a>
                     </div>
                 </div>
             </div>
             <div class="w-full relative">
-                <a href="{{route('office.items_list')}}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/prod-new.png')}}" alt="" class="w-[30px] h-auto">
+                <a href="{{ route('office.items_list') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/prod-new.png') }}" alt="" class="w-[30px] h-auto">
                 </a>
             </div>
             <div class="w-full relative">
                 <button onclick="openInventoryOptions()" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/inv-new.png')}}" alt="" class="w-[30px] h-auto">
+                    <img src="{{ asset('images/inv-new.png') }}" alt="" class="w-[30px] h-auto">
                 </button>
-                <div id="inventory_options" class="hidden w-[200px] absolute left-20 top-0 z-10 bg-slate-50 p-3 text-sm">
+                <div id="inventory_options"
+                    class="hidden w-[200px] absolute left-20 top-0 z-10 bg-slate-50 p-3 text-sm">
                     <div class="w-full flex flex-col gap-3">
-                        <a href="{{route('office.stocks_adjustment')}}">Stocks Adjustment</a>
-                        <a href="{{route('office.inventory')}}">Inventory</a>
+                        <a href="{{ route('office.stocks_adjustment') }}">Stocks Adjustment</a>
+                        <a href="{{ route('office.inventory') }}">Inventory</a>
                     </div>
                 </div>
             </div>
@@ -79,41 +88,69 @@
                 </a>
             </div> --}}
             <div class="w-full relative">
-                <a href="{{route('office.cashiers')}}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/employee-new.png')}}" alt="" class="w-[30px] h-auto">
+                <a href="{{ route('office.cashiers') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/employee-new.png') }}" alt="" class="w-[30px] h-auto">
                 </a>
             </div>
             <div class="w-full relative">
-                <a href="{{route('office.supplier')}}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/supplier-new.png')}}" alt="" class="w-[30px] h-auto">
+                <a href="{{ route('office.supplier') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/supplier-new.png') }}" alt="" class="w-[30px] h-auto">
                 </a>
             </div>
             <div class="w-full relative">
-                <a href="{{route('office.ordering')}}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/order-new.png')}}" alt="" class="w-[30px] h-auto">
+                <a href="{{ route('office.ordering') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/order-new.png') }}" alt="" class="w-[30px] h-auto">
                 </a>
             </div>
             <div class="w-full relative">
-                <a href="{{route('office.logout')}}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/logout-new.png')}}" alt="" class="w-[30px] h-auto">
-                </a>
+                <form id="logoutForm" action="{{ route('office.logout') }}" method="POST">
+                    @csrf
+                    <a href="#" id="logoutLink" class="w-full flex items-center justify-center h-auto py-4">
+                        <img src="{{ asset('images/logout-new.png') }}" alt="Logout" class="w-[30px] h-auto">
+                    </a>
+                </form>
             </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                document.getElementById('logoutLink').addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent the default link action
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You will be logged out of the system.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, log me out!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit the logout form
+                            document.getElementById('logoutForm').submit();
+                        }
+                    });
+                });
+            </script>
         </div>
         {{-- POS --}}
         <div class="w-[95%] flex p-6 bg-[#ededed]">
             <div class="w-full block mx-auto shadow-2xl rounded-md p-4 bg-[#f4f4f4] overflow-hidden">
-                <div class="mb-5">
-                    <form action="{{route('office.purchased_date')}}" method="GET" class="flex gap-2 items-center">
-                        <input type="date" id="date" name="date" class="px-2 py-1 border border-bd rounded-md">
+                <div class="mb-5 flex items-center gap-5">
+                    <form action="{{ route('office.sales_history') }}" method="GET" class="flex gap-2 items-center">
+                        <input type="date" id="date" name="date"
+                            class="px-2 py-1 border border-bd rounded-md">
                         <button class="px-10 py-1 bg-main text-white rounded-md">Filter</button>
                     </form>
+                    <a href="/back-office/sales_history/"> <button class="px-10 py-1 bg-[#4d4d4d] text-white rounded-md">Clear Filter</button></a>
                     <script>
                         // Get today's date
                         const today = new Date().toISOString().split('T')[0];
                         // Set the input value to today's date
                         document.getElementById('date').value = today;
-                      </script>
+                    </script>
                 </div>
+
                 <div class="w-full">
                     <div class="w-full flex p-2 bg-[#bebebe] uppercase font-medium">
                         <p class="w-[15%]">Ticket Number</p>
@@ -124,6 +161,7 @@
                         <p class="w-[15%]">Total</p>
                         <div class="w-[5%]"></div>
                     </div>
+
                     @forelse ($history as $sale)
                         <div class="w-full flex border-b border-[#bebebe] p-2">
                             <p class="w-[15%]">1-{{ $sale->ticket }}</p>
@@ -133,7 +171,8 @@
                             <p class="w-[10%]">{{ $sale->type }}</p>
                             <p class="w-[15%]">&#8369; {{ $sale->total }}</p>
                             <div class="w-[5%]">
-                                <button onclick="view({{ $sale->ticket }})" class="w-full py-1 bg-main rounded-md block mx-auto text-white text-sm">
+                                <button onclick="view({{ $sale->ticket }})"
+                                    class="w-full py-1 bg-main rounded-md block mx-auto text-white text-sm">
                                     View
                                 </button>
                             </div>
@@ -142,8 +181,14 @@
                         <div class="text-center text-gray-500 py-4">No purchases made</div>
                     @endforelse
                 </div>
-            </div>  
+
+                <!-- Pagination Links -->
+                <div class="mt-4">
+                    {{ $history->links() }} <!-- Pagination links here -->
+                </div>
+            </div>
         </div>
+
     </div>
     <script>
         function shet() {
@@ -153,7 +198,7 @@
             main.style.filter = 'blur(0)'
         }
 
-        function view(ticket){
+        function view(ticket) {
             var url = "{{ route('office.history_ticket', ['ticket' => ':ticket']) }}";
             url = url.replace(':ticket', ticket);
             $.ajax({
@@ -205,7 +250,8 @@
                     var date = new Date(response.result[0].created_at);
 
                     // Format the date components
-                    var month = ('0' + (date.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() returns 0-indexed month
+                    var month = ('0' + (date.getMonth() + 1)).slice(-
+                    2); // Adding 1 because getMonth() returns 0-indexed month
                     var day = ('0' + date.getDate()).slice(-2);
                     var year = date.getFullYear();
                     var hours = ('0' + date.getHours()).slice(-2);
@@ -226,21 +272,21 @@
             });
         }
 
-        function openInventoryOptions(){
+        function openInventoryOptions() {
             var inventoryOptions = document.getElementById('inventory_options')
             inventoryOptions.classList.toggle('hidden')
         }
 
-        function openDashboard(){
+        function openDashboard() {
             var inventoryOptions = document.getElementById('dash_options')
             inventoryOptions.classList.toggle('hidden')
         }
 
-        function openItems(){
+        function openItems() {
             var inventoryOptions = document.getElementById('items_options')
             inventoryOptions.classList.toggle('hidden')
         }
-
     </script>
 </body>
+
 </html>

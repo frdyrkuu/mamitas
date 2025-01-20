@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/5bf9be4e76.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
-
     @vite('resources/css/app.css')
     <title>Back Office</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="w-full h-auto bg-[#fefefe]">
@@ -71,10 +72,35 @@
                 </a>
             </div>
             <div class="w-full relative">
-                <a href="{{ route('office.logout') }}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{ asset('images/logout-new.png') }}" alt="" class="w-[30px] h-auto">
-                </a>
+                <form id="logoutForm" action="{{ route('office.logout') }}" method="POST">
+                    @csrf
+                    <a href="#" id="logoutLink" class="w-full flex items-center justify-center h-auto py-4">
+                        <img src="{{ asset('images/logout-new.png') }}" alt="Logout" class="w-[30px] h-auto">
+                    </a>
+                </form>
             </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                document.getElementById('logoutLink').addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent the default link action
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You will be logged out of the system.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, log me out!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit the logout form
+                            document.getElementById('logoutForm').submit();
+                        }
+                    });
+                });
+            </script>
         </div>
         <div class="w-[95%] bg-[#f2f2f2] z-0 p-7">
             <div class="w-1/2 flex mx-auto shadow-md text-sm">
@@ -83,25 +109,61 @@
                     @csrf
                     <div class=" bg-white rounded-md p-10 mb-5">
 
-                        <img class="h-[200px] max-w-full rounded-md mb-10"
-                            src="{{ $item->image ? asset('images/product/' . $item->image) : asset('images/product-image-placeholder.jpg') }}"
-                            alt="Product Image">
+                        <div class="flex justify-between">
+                            <img class="h-[200px] max-w-full rounded-md mb-10"
+                                src="{{ $item->image ? asset('images/product/' . $item->image) : asset('images/product-image-placeholder.jpg') }}"
+                                alt="Product Image">
+
+                            <div class="w-1/2">
+                                <label for="item_image" class="text-gray-500 block mb-2">Change Item Image</label>
+                                <div class="items-center space-x-4">
+                                    <!-- Image Preview -->
+                                    <div
+                                        class="w-32 h-32 bg-gray-100 border rounded-md overflow-hidden flex items-center justify-center">
+                                        <img id="imagePreview" class="w-full h-full object-cover hidden"
+                                            alt="Image Preview">
+                                    </div>
+                                    <!-- File Input -->
+                                    <input type="file" name="item_image" id="item_image"
+                                        class="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                        accept="image/*" onchange="previewImage(event)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function previewImage(event) {
+                                const input = event.target;
+                                const preview = document.getElementById('imagePreview');
+
+                                if (input.files && input.files[0]) {
+                                    const reader = new FileReader();
+
+                                    reader.onload = function(e) {
+                                        preview.src = e.target.result;
+                                        preview.classList.remove('hidden');
+                                    };
+
+                                    reader.readAsDataURL(input.files[0]);
+                                }
+                            }
+                        </script>
 
                         <div class="w-full flex items-center justify-between gap-5 mb-10">
                             <div class="w-1/2">
                                 <label for="" class="text-gray-500">Item Name</label>
                                 <input type="text" name="item_name" value="{{ $item->item }}"
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main">
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                             </div>
                             <div class="w-1/2">
                                 <label for="" class="text-gray-500">Quantity</label>
                                 <input type="text" name="item_quantity" value="{{ $item->quantity }}"
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main">
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                             </div>
                             <div class="w-1/3">
                                 <label for="" class="text-gray-500">Select Category</label>
                                 <select name="category" id=""
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main">
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                                     <option value="{{ $item->category }}" selected>{{ $item->category }}</option>
                                     <option value="Dry Goods">Dry Goods</option>
                                     <option value="Wet Goods">Wet Goods</option>
@@ -113,7 +175,7 @@
                         <div class="w-full mb-10">
                             <label for="" class="text-gray-500">Supplier</label>
                             <select name="supplier"
-                                class="w-full mt-1 p-2 border border-[#eaeaea] focus:border-main outline-none rounded-md">
+                                class="w-full mt-1 p-2 border border-[#eaeaea] focus:border-main outline-none rounded-md" required>
                                 <option value="{{ $item->supplier }}" selected>{{ $item->supplier }}</option>
                                 @foreach ($suppliers as $supplier)
                                     <option value="{{ $supplier->name }}">{{ $supplier->name }}</option>
@@ -130,17 +192,28 @@
                             </div>
                         </div>
 
-                        <div class="w-full mb-10">
-                            <label for="" class="text-gray-500">SKU</label>
-                            <input type="text" name="item_sku" value="{{ $item->sku }}"
-                                class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main"
-                                autofocus="false">
+                        <div class="w-full flex items-center justify-between gap-5 mb-5">
+                            <div class="w-1/2">
+                                <label for="" class="text-gray-500">SKU</label>
+                                <input type="text" name="item_sku" value="{{ $item->sku }}"
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main"
+                                    autofocus="false" required>
+                            </div>
+                            <div class="w-1/2">
+                                <label for="" class="text-gray-500">Color</label>
+                                <input type="text" name="item_color" value="{{ $item->color }}"
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main"
+                                    autofocus="false" required>
+                            </div>
                         </div>
+
+
+
                         <div class="w-full flex items-center justify-between gap-5">
                             <div class="w-1/2">
                                 <label for="" class="text-gray-500">Product unit</label>
                                 <select name="product_unit"
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main">
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                                     <option value="pc">Per pc</option>
                                     <option value="kg">Per kg</option>
                                     <option value="pack">Per pack</option>
@@ -151,7 +224,7 @@
                                 <label for="" class="text-gray-500">Barcode</label>
                                 <input type="text" name="barcode" value="{{ $item->barcode }}"
                                     class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main"
-                                    autofocus="false">
+                                    autofocus="false" required>
                             </div>
                         </div>
                     </div>
@@ -160,19 +233,15 @@
                             <div class="w-1/2">
                                 <label for="" class="text-gray-500">Purchase Cost</label>
                                 <input type="number" name="cost" value="{{ $item->cost }}"
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main">
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                             </div>
                             <div class="w-1/2">
                                 <label for="" class="text-gray-500">Retail Value</label>
                                 <input type="number" name="retail" value="{{ $item->retail }}"
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main">
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                             </div>
                         </div>
-                        <div class="w-ful flex gap-16">
-                            <div class="w-1/2">
-                                <label for="" class="text-gray-500">Change Item Image</label>
-                                <input type="file" name="item_image" class="mt-1">
-                            </div>
+                        <div class="w-full gap-16">
                             <div class="w-full flex gap-5 items-center justify-end">
                                 <button
                                     class="w-[100px] bg-main rounded-sm py-2 shadow-md font-medium text-white">Save</button>
@@ -183,6 +252,20 @@
             </div>
         </div>
     </div>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "Success!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>
