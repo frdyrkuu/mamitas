@@ -46,9 +46,25 @@ Route::get('/back-office/login', [OfficeController::class, 'adminLogin'])->name(
 Route::post('/back-office/auth/login', [AuthController::class, 'authLoginAdmin'])->name('office.login.post');
 Route::get('add_admin', [AuthController::class, 'addAdmin']);
 
-Route::get('/admin_forgot_password', function () {
-    return view('backoffice/admin_forgot_password');
-})->name('admin_forgot_password');
+/*
+*
+* Route for Admin forgot password
+*
+*/
+
+Route::get('/back-office/admin_forgot_password', [AuthController::class, 'viewAdminPassword'])
+    ->name('office.viewforgotAdmin');
+Route::post('/back-office/admin_forgot_password', [AuthController::class, 'forgotAdminPassword'])
+    ->name('office.forgotAdmin');
+
+/*
+* END Route for Admin forgot password
+*/
+
+
+Route::get('/back-office/reset_password/{token}', [AuthController::class, 'resetPasswordForm'])->name('office.resetPasswordForm');
+Route::post('/back-office/reset_password', [AuthController::class, 'resetPassword'])->name('office.resetPassword');
+
 
 Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::get('/back-office/dashboard', [OfficeController::class, 'dashboard'])->name('office.dashboard');

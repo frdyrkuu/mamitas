@@ -527,7 +527,6 @@ class OfficeController extends Controller
             $imageName = null;
         }
 
-
         if ($item) {
             $item->item = $request->input('item_name');
             $item->quantity = $request->input('item_quantity');

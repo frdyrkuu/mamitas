@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <a class="underline" href="{{ route('admin_forgot_password') }}">Forgot Password?</a>
+                    <a class="underline" href="{{ route('office.viewforgotAdmin') }}">Forgot Password?</a>
                 </div>
                 <input type="hidden" name="role" value="admin">
                 <button
