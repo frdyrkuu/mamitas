@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     @vite('resources/css/app.css')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="bg-[#fefef8] h-screen mx-auto">
@@ -26,28 +28,31 @@
 
                 <div class="mt-7 sm:mt-12 mx-auto max-w-xl relative">
                     <!-- Form -->
-                    <form>
+                    <!-- Form -->
+                    <form action="{{ route('office.forgotAdmin') }}" method="POST" id="myForm">
+                        @csrf
                         <div
                             class="relative z-10 flex gap-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100">
                             <div class="w-full">
                                 <label for="hs-search-article-1" class="block text-sm text-gray-700 font-medium"><span
                                         class="sr-only">Enter Email</span></label>
-                                <input type="email" name="hs-search-article-1" id="hs-search-article-1"
+                                <input type="email" name="email" id="hs-search-article-1"
                                     class="py-2.5 px-4 block w-full border-transparent rounded-lg focus:border-blue-500 focus:ring-blue-500"
                                     placeholder="Enter email">
                             </div>
                             <div>
-                                <a class="size-[46px] inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                                    href="#">
+                                <button type="submit"
+                                    class="size-[46px] inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="11" cy="11" r="8" />
                                         <path d="m21 21-4.3-4.3" />
                                     </svg>
-                                </a>
+                                </button>
                             </div>
                         </div>
+
                     </form>
                     <br>
                     <div class="whitespace-nowrap pt-2 sm:pt-0 grid sm:block">
@@ -57,6 +62,40 @@
                         </a>
                     </div>
                     <!-- End Form -->
+
+                    <script>
+                        // Check if the value is '1' (Email Sent)
+                        @if ($value == '1')
+                            // Trigger SweetAlert when the value is '1'
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'The email has been sent successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Redirect to the homepage when OK is clicked
+                                    window.location.href = '/';
+                                }
+                            });
+                        @endif
+
+                        @if ($value == '2')
+                            // Trigger SweetAlert when the value is '1'
+                            Swal.fire({
+                                title: 'Oops!',
+                                text: 'The email has been not associated with the admin email.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Redirect to the homepage when OK is clicked
+                                    window.location.href = '/back-office/login';
+                                }
+                            });
+                        @endif
+                    </script>
+
 
                     <!-- SVG Element -->
                     <div class="hidden md:block absolute top-0 end-0 -translate-y-12 translate-x-20">
@@ -88,6 +127,7 @@
         </div>
     </div>
     <!-- End Hero -->
+
 
 </body>
 
