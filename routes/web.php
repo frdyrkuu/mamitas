@@ -8,9 +8,12 @@ use App\Http\Middleware\IsAdminLoggedIn;
 use App\Http\Middleware\isCashierLoggedIn;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+// Route::get('/', function() {
+//     return view('welcome');
+// })->name('welcome');
+
+Route::get('/', [POSController::class, 'displayCMS'])->name('welcome');
+
 Route::post('/login', [AuthController::class, 'authLoginCashier'])->name('auth_login');
 
 Route::POST('/forgot_password', [AuthController::class, 'forgotPassword'])->name('reset_password');
@@ -46,9 +49,34 @@ Route::get('/back-office/login', [OfficeController::class, 'adminLogin'])->name(
 Route::post('/back-office/auth/login', [AuthController::class, 'authLoginAdmin'])->name('office.login.post');
 Route::get('add_admin', [AuthController::class, 'addAdmin']);
 
-Route::get('/admin_forgot_password', function () {
-    return view('backoffice/admin_forgot_password');
-})->name('admin_forgot_password');
+/*
+*
+* Route for Admin forgot password
+*
+*/
+
+Route::get('/back-office/admin_forgot_password', [AuthController::class, 'viewAdminPassword'])
+    ->name('office.viewforgotAdmin');
+Route::post('/back-office/admin_forgot_password', [AuthController::class, 'forgotAdminPassword'])
+    ->name('office.forgotAdmin');
+
+/*
+* END Route for Admin forgot password
+*/
+
+
+/**
+ * 
+ * For Password reset route
+ * 
+ */
+
+Route::get('/back-office/reset_password/{token}', [AuthController::class, 'resetPasswordForm'])->name('office.resetPasswordForm');
+Route::post('/back-office/reset_password', [AuthController::class, 'resetPassword'])->name('office.resetPassword');
+
+/*
+*   END PASSWORD ROUTER 
+*/
 
 Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::get('/back-office/dashboard', [OfficeController::class, 'dashboard'])->name('office.dashboard');
@@ -88,4 +116,8 @@ Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::get('/back-office/accept-item/{id}', [OfficeController::class, 'acceptAddedItem'])->name('office.accept_item');
     Route::get('/back-office/fetch-order-details', [OfficeController::class, 'fetchBatchDetails'])->name('fetchBatchDetails');
     Route::get('/back-office/remove-cashier/{id}', [OfficeController::class, 'resignCashier']);
+
+    // CMS ROUTE
+    Route::get('/back-office/cms', [OfficeController::class, 'contentManagement'])->name('office.cms');
+    Route::post('/back-office/cms', [OfficeController::class, 'contentManagementUpload'])->name('office.cms');
 });
