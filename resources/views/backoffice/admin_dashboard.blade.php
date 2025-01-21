@@ -71,6 +71,11 @@
                 </a>
             </div>
             <div class="w-full relative">
+                <a href="{{ route('office.cms') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/cms.png') }}" alt="" class="w-[30px] h-auto">
+                </a>
+            </div>
+            <div class="w-full relative">
                 <form id="logoutForm" action="{{ route('office.logout') }}" method="POST">
                     @csrf
                     <a href="#" id="logoutLink" class="w-full flex items-center justify-center h-auto py-4">

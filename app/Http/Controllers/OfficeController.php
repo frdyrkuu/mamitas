@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Models\Cms;
+
 class OfficeController extends Controller
 {
     /**
@@ -47,7 +49,8 @@ class OfficeController extends Controller
      */
     public function adminLogin()
     {
-        return view('backoffice/admin_login');
+        $cmsData = Cms::first();
+        return view('backoffice/admin_login', ['cms' => $cmsData]);
     }
 
     // END ADMIN LOGIN FUNCTION
@@ -406,7 +409,7 @@ class OfficeController extends Controller
                 $query->whereBetween('retail', [$request->price_from, $request->price_to]);
             }
 
-            
+
 
             $filteredItems = $query->get('item');
 
@@ -430,10 +433,10 @@ class OfficeController extends Controller
         $categoryChar = Stocks::select('category')->distinct()->get();
 
         $supplierChar = Stocks::select('supplier')
-        ->whereNotNull('supplier') // Exclude null values
-        ->distinct()
-        ->get();
-    
+            ->whereNotNull('supplier') // Exclude null values
+            ->distinct()
+            ->get();
+
         return view('backoffice/items/items_list', [
             'items' => $data,
             'pending' => $pendingCount,
@@ -1005,6 +1008,92 @@ class OfficeController extends Controller
         } else {
             // Optionally handle the case where deletion fails
             return redirect()->route('office.cashiers')->with('error', 'Failed to remove cashier.');
+        }
+    }
+
+    public function contentManagement()
+    {
+        $name = Cms::first();  // Get the first CMS entry
+        return view('backoffice.cms', ['name' => $name]);
+    }
+    public function contentManagementUpload(Request $request)
+    {
+        // Validate the input data
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for logo upload
+            'company_description' => 'nullable|string',
+        ]);
+
+        try {
+            // Check if there's already a CMS entry
+            $cms = Cms::first(); // Get the first CMS entry, if any
+
+            if ($cms) {
+                // If CMS entry exists, update it
+                if ($request->hasFile('company_logo')) {
+                    $image = $request->file('company_logo');
+                    if ($image->isValid()) {
+                        $imageName = time() . '.' . $image->extension();
+                        $image->move(public_path('images/cms'), $imageName);
+                        $logoPath = 'images/cms/' . $imageName;
+                    } else {
+                        Log::error('Uploaded file is not valid.');
+                        return redirect()->back()->with('error', 'Invalid file uploaded.');
+                    }
+                } else {
+                    $logoPath = $cms->company_logo; // Keep the existing logo if no new one is uploaded
+                }
+
+                // Log data before saving
+                Log::info('Updating CMS data:', [
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Update the existing CMS entry
+                $cms->update([
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Return success message
+                return redirect()->route('backoffice.cms')->with('success', 'CMS data updated successfully!');
+            } else {
+                // If no CMS entry exists, create a new one
+                if ($request->hasFile('company_logo')) {
+                    $image = $request->file('company_logo');
+                    $imageName = time() . '.' . $image->extension();
+                    $image->move(public_path('images/cms'), $imageName);
+                    $logoPath = 'images/cms/' . $imageName;
+                } else {
+                    $logoPath = null;
+                }
+
+                // Log data before saving
+                Log::info('Creating CMS data:', [
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Create a new CMS entry
+                Cms::create([
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Return success message
+                return redirect()->route('backoffice.cms')->with('success', 'CMS data saved successfully!');
+            }
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Error updating CMS data: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'There was an error processing your request.');
         }
     }
 }

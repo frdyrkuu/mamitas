@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Menu;
 use App\Models\Customer;
 use App\Models\GCash;
@@ -16,13 +17,15 @@ use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
+use App\Models\Cms;
 
 class POSController extends Controller
 {
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $cashier_name = session('cashier_name');
-        if(!isset($cashier_name)){
+        if (!isset($cashier_name)) {
             return redirect()->route('login');
         } else {
             $started_shift = false;
@@ -35,9 +38,9 @@ class POSController extends Controller
             $ticket = $lastTicket->ticket + 1;
             $cashier_name = session('cashier_name');
             $shift = Shift::where('cashier', $cashier_name)
-                            ->whereDate('created_at', $today)
-                            ->get();
-            if($shift->isEmpty()){
+                ->whereDate('created_at', $today)
+                ->get();
+            if ($shift->isEmpty()) {
                 return view('cashier');
             } else {
                 return view('dashboard', ['menus' => $items, 'ticket' => $ticket, 'alerts' => $stocks_alert]);
@@ -59,10 +62,11 @@ class POSController extends Controller
         return response()->json(['menus' => $menus]);
     }
 
-    public function ticketDetails(Request $request){
+    public function ticketDetails(Request $request)
+    {
         $action = $request->input('action');
         $customer = $request->input('customer');
-        if(empty($customer)){
+        if (empty($customer)) {
             $customer = 'Customer';
         }
         $ticket = $request->input('ticket');
@@ -75,43 +79,43 @@ class POSController extends Controller
                     'name' => $customer
                 ]);
                 Customer::create($data);
-        
+
                 $foodNames = $request->input('food_name');
                 foreach ($foodNames as $foodName) {
                     // Create a new Food instance
                     $food = new Ticket();
-                    
+
                     // Set the name attribute
                     $food->food_name = $foodName;
-        
+
                     // Set the ticket_number attribute
                     $food->ticket = $ticket; // Or whatever the specific ticket number is
-                    
+
                     // Save the record to the database
                     $food->save();
                 }
-        
+
                 $foods = Ticket::select('food_name')
                     ->selectRaw('COUNT(*) as count')
                     ->where('ticket', $ticket)
                     ->groupBy('food_name')
                     ->get();
-        
+
                 $prices = Stocks::all();
-        
+
                 // Create the foodPrices array
                 $foodPrices = [];
                 foreach ($prices as $price) {
                     $foodPrices[$price->item] = $price->retail;
                 }
-        
+
                 $time = Ticket::where('ticket', $ticket)
-                        ->orderBy('created_at', 'desc')
-                        ->pluck('created_at')
-                        ->first();
-        
+                    ->orderBy('created_at', 'desc')
+                    ->pluck('created_at')
+                    ->first();
+
                 $time_formatted = Carbon::parse($time)->format('F d, Y \a\t h:ia');
-        
+
                 return view('order_details', [
                     'ticket' => $ticket,
                     'customer' => $customer,
@@ -119,28 +123,29 @@ class POSController extends Controller
                     'prices' => $foodPrices,
                     'time' => $time_formatted
                 ]);
-            
+
             case 'gcash':
                 // Handle the logic for the "GCash" button
                 $time_formatted = Carbon::now()->format('F d, Y \a\t h:ia');
                 return view('gcash_payment', ['time' => $time_formatted]);
-            
+
             default:
                 // Handle default action or throw an error
                 return redirect()->back()->with('error', 'Invalid action.');
         }
     }
 
-    public function gCash(Request $request){
+    public function gCash(Request $request)
+    {
         $lastTicket = History::latest('ticket')->first(); // Retrieve the latest ticket
         $ticket = $lastTicket->ticket + 1;
         $amount = $request->input('cash');
         $charge = 0;
         $cashier_name = session('cashier_name');
         $shift = Shift::where('cashier', $cashier_name)
-                    ->whereDate('created_at', Carbon::today())
-                    ->latest()
-                    ->first();
+            ->whereDate('created_at', Carbon::today())
+            ->latest()
+            ->first();
         $menu = Menu::all();
         $lastTicket = Customer::latest('ticket')->first(); // Retrieve the latest ticket
         $ticket = $lastTicket->ticket + 1;
@@ -191,7 +196,7 @@ class POSController extends Controller
             $charge = "Invalid amount";
         }
 
-        switch($action){
+        switch ($action) {
             case 'cash-in':
                 $data = [
                     'transaction_number' => $request->input('transaction_number'),
@@ -217,7 +222,7 @@ class POSController extends Controller
 
                 // $paid_in = $shift->cash_in += $amount;
                 // $shift->cash_in = $paid_in;
-                if($historySave && $gcashSave){
+                if ($historySave && $gcashSave) {
                     return redirect()->intended(route('dashboard', ['menus' => $menu, 'ticket' => $ticket]));
                 } else {
                     return redirect()->back()->withErrors(['Unable to save shift data.']);
@@ -247,7 +252,7 @@ class POSController extends Controller
 
                 // $paid_out = $shift->cash_out += $amount;
                 // $shift->cash_out = $paid_out;
-                if($historySave && $gcashSave){
+                if ($historySave && $gcashSave) {
                     return redirect()->intended(route('dashboard', ['menus' => $menu, 'ticket' => $ticket]));
                 } else {
                     return redirect()->back()->withErrors(['Unable to save shift data.']);
@@ -255,9 +260,10 @@ class POSController extends Controller
         }
     }
 
-    public function history(){
+    public function history()
+    {
         $cashier_name = session('cashier_name');
-        if(!isset($cashier_name)){
+        if (!isset($cashier_name)) {
             return redirect()->route('login');
         }
         // Get today's date
@@ -271,10 +277,11 @@ class POSController extends Controller
         return view('history', ['history' => $history, 'gcash' => $gcash_transactions]);
     }
 
-    public function sale(Request $request){
+    public function sale(Request $request)
+    {
         $ticketNumber = $request->input('ticket');
         $cashier_name = session('cashier_name');
-        if(!isset($cashier_name)){
+        if (!isset($cashier_name)) {
             return redirect()->route('login');
         }
         $menu = Menu::all();
@@ -282,12 +289,12 @@ class POSController extends Controller
         $change = $request->input('cash') - $request->input('pay');
         $quantities = [];
         $items = Ticket::select('food_name')
-               ->where('ticket', $ticketNumber)
-               ->groupBy('food_name')
-               ->selectRaw('food_name, COUNT(*) as count')
-               ->get();
+            ->where('ticket', $ticketNumber)
+            ->groupBy('food_name')
+            ->selectRaw('food_name, COUNT(*) as count')
+            ->get();
 
-        foreach ($items as $item){
+        foreach ($items as $item) {
             $item_sold = $item->count;
             $quantity = Stocks::where('item', $item->food_name)->first();
             $current_stock = $quantity->quantity;
@@ -310,26 +317,27 @@ class POSController extends Controller
         ];
 
         $insert = History::create($data);
-        
+
         $shift_sales_total = History::where('cashier', $cashier_name)
-                    ->whereDate('created_at', Carbon::today()) //created at must be the date today formatted by 2024-05-17. Get only the date part of the created_at
-                    ->sum('total');
+            ->whereDate('created_at', Carbon::today()) //created at must be the date today formatted by 2024-05-17. Get only the date part of the created_at
+            ->sum('total');
 
         $shift = Shift::where('cashier', $cashier_name)
-                    ->whereDate('created_at', Carbon::today())
-                    ->latest()
-                    ->first();
+            ->whereDate('created_at', Carbon::today())
+            ->latest()
+            ->first();
         $starting_cash = $shift->starting_cash ?? 0;
         $sales_today = $starting_cash + $shift_sales_total;
         $shift->closing_cash = $sales_today;
         $shift->save();
 
-        if($insert){
+        if ($insert) {
             return redirect()->intended(route('dashboard', ['menus' => $menu, 'ticket' => $ticket]));
         }
     }
 
-    public function purchasedDate(Request $request){
+    public function purchasedDate(Request $request)
+    {
         $date = $request->input('date');
         // Query to fetch records with matching date
         $history = History::whereDate('created_at', $date)->get();
@@ -338,15 +346,16 @@ class POSController extends Controller
         return view('history', ['history' => $history, 'gcash' => $gcash_transactions]);
     }
 
-    public function cashier(){
+    public function cashier()
+    {
         $pos_number = session('pos_number');
         $cashier_name = session('cashier_name');
         $stocks_alert = Stocks::where('quantity', '<=', 20)->get();
         $shift = Shift::where('cashier', $cashier_name)
-                    ->whereDate('created_at', Carbon::today())
-                    ->latest()
-                    ->first();
-        
+            ->whereDate('created_at', Carbon::today())
+            ->latest()
+            ->first();
+
         $shift_start = $shift->created_at;
 
         $date_today = Carbon::today();
@@ -355,39 +364,39 @@ class POSController extends Controller
         $formatted_shift_start = Carbon::parse($shift_start)->format('F d, Y \- h:ia');
 
         $shift_sales_total = History::where('cashier', $cashier_name)
-                    ->where('type', 'SALE')
-                    ->whereDate('created_at', Carbon::today()) //created at must be the date today formatted by 2024-05-17. Get only the date part of the created_at
-                    ->sum('total');
+            ->where('type', 'SALE')
+            ->whereDate('created_at', Carbon::today()) //created at must be the date today formatted by 2024-05-17. Get only the date part of the created_at
+            ->sum('total');
 
         $cash_in_payments = History::where('cashier', $cashier_name)
-                    ->where('type', 'CASH IN')
-                    ->whereDate('created_at', Carbon::today())
-                    ->sum('total');
+            ->where('type', 'CASH IN')
+            ->whereDate('created_at', Carbon::today())
+            ->sum('total');
 
         $cash_out_payments = History::where('cashier', $cashier_name)
-                    ->where('type', 'CASH OUT')
-                    ->whereDate('created_at', Carbon::today())
-                    ->sum('total');
-        
+            ->where('type', 'CASH OUT')
+            ->whereDate('created_at', Carbon::today())
+            ->sum('total');
+
         $cash_in_charge = GCash::where('type', 'Cash In')
-                    ->whereDate('created_at', Carbon::today())
-                    ->sum('charge');
+            ->whereDate('created_at', Carbon::today())
+            ->sum('charge');
 
         $cash_out_charge = GCash::where('type', 'Cash Out')
-                    ->whereDate('created_at', Carbon::today())
-                    ->sum('charge');
+            ->whereDate('created_at', Carbon::today())
+            ->sum('charge');
 
         $net_sales = History::where('cashier', $cashier_name)
-                    ->where('cashier', $cashier_name)
-                    ->whereDate('created_at', Carbon::today())
-                    ->sum('sub_total');
+            ->where('cashier', $cashier_name)
+            ->whereDate('created_at', Carbon::today())
+            ->sum('sub_total');
 
-        if(is_null($shift)){
+        if (is_null($shift)) {
             // If no shift is found, render the cashier view
             return view('cashier');
         } else {
             // If at least one shift is found, render the cashier_menu view
-            return view('cashier_menu',[
+            return view('cashier_menu', [
                 'shift' => $shift,
                 'net_sales' => $net_sales,
                 'cash' => $shift_sales_total,
@@ -403,11 +412,12 @@ class POSController extends Controller
         }
     }
 
-    public function startShift(Request $request){
+    public function startShift(Request $request)
+    {
         $cashier_name = session('cashier_name');
         $pos = session('pos_number');
         $stocks_alert = Stocks::where('quantity', '<=', 20)->get();
-        
+
         $starting_cash = $request->input('starting_cash');
 
         $data = [
@@ -427,19 +437,20 @@ class POSController extends Controller
         return view('dashboard', ['menus' => $items, 'ticket' => $ticket, 'alerts' => $stocks_alert]);
     }
 
-    public function historyTicket(Request $request, $ticket){
+    public function historyTicket(Request $request, $ticket)
+    {
         $sanitizedTicket = str_replace('1-', '', $ticket);
-    
+
         // Query the database with the sanitized ticket
         $orders = Ticket::where('ticket', $sanitizedTicket)->get();
-    
+
         $foodQuantities = [];
-    
+
         // Loop through each order
         foreach ($orders as $order) {
             // Get the food_name for this order
             $foodName = $order->food_name;
-    
+
             // Increment the quantity of this food name in the associative array
             if (isset($foodQuantities[$foodName])) {
                 $foodQuantities[$foodName]++;
@@ -447,14 +458,14 @@ class POSController extends Controller
                 $foodQuantities[$foodName] = 1;
             }
         }
-    
+
         $foodPrices = [];
-    
+
         // Loop through each unique food name
         foreach ($foodQuantities as $foodName => $quantity) {
             // Query the Menu model to get the price of this food
             $foodPrice = Stocks::where('item', $foodName)->value('retail');
-    
+
             // Add the food name, its price, and quantity to the foodPrices array
             $foodPrices[] = [
                 'food_name' => $foodName,
@@ -462,27 +473,28 @@ class POSController extends Controller
                 'quantity' => $quantity
             ];
         }
-    
+
         // Query the database for other ticket details
         $result = History::where('ticket', $sanitizedTicket)->get();
-    
+
         $data = [
             'result' => $result,
             'food_prices' => $foodPrices
         ];
-        
+
         // Return the combined data as JSON
         return response()->json($data);
     }
 
-    public function cashManagement(Request $request){
+    public function cashManagement(Request $request)
+    {
         $lastTicket = Customer::latest('ticket')->first(); // Retrieve the latest ticket
         $ticket = $lastTicket->ticket + 1;
         $cashier_name = session('cashier_name');
         $shift = Shift::where('cashier', $cashier_name)
-                    ->whereDate('created_at', Carbon::today())
-                    ->latest()
-                    ->first();
+            ->whereDate('created_at', Carbon::today())
+            ->latest()
+            ->first();
         $mode = $request->input('reason');
         $amount = $request->input('amount');
         $customer = [
@@ -490,7 +502,7 @@ class POSController extends Controller
             'name' => 'Customer'
         ];
 
-        if($mode == 'paid_in'){
+        if ($mode == 'paid_in') {
             $data = [
                 'ticket' => $ticket,
                 'cashier' => $cashier_name,
@@ -507,7 +519,7 @@ class POSController extends Controller
             $shift->cash_in = $paid_in;
             $create = History::create($data);
             Customer::create($customer);
-            if($shift->save() && $create){
+            if ($shift->save() && $create) {
                 return redirect()->back()->with('status', 'Cash in successfully updated.'); // Redirect back with success message
             } else {
                 return redirect()->back()->withErrors(['Unable to save shift data.']);
@@ -529,7 +541,7 @@ class POSController extends Controller
             $shift->cash_out = $paid_out;
             $create = History::create($data);
             Customer::create($customer);
-            if($shift->save() && $create){
+            if ($shift->save() && $create) {
                 return redirect()->back()->with('status', 'Cash out successfully updated.'); // Redirect back with success message
             } else {
                 return redirect()->back()->withErrors(['Unable to save shift data.']);
@@ -537,7 +549,8 @@ class POSController extends Controller
         }
     }
 
-    public function inventory(){
+    public function inventory()
+    {
         $data = Stocks::paginate(8);
         return view('pos_inventory', ['item' => $data]);
     }
@@ -556,10 +569,11 @@ class POSController extends Controller
         return response()->json(['menus' => $menus]);
     }
 
-    public function orders() {
+    public function orders()
+    {
         // Get all orders with pending status
         $pendingOrders = SupplierOrder::where('status', 'Pending')->get();
-    
+
         // Group orders by batch number and calculate summary data
         $batches = $pendingOrders->groupBy('batch_number')->map(function ($group) {
             return [
@@ -569,19 +583,19 @@ class POSController extends Controller
                 'created_at' => $group->first()->created_at
             ];
         });
-    
+
         // Pass the summary data to the view
         return view('orders', [
             'batches' => $batches
         ]);
     }
-    
+
 
     public function ordersFromSupplier($name)
     {
         $orders = SupplierOrder::where('batch_number', $name)
-                    ->where('status', 'Pending')
-                    ->get();
+            ->where('status', 'Pending')
+            ->get();
 
         // Format the created_at attribute
         $formattedOrders = $orders->map(function ($order) {
@@ -600,47 +614,49 @@ class POSController extends Controller
             'orders.*.id' => 'exists:supplier_orders,id', // Ensure each ID exists in the supplier_orders table
             'orders.*.expiration_date' => 'required|date_format:m/d/Y' // Validate the expiration_date
         ]);
-    
+
         // Extract the orders data
         $ordersData = $validated['orders'];
-    
+
         foreach ($ordersData as $orderData) {
             // Retrieve the order by ID
             $order = SupplierOrder::find($orderData['id']);
-            
+
             if ($order) {
                 // Retrieve the item name and quantity from the order
                 $itemName = $order->item; // Adjust this if your column name is different
                 $quantity = $order->quantity; // Adjust this if your column name is different
-    
+
                 // Find the corresponding item in the Stocks model
                 $stock = Stocks::where('item', $itemName)->first();
-    
+
                 if ($stock) {
                     // Update the quantity in the Stocks model
                     $stock->quantity += $quantity;
                     $stock->update_reason = 'New stocks';
                     $stock->save();
                 }
-    
+
                 // Update the expiration date and status for the order
                 $order->status = 'Delivered';
                 $order->expiration_date = Carbon::createFromFormat('m/d/Y', $orderData['expiration_date'])->format('Y-m-d');
                 $order->save();
             }
         }
-    
+
         return response()->json(['status' => 'success', 'message' => 'Orders updated successfully.']);
     }
 
-    public function addItem(){
+    public function addItem()
+    {
         $supplier = Supplier::all();
         return view('add_item', [
             'suppliers' => $supplier
         ]);
     }
 
-    public function toPendingItems(Request $request){
+    public function toPendingItems(Request $request)
+    {
         // dd($request);
         $data = Stocks::paginate(8);
         $quantity = 0;
@@ -679,5 +695,14 @@ class POSController extends Controller
         if ($add) {
             return redirect()->intended(route('inventory', ['item' => $data]));
         }
+    }
+
+    public function displayCMS()
+    {
+        // Retrieve the CMS data
+        $cmsData = Cms::first(); // This will get the first CMS entry
+
+        // Return the view with CMS data
+        return view('welcome', ['cms' => $cmsData]);
     }
 }
