@@ -253,4 +253,36 @@ class AuthController extends Controller
     {
         return view('backoffice.reset_password');
     }
+    public function resetPassword(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'adminEmail' => 'required|email',
+            'newPassword' => 'required|string|min:8',
+            'confirmPassword' => 'required|string|same:newPassword',
+        ]);
+
+        // Hash the new password
+        $new_password = Hash::make($request->newPassword);
+
+        // Find the admin by email
+        $admin = Admin::where('email', $request->adminEmail)->first();
+
+        if ($admin) {
+            // Update the password
+            $admin->password = $new_password;
+
+            // Save the updated password
+            $admin->save();
+
+            // Redirect with success message to trigger SweetAlert
+            return redirect()->route('welcome')->with('success', 'Password updated successfully!');
+        } else {
+            $returnAuth = "Invalid credentials given from Admin details";
+
+            return view('backoffice.reset_password', [
+                'returnAuth' => $returnAuth,
+            ]);
+        }
+    }
 }
