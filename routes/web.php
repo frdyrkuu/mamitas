@@ -8,9 +8,12 @@ use App\Http\Middleware\IsAdminLoggedIn;
 use App\Http\Middleware\isCashierLoggedIn;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+// Route::get('/', function() {
+//     return view('welcome');
+// })->name('welcome');
+
+Route::get('/', [POSController::class, 'displayCMS'])->name('welcome');
+
 Route::post('/login', [AuthController::class, 'authLoginCashier'])->name('auth_login');
 
 Route::POST('/forgot_password', [AuthController::class, 'forgotPassword'])->name('reset_password');
@@ -113,4 +116,8 @@ Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::get('/back-office/accept-item/{id}', [OfficeController::class, 'acceptAddedItem'])->name('office.accept_item');
     Route::get('/back-office/fetch-order-details', [OfficeController::class, 'fetchBatchDetails'])->name('fetchBatchDetails');
     Route::get('/back-office/remove-cashier/{id}', [OfficeController::class, 'resignCashier']);
+
+    // CMS ROUTE
+    Route::get('/back-office/cms', [OfficeController::class, 'contentManagement'])->name('office.cms');
+    Route::post('/back-office/cms', [OfficeController::class, 'contentManagementUpload'])->name('office.cms');
 });

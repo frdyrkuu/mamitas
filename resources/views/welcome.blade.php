@@ -27,7 +27,7 @@
     <div id="main"
         class="w-3/4 h-[80%] flex p-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#fefef8] rounded-3xl shadow-md backdrop-blur-sm border border-opacity-20">
         <div class="w-[60%] relative">
-            <img src="{{ asset('images/new_logo.png') }}" alt=""
+            <img src="{{ asset($cms->company_logo) }}" alt=""
                 class="w-[80%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         </div>
         <div class="w-[40%] flex flex-col justify-center">
