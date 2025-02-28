@@ -22,7 +22,7 @@
     <div
         class="w-3/4 h-[80%] flex p-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#fefef8] rounded-3xl shadow-md backdrop-blur-sm border border-opacity-20">
         <div class="w-[60%] relative">
-            <img src="{{ asset('images/new_logo.png') }}" alt=""
+            <img src="{{ asset($cms->company_logo) }}" alt=""
                 class="w-[80%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         </div>
         <div class="w-[40%] flex flex-col justify-center">
@@ -47,6 +47,9 @@
                         <input id="pass" type="password" name="password"
                             class="w-full p-2 outline-none rounded-md border border-[#727272] focus:border focus:border-main">
                     </div>
+                </div>
+                <div class="mb-4">
+                    <a class="underline" href="{{ route('office.viewforgotAdmin') }}">Forgot Password?</a>
                 </div>
                 <input type="hidden" name="role" value="admin">
                 <button

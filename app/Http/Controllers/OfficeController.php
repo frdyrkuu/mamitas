@@ -17,12 +17,43 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Models\Cms;
+
 class OfficeController extends Controller
 {
+    /**
+     * 
+     * Display the admin login view.
+     * 
+     * This public function `adminLogin` is responsible for returning the view
+     * associated with the admin login page of the backoffice. When this function
+     * is called, it will render the `admin_login` view located in the `backoffice`
+     * directory.
+     * 
+     * Controller Setup for all Back-Office function
+     * 
+     * Update Product
+     * Add Product
+     * Filter Item
+     * Dashboard
+     * Getmonthly Sales
+     * Inventory
+     * Stock Adjustments
+     * Item List
+     * Update Stock
+     * etc.
+     * 
+     * cc Frdyrkuu 
+     * https://fredericksocorin.netlify.app/
+     *
+     */
     public function adminLogin()
     {
-        return view('backoffice/admin_login');
+        $cmsData = Cms::first();
+        return view('backoffice/admin_login', ['cms' => $cmsData]);
     }
+
+    // END ADMIN LOGIN FUNCTION
 
     public function login(Request $request)
     {
@@ -348,6 +379,10 @@ class OfficeController extends Controller
                 $query->where('color', $request->color);
             }
 
+            if ($request->filled('supplier')) {
+                $query->where('supplier', $request->supplier);
+            }
+
             if ($request->filled('size')) {
                 $size = $request->size;
                 switch ($size) {
@@ -374,6 +409,8 @@ class OfficeController extends Controller
                 $query->whereBetween('retail', [$request->price_from, $request->price_to]);
             }
 
+
+
             $filteredItems = $query->get('item');
 
             $itemNames = $filteredItems->pluck('item')->toArray();
@@ -388,9 +425,25 @@ class OfficeController extends Controller
 
     public function itemsList()
     {
-        $data = Stocks::paginate(10); // Paginate based on the selected number of rows
-        $pendingCount = PendingItems::all()->count();
-        return view('backoffice/items/items_list', ['items' => $data, 'pending' => $pendingCount]);
+        // Order by created_at in descending order and paginate
+        $data = Stocks::orderBy('created_at', 'desc')->paginate(10);
+        $pendingCount = PendingItems::count(); // Simplified count query
+
+        $colorChar = Stocks::select('color')->distinct()->get();
+        $categoryChar = Stocks::select('category')->distinct()->get();
+
+        $supplierChar = Stocks::select('supplier')
+            ->whereNotNull('supplier') // Exclude null values
+            ->distinct()
+            ->get();
+
+        return view('backoffice/items/items_list', [
+            'items' => $data,
+            'pending' => $pendingCount,
+            'color' => $colorChar,
+            'category' =>  $categoryChar,
+            'supplier' => $supplierChar
+        ]);
     }
 
     public function createItem()
@@ -445,9 +498,10 @@ class OfficeController extends Controller
 
 
         $add = Stocks::create($data);
+        session()->flash('success', 'Item has been updated successfully!');
 
         if ($add) {
-            return redirect()->intended(route('office.create_item', ['items' => $stocks]));
+            return redirect()->intended(default: route('office.create_item', ['items' => $stocks]));
         }
     }
 
@@ -467,15 +521,14 @@ class OfficeController extends Controller
         $cost = $request->input('cost');
         $retail = $request->input('retail');
 
-         // Handle the image upload
-         if ($request->hasFile('item_image')) {
+        // Handle the image upload
+        if ($request->hasFile('item_image')) {
             $image = $request->file('item_image');
             $imageName = $request->input('item_name') . '.' . $image->extension();
             $image->move(public_path('images/product'), $imageName);
         } else {
             $imageName = null;
         }
-
 
         if ($item) {
             $item->item = $request->input('item_name');
@@ -485,14 +538,15 @@ class OfficeController extends Controller
             $item->product_unit = $request->input('product_unit');
             $item->barcode = $request->input('barcode');
             $item->sku = $request->input('item_sku');
+            $item->color = $request->input('item_color');
             $item->cost = $request->input('cost');
             $item->retail = $request->input('retail');
             $item->description = $request->input('item_description');
             $item->image = $imageName;
 
             $item->save();
-
-            return redirect()->route('office.items_list')->with('items', $stocks);
+            session()->flash('success', 'Item has been updated successfully!');
+            return redirect()->back();
         } else {
             return redirect()->route('office.items_list')->with('items', $stocks);
         }
@@ -562,16 +616,22 @@ class OfficeController extends Controller
         ]);
     }
 
-    public function salesHistory()
+    public function salesHistory(Request $request)
     {
-        // Get today's date
-        $today = Carbon::today();
+        // Initialize the query to fetch all history by default
+        $query = History::query();
 
-        // Query to fetch records with matching date
-        $history = History::whereDate('created_at', $today)->get();
+        // If a date is provided via the request, filter by the selected date
+        if ($request->has('date') && $request->date) {
+            $query->whereDate('created_at', $request->date);
+        }
 
-        return view('backoffice/sales_history', ['history' => $history]);
+        // Fetch the history, ordered by the most recent first, with pagination
+        $history = $query->orderBy('created_at', 'desc')->paginate(15); // 10 records per page
+
+        return view('backoffice.sales_history', ['history' => $history]);
     }
+
 
     public function historyTicket(Request $request, $ticket)
     {
@@ -948,6 +1008,92 @@ class OfficeController extends Controller
         } else {
             // Optionally handle the case where deletion fails
             return redirect()->route('office.cashiers')->with('error', 'Failed to remove cashier.');
+        }
+    }
+
+    public function contentManagement()
+    {
+        $name = Cms::first();  // Get the first CMS entry
+        return view('backoffice.cms', ['name' => $name]);
+    }
+    public function contentManagementUpload(Request $request)
+    {
+        // Validate the input data
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for logo upload
+            'company_description' => 'nullable|string',
+        ]);
+
+        try {
+            // Check if there's already a CMS entry
+            $cms = Cms::first(); // Get the first CMS entry, if any
+
+            if ($cms) {
+                // If CMS entry exists, update it
+                if ($request->hasFile('company_logo')) {
+                    $image = $request->file('company_logo');
+                    if ($image->isValid()) {
+                        $imageName = time() . '.' . $image->extension();
+                        $image->move(public_path('images/cms'), $imageName);
+                        $logoPath = 'images/cms/' . $imageName;
+                    } else {
+                        Log::error('Uploaded file is not valid.');
+                        return redirect()->back()->with('error', 'Invalid file uploaded.');
+                    }
+                } else {
+                    $logoPath = $cms->company_logo; // Keep the existing logo if no new one is uploaded
+                }
+
+                // Log data before saving
+                Log::info('Updating CMS data:', [
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Update the existing CMS entry
+                $cms->update([
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Return success message
+                return redirect()->route('backoffice.cms')->with('success', 'CMS data updated successfully!');
+            } else {
+                // If no CMS entry exists, create a new one
+                if ($request->hasFile('company_logo')) {
+                    $image = $request->file('company_logo');
+                    $imageName = time() . '.' . $image->extension();
+                    $image->move(public_path('images/cms'), $imageName);
+                    $logoPath = 'images/cms/' . $imageName;
+                } else {
+                    $logoPath = null;
+                }
+
+                // Log data before saving
+                Log::info('Creating CMS data:', [
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Create a new CMS entry
+                Cms::create([
+                    'company_name' => $request->company_name,
+                    'company_logo' => $logoPath,
+                    'company_description' => $request->company_description,
+                ]);
+
+                // Return success message
+                return redirect()->route('backoffice.cms')->with('success', 'CMS data saved successfully!');
+            }
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Error updating CMS data: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'There was an error processing your request.');
         }
     }
 }

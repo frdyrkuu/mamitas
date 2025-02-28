@@ -121,10 +121,35 @@
                 </a>
             </div>
             <div class="w-full relative">
-                <a href="{{route('office.logout')}}" class="w-full flex items-center justify-center h-auto py-4">
-                    <img src="{{asset('images/logout-new.png')}}" alt="" class="w-[30px] h-auto">
-                </a>
+                <form id="logoutForm" action="{{ route('office.logout') }}" method="POST">
+                    @csrf
+                    <a href="#" id="logoutLink" class="w-full flex items-center justify-center h-auto py-4">
+                        <img src="{{ asset('images/logout-new.png') }}" alt="Logout" class="w-[30px] h-auto">
+                    </a>
+                </form>
             </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                document.getElementById('logoutLink').addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent the default link action
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You will be logged out of the system.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, log me out!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit the logout form
+                            document.getElementById('logoutForm').submit();
+                        }
+                    });
+                });
+            </script>
         </div>
         <div id="main" class="w-[95%] bg-[#f2f2f2] z-0 p-7">
             <div class="w-full bg-slate-50 shadow-md p-6 rounded-xl">
