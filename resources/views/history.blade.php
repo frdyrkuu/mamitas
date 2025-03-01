@@ -47,7 +47,7 @@
         {{-- navigations --}}
         <div class="w-[6%] py-6 bg-white">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+               <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <a href="{{route('dashboard')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
                 <img src="{{asset('images/products-new.png')}}" alt="Home Icon" class="w-1/3">

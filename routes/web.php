@@ -101,6 +101,7 @@ Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::get('/back-office/cashiers', [OfficeController::class, 'cashiers'])->name('office.cashiers');
     Route::post('/back-office/add_cashier', [AuthController::class, 'addCashier'])->name('office.add_cashier');
     Route::get('/back-office/supplier', [OfficeController::class, 'suppliers'])->name('office.supplier');
+    Route::get('/back-office/supplier/edit/{id}', [OfficeController::class, 'getSupplierDetails'])->name('office.supplier.edit');
     Route::post('/back-office/add-supplier', [OfficeController::class, 'addSuppliers'])->name('office.add_supplier');
     Route::get('/back-office/ordering', [OfficeController::class, 'ordering'])->name('office.ordering');
     Route::get('/back-office/item_search/{key?}', [OfficeController::class, 'itemSearch'])->name('office.item_search');
@@ -120,4 +121,8 @@ Route::middleware([IsAdminLoggedIn::class])->group(function () {
     // CMS ROUTE
     Route::get('/back-office/cms', [OfficeController::class, 'contentManagement'])->name('office.cms');
     Route::post('/back-office/cms', [OfficeController::class, 'contentManagementUpload'])->name('office.cms');
+
+    Route::put('/update-supplier/{id}', [OfficeController::class, 'updateSupplierDetails'])->name('office.update_supplier_details');
+
+    Route::post('/update-stock', [OfficeController::class, 'updateStock'])->name('office.update_stock');
 });

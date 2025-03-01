@@ -125,7 +125,11 @@
                                 <input type="text" name="item_sku"
                                     class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                             </div>
-                            <div class="w-1/3">
+                            
+                        </div>
+
+                        <div class="w-full flex items-center justify-between gap-5 mb-10">
+                            <div class="w-1/2">
                                 <label for="" class="text-gray-500">Supplier</label>
                                 <select name="supplier"
                                     class="w-full mt-1 p-2 border border-[#eaeaea] focus:border-main outline-none rounded-md">
@@ -133,6 +137,17 @@
                                         <option value="{{ $supplier->name }}">{{ $supplier->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="w-1/2">
+                                <label for="expiration_date">Expiration Date</label>
+                                <input 
+                                    type="date" 
+                                    name="expiration_date" 
+                                    id="expiration_date" 
+                                    class="w-full rounded-xl outline-none border border-[#bebebe] focus:border focus:border-main px-4 py-2 mb-3"
+                                    min="{{ date('Y-m-d') }}"
+                                >
                             </div>
                         </div>
 

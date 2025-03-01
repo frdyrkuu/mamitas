@@ -50,7 +50,7 @@
         {{-- navigations --}}
         <div class="w-[5%] pt-10 bg-[#fefefe]">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{ asset('images/logo-transparent.png') }}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <div class="w-full relative">
                 <button onclick="openDashboard()"

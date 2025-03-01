@@ -28,7 +28,7 @@
                         <label for="">Color</label>
                         <select name="color" id="color"
                             class="
-                        w-full py-2 px-3 rounded-xl outline-none">
+                        w-full py-2 px-3 rounded-xl outline-none">          
                             <option value="" selected disabled></option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->color }}">{{ $item->color }}</option>
@@ -102,7 +102,7 @@
     <div class="w-full h-[93%] flex z-0">
         <div class="w-[5%] pt-10 bg-[#fefefe]">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{ asset('images/logo-transparent.png') }}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <div class="w-full relative">
                 <button onclick="openDashboard()" class="w-full flex items-center justify-center h-auto py-4">

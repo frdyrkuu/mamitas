@@ -21,7 +21,7 @@
         {{-- navigations --}}
         <div class="w-[6%] py-6 bg-white">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <a href="{{route('dashboard')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
                 <img src="{{asset('images/products-new.png')}}" alt="Home Icon" class="w-1/3">
@@ -57,7 +57,7 @@
                     <p class="w-[40%]">Item</p>
                     <p class="w-[10%] text-right">In Stock</p>
                     <p class="w-[15%] text-right">Status</p>
-                    <p class="w-[15%] text-right">Last update</p>
+                    <p class="w-[15%] text-right">Expiration Date</p>
                     <p class="w-[20%] text-right">Recent adjustment</p>
                 </div>
                 <div id="search_result" class="w-full">
@@ -86,7 +86,9 @@
                                 }
                             @endphp
                             </p>
-                            <p class='w-[15%] text-right'>{{ \Carbon\Carbon::parse($i->updated_at)->format('F j, Y - g:i A') }}</p>
+                            <p class='w-[15%] text-right expiration-date' data-expiration="{{ $i->expiration_date }}">
+                                {{ $i->expiration_date ? \Carbon\Carbon::parse($i->expiration_date)->format('F j, Y') : 'No expiration date' }}
+                            </p>
                             <p class='w-[20%] text-right'>{{$i->update_reason ?? 'None'}}</p>
                         </div>
                     @endforeach
@@ -161,6 +163,41 @@
 });
 
         })
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expirationElements = document.querySelectorAll('.expiration-date');
+            const today = new Date();
+            
+            expirationElements.forEach(element => {
+                const expirationDate = element.dataset.expiration;
+                
+                if (expirationDate) {
+                    const expDate = new Date(expirationDate);
+                    const daysUntilExpiration = Math.ceil((expDate - today) / (1000 * 60 * 60 * 24));
+                    
+                    if (daysUntilExpiration < 0) {
+                        // Expired
+                        element.style.color = '#e5231a'; // Red
+                        element.style.fontWeight = 'bold';
+                    } else if (daysUntilExpiration <= 30) {
+                        // Near expiration (30 days or less)
+                        element.style.color = '#FFA500'; // Yellow/Orange
+                        element.style.fontWeight = 'bold';
+                    } else {
+                        // Good condition (more than 30 days)
+                        element.style.color = '#008000'; // Green
+                    }
+
+                    // Add days remaining for near expiration items
+                    if (daysUntilExpiration > 0 && daysUntilExpiration <= 30) {
+                        element.innerHTML += ` <span style="font-size: 0.8em;">(${daysUntilExpiration} days left)</span>`;
+                    } else if (daysUntilExpiration < 0) {
+                        element.innerHTML += ` <span style="font-size: 0.8em;">(Expired)</span>`;
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>

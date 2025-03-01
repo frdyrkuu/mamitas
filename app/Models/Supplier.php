@@ -13,6 +13,7 @@ class Supplier extends Model
         'name',
         'contact_number',
         'contact_person',
+        'email',
         'address'
     ];
 }
