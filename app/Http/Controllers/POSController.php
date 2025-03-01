@@ -28,6 +28,7 @@ class POSController extends Controller
         if (!isset($cashier_name)) {
             return redirect()->route('login');
         } else {
+            $cmsData = Cms::first(); // This will get the first CMS entry
             $started_shift = false;
             $today = Carbon::today()->toDateString();
             $menu = Menu::all();
@@ -41,11 +42,17 @@ class POSController extends Controller
                 ->whereDate('created_at', $today)
                 ->get();
             if ($shift->isEmpty()) {
-                return view('cashier');
+                return view('cashier', compact('cmsData')); // Changed this line
             } else {
-                return view('dashboard', ['menus' => $items, 'ticket' => $ticket, 'alerts' => $stocks_alert]);
+                return view('dashboard', [
+                    'menus' => $items,
+                    'ticket' => $ticket,
+                    'alerts' => $stocks_alert,
+                    'cms' => $cmsData
+                ]);
             }
         }
+
     }
 
     public function livesearch($key = null)
@@ -266,6 +273,8 @@ class POSController extends Controller
         if (!isset($cashier_name)) {
             return redirect()->route('login');
         }
+        
+        $cmsData = Cms::first();  // Add this line
         // Get today's date
         $today = Carbon::today();
 
@@ -274,7 +283,11 @@ class POSController extends Controller
 
         $gcash_transactions = GCash::whereDate('created_at', $today)->get();
 
-        return view('history', ['history' => $history, 'gcash' => $gcash_transactions]);
+        return view('history', [
+            'history' => $history, 
+            'gcash' => $gcash_transactions,
+            'cms' => $cmsData  // Add this line
+        ]);
     }
 
     public function sale(Request $request)
@@ -350,6 +363,7 @@ class POSController extends Controller
     {
         $pos_number = session('pos_number');
         $cashier_name = session('cashier_name');
+        $cmsData = Cms::first();  // Add this line
         $stocks_alert = Stocks::where('quantity', '<=', 20)->get();
         $shift = Shift::where('cashier', $cashier_name)
             ->whereDate('created_at', Carbon::today())
@@ -393,7 +407,9 @@ class POSController extends Controller
 
         if (is_null($shift)) {
             // If no shift is found, render the cashier view
-            return view('cashier');
+            return view('cashier', [
+                'cms' => $cmsData  // Add this line
+            ]);
         } else {
             // If at least one shift is found, render the cashier_menu view
             return view('cashier_menu', [
@@ -407,7 +423,8 @@ class POSController extends Controller
                 'cashInPayments' => $cash_in_payments,
                 'cashOutPayments' => $cash_out_payments,
                 'cashInCharge' => $cash_in_charge,
-                'cashOutCharge' => $cash_out_charge
+                'cashOutCharge' => $cash_out_charge,
+                'cms' => $cmsData  // Add this line
             ]);
         }
     }
@@ -551,8 +568,12 @@ class POSController extends Controller
 
     public function inventory()
     {
-        $data = Stocks::paginate(8);
-        return view('pos_inventory', ['item' => $data]);
+        $cmsData = Cms::first();  // Add this line
+        $data = Stocks::paginate(13);
+        return view('pos_inventory', [
+            'item' => $data,
+            'cms' => $cmsData  // Add this line
+        ]);
     }
 
     public function itemSearch($key = null)
@@ -573,6 +594,7 @@ class POSController extends Controller
     {
         // Get all orders with pending status
         $pendingOrders = SupplierOrder::where('status', 'Pending')->get();
+        $cmsData = Cms::first();  // Add this line
 
         // Group orders by batch number and calculate summary data
         $batches = $pendingOrders->groupBy('batch_number')->map(function ($group) {
@@ -586,7 +608,8 @@ class POSController extends Controller
 
         // Pass the summary data to the view
         return view('orders', [
-            'batches' => $batches
+            'batches' => $batches,
+            'cms' => $cmsData  // Add this line
         ]);
     }
 

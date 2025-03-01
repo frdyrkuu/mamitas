@@ -70,7 +70,7 @@
     <div id="body" class="w-full h-[93%] flex z-0">
         <div class="w-[5%] pt-10 bg-[#fefefe]">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <div class="w-full relative">
                 <button onclick="openDashboard()" class="w-full flex items-center justify-center h-auto py-4">
@@ -165,6 +165,7 @@
                     <p class="w-[20%]">Contact number</p>
                     <p class="w-[20%]">Supplier's address</p>
                     <p class="w-[20%]">Created at</p>
+                    <p class="w-[20%]">Modify</p>
                 </div>
                 <div id="supplierResults" class="w-full">
                     @foreach ($suppliers as $supplier)
@@ -174,6 +175,7 @@
                             <p class="w-1/5">{{ $supplier->contact_number }}</p>
                             <p class="w-1/5">{{ $supplier->address }}</p>
                             <p class="w-1/5">{{ $supplier->created_at->format('F d, Y - g:i A') }}</p>
+                            <a href="{{ route('office.supplier.edit', $supplier->id) }}" class="w-1/5 text-blue-400 underline">Edit Supplier Details</a>
                         </div>
                     @endforeach
                 </div>

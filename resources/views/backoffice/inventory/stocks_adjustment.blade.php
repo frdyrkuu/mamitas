@@ -8,8 +8,9 @@
     <script src="{{ asset('jquery/jquery.js') }}"></script>
     @vite('resources/css/app.css')
     <title>Back Office</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="w-full h-screen bg-[#fefefe] relative">
+<body class="w-full h-auto bg-[#fefefe] relative">
     <div id="coverup" class="hidden w-full bg-main h-screen absolute z-50 opacity-30"></div>
     <form id="filterForm">
         <div id="filterModal" class="hidden py-1 w-1/3 bg-[#f0f0f0] shadow-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-2xl">
@@ -42,7 +43,7 @@
                             <option value="1000_2000">Greater than 1kg/L & Less than 2kg/L</option>
                         </select>
                     </div>
-                </div>
+                </div>          
                 <div class="w-full flex gap-4">
                     <div class="w-1/2 flex flex-col gap-1">
                         <label for="">Category</label>
@@ -78,7 +79,7 @@
     <div class="w-full h-[93%] flex z-0">
         <div class="w-[5%] pt-10 bg-[#fefefe]">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <div class="w-full relative">
                 <button onclick="openDashboard()" class="w-full flex items-center justify-center h-auto py-4">
@@ -161,7 +162,15 @@
         </div>
         <div class="w-[95%] bg-[#f2f2f2] z-0 p-7">
             <div class="w-full bg-slate-50 shadow-md p-6">
-                <div class="w-full flex gap-4 px-5">
+                <div class="w-full flex gap-4 px-5 mb-4">
+                    <div class="w-1/3">
+                        <input 
+                            type="text" 
+                            id="searchProduct" 
+                            placeholder="Search products..." 
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-main"
+                        >
+                    </div>
                     <button onclick="openFilter()" class="px-10 py-2 rounded-lg text-center bg-main text-white">Advance filter</button>
                 </div>
                 <div class="w-full flex items-center text-sm py-4 px-5 text-gray-500 border-b border-[#dadada] text-left">
@@ -201,11 +210,48 @@
                             @endphp
                             </p>
                             <p class="w-[15%]">{{$i->update_reason}}</p>
-                            <a href="{{route('office.adjust', ['item_name' => $i->item])}}" class="w-[15%] flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="15" height="15"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
-                            </a>
+                            <button 
+                                onclick="openAdjustmentModal('{{$i->id}}', '{{$i->item}}', '{{$i->quantity}}')" 
+                                class="w-[15%] flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="15" height="15">
+                                    <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                </svg>
+                            </button>
                         </div>
                     @endforeach
+                </div>
+                
+                <!-- Add this after the items list section and before the pagination -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold mb-4 px-5">Stock Adjustment History</h3>
+                    <div class="w-full flex items-center text-sm py-4 px-5 text-gray-500 border-b border-[#dadada] text-left">
+                        <p class="w-[25%]">Item</p>
+                        <p class="w-[15%]">Adjustment Type</p>
+                        <p class="w-[15%]">Quantity</p>
+                        <p class="w-[15%]">Old Stock</p>
+                        <p class="w-[15%]">New Stock</p>
+                        <p class="w-[25%]">Reason</p>
+                        <p class="w-[15%]">Date</p>
+                    </div>
+                    <div id="adjustmentLogs" class="w-full">
+                        @foreach ($adjustmentLogs as $log)
+                            <div class="w-full flex items-center text-sm py-4 px-5 text-gray-700 border-b border-[#dadada] text-left">
+                                <p class="w-[25%]">{{ $log->item }}</p>
+                                <p class="w-[15%]">
+                                    @if($log->adjustment_type === 'increase')
+                                        <span class="text-green-500">Increased</span>
+                                    @else
+                                        <span class="text-red-500">Decreased</span>
+                                    @endif
+                                </p>
+                                <p class="w-[15%]">{{ $log->quantity }}</p>
+                                <p class="w-[15%]">{{ $log->old_quantity }}</p>
+                                <p class="w-[15%]">{{ $log->new_quantity }}</p>
+                                <p class="w-[25%]">{{ $log->reason }}</p>
+                                <p class="w-[15%]">{{ \Carbon\Carbon::parse($log->created_at)->format('M d, Y H:i') }}</p>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
                 
                 <!-- Pagination links -->
@@ -220,6 +266,66 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    {{-- Stock Adjustment Modal --}}
+    <div id="adjustmentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50">
+        <div class="bg-white w-1/2 mx-auto mt-20 rounded-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Stock Adjustment</h2>
+                <button onclick="closeAdjustmentModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="adjustmentForm" method="POST">
+                @csrf
+                <input type="hidden" id="productId" name="product_id">
+                
+                <div class="mb-4">
+                    <p class="font-medium">Product: <span id="productName"></span></p>
+                    <p>Current Stock: <span id="currentStock"></span></p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2">Adjustment Type</label>
+                    <select name="adjustment_type" id="adjustmentType" class="w-full rounded-lg border p-2" required>
+                        <option value="increase">Increase Stock</option>
+                        <option value="decrease">Decrease Stock</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2">Quantity</label>
+                    <input type="number" name="quantity" class="w-full rounded-lg border p-2" required min="1">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2">Reason for Adjustment</label>
+                    <textarea name="reason" class="w-full rounded-lg border p-2" required></textarea>
+                </div>
+
+                {{-- For Increase Stock --}}
+                <div id="increaseFields" class="mb-4">
+                    <div class="mb-4">
+                        <label class="block mb-2">Batch Number</label>
+                        <input type="text" name="batch_number" class="w-full rounded-lg border p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-2">Manufacturing Date</label>
+                        <input type="date" name="manufacturing_date" class="w-full rounded-lg border p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-2">Expiration Date</label>
+                        <input type="date" name="expiration_date" class="w-full rounded-lg border p-2">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeAdjustmentModal()" class="px-4 py-2 bg-gray-200 rounded-lg">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-main text-white rounded-lg">Save Adjustment</button>
+                </div>
+            </form>
         </div>
     </div>
     <script>
@@ -253,11 +359,13 @@
                                         <p class="w-[10%]" id="quantity_res">${item.quantity}</p>
                                         ${quantityStatus}
                                         <p class="w-[15%]">${item.update_reason}</p>
-                                        <a href="/back-office/stocks_adjustments/${item.item}" class="w-[15%] flex items-center justify-center">
+                                        <button 
+                                            onclick="openAdjustmentModal('${item.id}', '${item.item}', '${item.quantity}')" 
+                                            class="w-[15%] flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="15" height="15">
                                                 <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
                                             </svg>
-                                        </a>
+                                        </button>
                                     </div>`;
                                 $('#filteredItems').append(itemRow);
                             });
@@ -300,6 +408,103 @@
             cover.classList.add('hidden')
             modal.classList.add('hidden')
         }
+
+        // Search functionality
+        $('#searchProduct').on('keyup', function() {
+            let searchValue = $(this).val().toLowerCase();
+            
+            $('#filteredItems > div').each(function() {
+                let itemName = $(this).find('#item_res').text().toLowerCase();
+                $(this).toggle(itemName.includes(searchValue));
+            });
+        });
+
+        // Stock Adjustment Modal
+        function openAdjustmentModal(productId, productName, currentStock) {
+            $('#productId').val(productId);
+            $('#productName').text(productName);
+            $('#currentStock').text(currentStock);
+            $('#adjustmentModal').removeClass('hidden');
+        }
+
+        function closeAdjustmentModal() {
+            $('#adjustmentModal').addClass('hidden');
+            $('#adjustmentForm')[0].reset();
+        }
+
+        // Show/Hide fields based on adjustment type
+        $('#adjustmentType').change(function() {
+            if ($(this).val() === 'increase') {
+                $('#increaseFields').show();
+            } else {
+                $('#increaseFields').hide();
+            }
+        });
+
+        // Form submission
+        $('#adjustmentForm').submit(function(e) {
+            e.preventDefault();
+            
+            // Get the form data
+            let formData = $(this).serializeArray();
+            
+            // Add CSRF token
+            formData.push({
+                name: '_token',
+                value: $('meta[name="csrf-token"]').attr('content')
+            });
+
+            // Validate quantity for decrease
+            let currentStock = parseInt($('#currentStock').text());
+            let requestedQuantity = parseInt($('input[name="quantity"]').val());
+            let adjustmentType = $('#adjustmentType').val();
+
+            if (adjustmentType === 'decrease' && requestedQuantity > currentStock) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Cannot decrease more than available stock',
+                    icon: 'error'
+                });
+                return false;
+            }
+            
+            $.ajax({
+                url: "{{ route('office.update_stock') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.message || 'Stock has been adjusted successfully',
+                            icon: 'success'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.message || 'Failed to adjust stock',
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    let errorMessage = 'Failed to adjust stock';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    Swal.fire({
+                        title: 'Error!',
+                        text: errorMessage,
+                        icon: 'error'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>

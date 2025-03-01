@@ -20,15 +20,20 @@ class Stocks extends Model
         'sku',
         'size',
         'barcode',
-        'quantity',
         'cost',
         'retail',
         'image',
         'update_reason',
+        'expiration_date',
     ];
 
     public function ticket()
     {
         return $this->hasOne(Ticket::class, 'food_name', 'item');
+    }
+
+    public function adjustmentLogs()
+    {
+        return $this->hasMany(StockAdjustmentLog::class, 'stock_id');
     }
 }

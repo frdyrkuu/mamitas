@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Cms;
+use App\Models\StockBatch;
+use App\Models\StockAdjustmentLog;
 
 class OfficeController extends Controller
 {
@@ -250,7 +252,7 @@ class OfficeController extends Controller
         // Prepare data for Polar Chart
         $polarLabels = ['Morning', 'Afternoon', 'Evening'];
         $polarData = [$morningAverage, $afternoonAverage, $eveningAverage];
-
+        $cmsData = Cms::first();  // Add this line
         // Pass data to your view
         return view('backoffice/admin_dashboard', [
             'sales' => $dailySalesFormatted,
@@ -266,6 +268,7 @@ class OfficeController extends Controller
             'chartData' => $chartDataValues,
             'polarLabels' => $polarLabels,
             'polarData' => $polarData,
+            'cms' => $cmsData
         ]);
     }
     public function getMonthlySales(Request $request)
@@ -330,6 +333,7 @@ class OfficeController extends Controller
             // Handle division by zero or cases where total_retail is zero
             $margin_percentage = 0;
         }
+        $cmsData = Cms::first();  // Add this line
 
         $margin_percentage = number_format($margin_percentage, 2);
         return view('backoffice/inventory/inventory', [
@@ -338,6 +342,7 @@ class OfficeController extends Controller
             'total_retail' => $total_retail,
             'profit' => $profit,
             'margin' => $margin_percentage,
+            'cms' => $cmsData
         ]);
     }
 
@@ -366,8 +371,15 @@ class OfficeController extends Controller
 
     public function stocksAdjustment()
     {
-        $data = Stocks::paginate(8);
-        return view('backoffice/inventory/stocks_adjustment', ['item' => $data]);
+        $cms = DB::table('cms')->first();
+        $item = Stocks::paginate(10);
+        
+        // Get logs with item names
+        $adjustmentLogs = DB::table('stock_adjustment_logs')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('backoffice.inventory.stocks_adjustment', compact('item', 'adjustmentLogs', 'cms'));
     }
 
     public function filterItems(Request $request)
@@ -437,12 +449,15 @@ class OfficeController extends Controller
             ->distinct()
             ->get();
 
+        $cmsData = Cms::first();  // Add this line
+
         return view('backoffice/items/items_list', [
             'items' => $data,
             'pending' => $pendingCount,
             'color' => $colorChar,
-            'category' =>  $categoryChar,
-            'supplier' => $supplierChar
+            'category' => $categoryChar,
+            'supplier' => $supplierChar,
+            'cms' => $cmsData
         ]);
     }
 
@@ -494,6 +509,7 @@ class OfficeController extends Controller
             'retail' => $request->input('retail'),
             'image' => $imageName, // Use the image name here, not the full $image object
             'profit' => $profit,
+            'expiration_date' => $request->input('expiration_date'),
         ];
 
 
@@ -518,38 +534,47 @@ class OfficeController extends Controller
         $stocks = Stocks::all();
         $barcode = $request->input('barcode');
         $item = Stocks::where('barcode', $barcode)->first();
-        $cost = $request->input('cost');
-        $retail = $request->input('retail');
 
-        // Handle the image upload
+        if (!$item) {
+            return redirect()->route('office.items_list')->with('items', $stocks);
+        }
+
+        // Prepare update data
+        $updateData = [
+            'item' => $request->input('item_name'),
+            'quantity' => $request->input('item_quantity'),
+            'category' => $request->input('category'),
+            'supplier' => $request->input('supplier'),
+            'product_unit' => $request->input('product_unit'),
+            'barcode' => $request->input('barcode'),
+            'sku' => $request->input('item_sku'),
+            'color' => $request->input('item_color'),
+            'cost' => $request->input('cost'),
+            'retail' => $request->input('retail'),
+            'description' => $request->input('item_description'),
+            'expiration_date' => $request->input('expiration_date')
+        ];
+
+        // Only update image if a new one is uploaded
         if ($request->hasFile('item_image')) {
             $image = $request->file('item_image');
             $imageName = $request->input('item_name') . '.' . $image->extension();
+
+            // Delete old image if exists
+            if ($item->image && file_exists(public_path('images/product/' . $item->image))) {
+                unlink(public_path('images/product/' . $item->image));
+            }
+
+            // Move new image
             $image->move(public_path('images/product'), $imageName);
-        } else {
-            $imageName = null;
+            $updateData['image'] = $imageName;
         }
 
-        if ($item) {
-            $item->item = $request->input('item_name');
-            $item->quantity = $request->input('item_quantity');
-            $item->category = $request->input('category');
-            $item->supplier = $request->input('supplier');
-            $item->product_unit = $request->input('product_unit');
-            $item->barcode = $request->input('barcode');
-            $item->sku = $request->input('item_sku');
-            $item->color = $request->input('item_color');
-            $item->cost = $request->input('cost');
-            $item->retail = $request->input('retail');
-            $item->description = $request->input('item_description');
-            $item->image = $imageName;
+        // Update the item
+        $item->update($updateData);
 
-            $item->save();
-            session()->flash('success', 'Item has been updated successfully!');
-            return redirect()->back();
-        } else {
-            return redirect()->route('office.items_list')->with('items', $stocks);
-        }
+        session()->flash('success', 'Item has been updated successfully!');
+        return redirect()->back();
     }
 
     public function updateStocks(Request $request)
@@ -608,11 +633,13 @@ class OfficeController extends Controller
             $ticketsByFoodName[$name] = $ticketsForName;
         }
 
+        $cmsData = Cms::first();  // Add this line
         return view('backoffice/sales_by_items', [
             'topItems' => $topItems,
             'leastItems' => $leastItems,
             'items' => $result,
             'ticketsByFoodName' => $ticketsByFoodName,
+            'cms' => $cmsData
         ]);
     }
 
@@ -628,8 +655,12 @@ class OfficeController extends Controller
 
         // Fetch the history, ordered by the most recent first, with pagination
         $history = $query->orderBy('created_at', 'desc')->paginate(15); // 10 records per page
+        $cmsData = Cms::first();  // Add this line
 
-        return view('backoffice.sales_history', ['history' => $history]);
+        return view('backoffice.sales_history', [
+            'history' => $history,
+            'cms' => $cmsData
+        ]);
     }
 
 
@@ -753,17 +784,40 @@ class OfficeController extends Controller
 
     public function cashiers()
     {
+        $cmsData = Cms::first();  // Add this line
         $cashiers = Authentication::where('role', 'Cashier')->get();
         $pending = PendingAccount::all();
-        return view('backoffice/cashiers/cashiers', ['cashiers' => $cashiers, 'pendings' => $pending]);
+        return view('backoffice/cashiers/cashiers', ['cashiers' => $cashiers, 'pendings' => $pending, 'cms' => $cmsData]);
     }
 
     public function suppliers()
     {
         $supplier = Supplier::all();
+        $cmsData = Cms::first();  // Add this line
         return view('backoffice/suppliers/suppliers', [
             'suppliers' => $supplier,
+            'cms' => $cmsData
         ]);
+    }
+
+    public function updateSupplier($id)
+    {
+        // Just get all supplier data
+        $suppliers = Supplier::all();
+        // Get the specific supplier we want to edit
+        $supplier = Supplier::select('id', 'name', 'contact_person', 'contact_number', 'address')
+                            ->findOrFail($id);
+
+        return view('backoffice.suppliers.edit_supplier', compact('suppliers', 'supplier'));
+    }
+
+    public function getSupplierDetails($id)
+    {
+        $suppliers = Supplier::all();
+        $supplier = Supplier::select('id', 'name', 'contact_person', 'contact_number', 'address', 'email')
+                            ->findOrFail($id);
+
+        return view('backoffice.suppliers.edit_supplier', compact('suppliers', 'supplier'));
     }
 
     public function addSuppliers(Request $request)
@@ -799,10 +853,11 @@ class OfficeController extends Controller
                 'updated_at' => Carbon::parse($group->first()->updated_at)->format('F j, Y - g:i A'),
             ];
         });
-
+        $cmsData = Cms::first();  // Add this line  
         // Pass the summary data to the view
         return view('backoffice/ordering/order', [
             'summaries' => $summary,
+            'cms' => $cmsData
         ]);
     }
 
@@ -939,7 +994,9 @@ class OfficeController extends Controller
         return response()->json($suppliers);
     }
 
-    public function supplierLiveSearch($key) {}
+    public function supplierLiveSearch($key)
+    {
+    }
 
     public function pendingItems()
     {
@@ -1094,6 +1151,95 @@ class OfficeController extends Controller
             Log::error('Error updating CMS data: ' . $e->getMessage());
 
             return redirect()->back()->with('error', 'There was an error processing your request.');
+        }
+    }
+
+    public function updateSupplierDetails(Request $request, $id)
+    {
+        $request->validate([
+            'suppliers_name' => 'required',
+            'contact_person' => 'required',
+            'contact_number' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+        ]);
+
+        try {
+            $supplier = Supplier::findOrFail($id);
+            
+            $supplier->update([
+                'name' => $request->suppliers_name,
+                'contact_person' => $request->contact_person,
+                'contact_number' => $request->contact_number,
+                'email' => $request->email,
+                'address' => $request->address,
+            ]);
+
+            return redirect()->back()->with('success', 'Supplier updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update supplier. Please try again.');
+        }
+    }
+
+    public function updateStock(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required',
+            'adjustment_type' => 'required|in:increase,decrease',
+            'quantity' => 'required|numeric|min:1',
+            'reason' => 'required'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Get the stock and its item name
+            $stock = Stocks::findOrFail($request->product_id);
+            $itemName = $stock->item; // Get the item name
+            $oldQuantity = $stock->quantity;
+            
+            // Calculate new quantity
+            if ($request->adjustment_type === 'increase') {
+                $newQuantity = $oldQuantity + $request->quantity;
+            } else {
+                if ($oldQuantity < $request->quantity) {
+                    throw new \Exception('Cannot decrease more than available stock. Current stock: ' . $oldQuantity);
+                }
+                $newQuantity = $oldQuantity - $request->quantity;
+            }
+
+            // Update stock
+            $stock->quantity = $newQuantity;
+            $stock->update_reason = $request->reason;
+            $stock->save();
+
+            // Create log entry with item name
+            DB::table('stock_adjustment_logs')->insert([
+                'stock_id' => $stock->id,
+                'item' => $itemName, // Add item name to the log
+                'adjustment_type' => $request->adjustment_type,
+                'quantity' => $request->quantity,
+                'old_quantity' => $oldQuantity,
+                'new_quantity' => $newQuantity,
+                'reason' => $request->reason,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Stock adjusted successfully',
+                'new_quantity' => $newQuantity
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 422);
         }
     }
 }

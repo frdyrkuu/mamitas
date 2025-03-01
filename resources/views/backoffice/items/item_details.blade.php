@@ -19,7 +19,7 @@
     <div class="w-full h-[93%] flex z-0">
         <div class="w-[5%] pt-10 bg-[#fefefe] mb-10">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{ asset('images/logo-transparent.png') }}" alt="">
+                    <img src="{{ asset('images/logo-transparent.png') }}" alt="">
             </div>
             <div class="w-full relative">
                 <button onclick="openDashboard()" class="w-full flex items-center justify-center h-auto py-4">
@@ -160,7 +160,11 @@
                                 <input type="text" name="item_quantity" value="{{ $item->quantity }}"
                                     class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
                             </div>
-                            <div class="w-1/3">
+                          
+                        </div>
+                        <div class="w-full flex items-center justify-between gap-5 mb-10">
+                           
+                            <div class="w-1/2">
                                 <label for="" class="text-gray-500">Select Category</label>
                                 <select name="category" id=""
                                     class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" required>
@@ -170,6 +174,18 @@
                                     <option value="Groceries">Groceries</option>
                                     <option value="Meals">Meals</option>
                                 </select>
+                            </div>
+
+                            <div class="w-1/2">
+                                <label for="expiration_date">Expiration Date</label>
+                                <input 
+                                    type="date" 
+                                    name="expiration_date" 
+                                    id="expiration_date" 
+                                    class="w-full rounded-xl outline-none border border-[#bebebe] focus:border focus:border-main px-4 py-2 mb-3"
+                                    min="{{ date('Y-m-d') }}"
+                                    value="{{ $item->expiration_date ? date('Y-m-d', strtotime($item->expiration_date)) : '' }}"
+                                >
                             </div>
                         </div>
                         <div class="w-full mb-10">

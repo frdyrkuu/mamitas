@@ -34,7 +34,7 @@
         {{-- navigations --}}
         <div class="w-[6%] py-6 bg-white">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+                 <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <a href="{{route('dashboard')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
                 <img src="{{asset('images/products-new.png')}}" alt="Home Icon" class="w-1/3">
@@ -76,10 +76,10 @@
                     <a class="px-10 text-main underline" href="{{route('welcome')}}">Break</a>
                 </div>
             </div>
-            <div class="w-full flex gap-2">
+            <div class="w-full flex gap-[20px]">
                 <div class="w-[60%] shadow-xl bg-[#f5f5f5] rounded-xl p-4">
                     <p class="mb-2 font-semibold">Cash drawer details</p>
-                    <div class="w-full flex gap-2 justify-evenly items-center mb-5">
+                    <div class="w-full flex gap-[20px] flex-wrap items-center mb-5">
                         <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{$shift->starting_cash}}</p>
@@ -99,14 +99,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full flex gap-2 justify-evenly items-center mb-5">
+                    <div class="w-full flex gap-[20px] justify-wrap items-center mb-5">
                         <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{$cash ?? 0}}</p>
                                 <p class="text-center text-lg">Cash Payments</p>
                             </div>
                         </div>
-                        <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
+                        <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border hidden">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{$shift->cash_out ?? 0}}</p>
                                 <p class="text-center text-lg">Total Petty Cash</p>

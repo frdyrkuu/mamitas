@@ -77,7 +77,7 @@
     <div class="w-full h-[93%] flex z-0">
         <div class="w-[5%] pt-10 bg-[#fefefe]">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center pb-4 mb-3">
-                <img src="{{asset('images/logo-transparent.png')}}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
             <div class="w-full relative">
                 <button onclick="openDashboard()" class="w-full flex items-center justify-center h-auto py-4">
@@ -162,19 +162,19 @@
             <div class="w-full bg-slate-50 shadow-md py-10 flex justify-evenly mb-10">
                 <div class="w-1/4 flex flex-col items-center">
                     <p class="text-gray-700 text-md">Total Item Cost</p>
-                    <p class="text-4xl">&#8369;{{$total_cost}}.00</p>
+                    <p class="text-4xl">&#8369;{{ number_format($total_cost, 2, '.', ',') }}</p>
                 </div>
                 <div class="w-1/4 flex flex-col items-center">
                     <p class="text-gray-700 text-md">Total Retail Value</p>
-                    <p class="text-4xl">&#8369;{{$total_retail}}.00</p>
+                    <p class="text-4xl">&#8369;{{ number_format($total_retail, 2, '.', ',') }}</p>
                 </div>
                 <div class="w-1/4 flex flex-col items-center">
                     <p class="text-gray-700 text-md">Potential Profit</p>
-                    <p class="text-4xl">&#8369;{{$profit}}.00</p>
+                    <p class="text-4xl">&#8369;{{ number_format($profit, 2, '.', ',') }}</p>
                 </div>
                 <div class="w-1/4 flex flex-col items-center">
                     <p class="text-gray-700 text-md justify-start">Margin</p>
-                    <p class="text-4xl">{{$margin}}%</p>
+                    <p class="text-4xl">{{ number_format($margin, 2) }}%</p>
                 </div>
             </div>
             <div class="w-full flex gap-4 px-5 mb-7">
