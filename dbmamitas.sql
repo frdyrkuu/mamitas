@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 28, 2025 at 05:31 PM
--- Server version: 8.0.30
--- PHP Version: 8.2.24
+-- Generation Time: Mar 01, 2025 at 07:27 PM
+-- Server version: 8.4.3
+-- PHP Version: 8.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -42,7 +42,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `password`, `role`, `email`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', '$2y$12$BKiaZbAU0w8ChJvrENQ2MOwF.4vTVeFpB/IXiNcM7lKpH6c4rcmUW', 'Admin', 'fredericksocorin@gmail.com', '2024-06-10 14:59:58', '2025-02-18 14:01:52');
+(1, 'Admin', '$2y$12$nX.kGMgJGCTnwipWz26eWOO8MnKS2GinX4HxPQMRMoRhEpWHP6jMm', 'Admin', 'fredericksocorin@gmail.com', '2024-06-10 14:59:58', '2025-03-01 15:51:04');
 
 -- --------------------------------------------------------
 
@@ -63,8 +63,8 @@ CREATE TABLE `batch_orders` (
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -75,8 +75,8 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -88,9 +88,9 @@ CREATE TABLE `cache_locks` (
 
 CREATE TABLE `cms` (
   `id` bigint UNSIGNED NOT NULL,
-  `company_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company_logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_description` text COLLATE utf8mb4_unicode_ci,
+  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -110,8 +110,8 @@ INSERT INTO `cms` (`id`, `company_name`, `company_logo`, `company_description`, 
 
 CREATE TABLE `customers` (
   `id` bigint UNSIGNED NOT NULL,
-  `ticket` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ticket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -273,11 +273,11 @@ INSERT INTO `customers` (`id`, `ticket`, `name`, `created_at`, `updated_at`) VAL
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -289,10 +289,10 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `g_cashes` (
   `id` bigint UNSIGNED NOT NULL,
-  `transaction_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `charge` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `transaction_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `charge` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -305,8 +305,8 @@ CREATE TABLE `g_cashes` (
 
 CREATE TABLE `jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
@@ -320,13 +320,13 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL
@@ -340,7 +340,7 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -369,7 +369,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (48, '2024_08_24_182400_create_pending_items_table', 15),
 (49, '2025_01_20_134155_add_email_to_admins_table', 16),
 (50, '2025_01_20_134234_add_email_to_admins_table', 16),
-(51, '2025_01_21_172557_create_cms_table', 17);
+(51, '2025_01_21_172557_create_cms_table', 17),
+(52, '2025_03_02_004428_add_expiration_date_to_stocks_table', 18),
+(53, '2025_03_02_014704_add_email_to_suppliers_table', 19),
+(54, 'xxxx_xx_xx_add_email_to_suppliers_table', 19),
+(55, '2025_03_02_015806_create_stock_batches_table', 20),
+(57, '2025_03_02_020551_create_stock_adjustment_logs_table', 21),
+(58, '2025_03_02_021316_create_stock_adjustment_logs_table', 22),
+(59, '2025_03_02_021924_add_item_column_to_stock_adjustment_logs_table', 23);
 
 -- --------------------------------------------------------
 
@@ -379,7 +386,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `orders` (
   `id` int NOT NULL,
-  `ticket` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `ticket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `food_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -798,8 +805,8 @@ INSERT INTO `orders` (`id`, `ticket`, `food_name`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -811,8 +818,8 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `pending_accounts` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -825,14 +832,14 @@ CREATE TABLE `pending_accounts` (
 
 CREATE TABLE `pending_items` (
   `id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `supplier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barcode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barcode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cost` double NOT NULL,
   `retail` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -846,11 +853,11 @@ CREATE TABLE `pending_items` (
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -871,56 +878,102 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `stocks` (
   `id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `supplier` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_unit` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `size` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barcode` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_unit` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barcode` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qr` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `retail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `retail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `update_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expiration_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `stocks`
 --
 
-INSERT INTO `stocks` (`id`, `item`, `category`, `supplier`, `product_unit`, `color`, `size`, `barcode`, `description`, `sku`, `qr`, `quantity`, `cost`, `retail`, `image`, `update_reason`, `created_at`, `updated_at`) VALUES
-(2, 'Nomu-nomu Lychee', 'Groceries', 'Test Supplier', 'pc', '', '', '123123', 'Test', 'NMNM-001', 'Nomu-nomu Lychee', '125', '37', '45', '', 'Pull out', '2024-05-22 09:13:59', '2025-01-17 08:26:59'),
-(3, 'Rice per pack', 'Dry Goods', 'Test Supplier', 'pc', '', '', '4563412`3', 'Test', 'RICE-001', 'Rice (1 pack)', '67', '40', '51', '', NULL, '2024-05-22 09:14:49', '2025-01-17 08:24:09'),
-(4, 'Pod\'s Pea Snack', 'Groceries', 'Test Supplier', 'pc', '', '', '562345', 'Pod\'s Pea Snack yummy', 'PODS-001', 'Pod\'s Pea Snack', '43', '19', '24', '', 'New stocks', '2024-05-22 09:15:19', '2025-01-17 08:28:17'),
-(5, 'Sopas', 'Meals', 'Test Supplier', 'pc', '', '', '376123', 'Sopas good for health hello', 'SOPAS', 'Sopas', '81', '19', '24', 'Sopas.jpg', NULL, '2024-05-22 09:15:40', '2025-01-18 05:26:39'),
-(6, 'Pillows Chocolate 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '', '345712', 'Pillows Filling Chocolate Flavor 100g scrispy, delicious nack that stimulates the taste buds immensely. Oishi attractive package, suitable for watching movies, listening to music and enjoying. Snack Oishi is convenient, compact, easy to carry for outdoor activities.', 'PLLWSCHOC100G-01', 'Pillows Chocolate 100g', '94', '20', '24', NULL, 'Expired', '2024-05-22 09:16:08', '2025-01-18 07:01:36'),
-(7, 'Pilllows Ube 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '45612', 'This is the best pillows ube in the market', 'PLLWSUBE100G-01', 'Pilllows Ube 100g', '96', '20', '24', 'Pilllows Ube 100g.jpg', NULL, '2024-05-22 09:16:28', '2025-01-18 04:53:21'),
-(8, 'Oishi Prawn Crackers Spicy Flavor 75g', 'Groceries', '', '0', '', '', '45623', NULL, 'OISHISPCY75G-01', 'Oishi Prawn Crackers Spicy Flavor 75g', '93', '20', '25', '', 'Expired', '2024-05-22 09:16:54', '2024-06-10 17:46:33'),
-(9, 'Cheetos 75g', 'Groceries', NULL, 'pc', '', '', '56231', 'Test cheetos', 'CHEETOS75G-01', 'Cheetos 75g', '85', '37', '45', NULL, NULL, '2024-05-22 09:17:31', '2025-01-17 09:23:08'),
-(10, 'Piattos Cheese Flavor 125g', 'Groceries', '', '0', '', '', '673142', NULL, 'PTTSCHSE125G', 'Piattos Cheese Flavor 125g', '90', '17', '20', '', NULL, '2024-05-22 09:18:05', '2024-06-11 05:42:17'),
-(11, 'Stick-O Chocolate 200G', 'Groceries', '', '0', '', '', '34512234', NULL, 'STICKOCHOCO200G', 'Stick-O Chocolate 200G', '43', '55', '70', '', 'Expired', '2024-05-22 09:18:21', '2024-06-10 16:15:03'),
-(12, 'Pocky Choco', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '76457234', NULL, 'POCKYCHOCO-01', 'Pocky Choco', '25', '67', '77', NULL, 'Out of season', '2024-05-22 09:18:39', '2025-01-17 09:22:27'),
-(13, 'Souper', 'Groceries', '', '0', '', '', '456123', NULL, 'SOUPER-001', 'Souper', '2', '41', '49', '', 'New stocks', '2024-05-24 11:32:59', '2024-06-10 17:46:33'),
-(14, 'Roller Coaster', 'Groceries', 'Test Supplier', 'pc', '', '', '6789234', NULL, 'RLLRCSTR-001', 'Roller Coaster', '114', '7', '10', '', 'New stocks', '2024-05-24 14:06:53', '2025-01-17 09:25:47'),
-(15, 'Nescafe Original Twin Pack Sugar Free', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '3456723', 'Enjoy the rich, classic taste of Nescafe Original in a sugar-free twin pack for double the delight!', 'NSCFO-TWNPCK', '4800361423601', '99', '12', '14', NULL, 'New stocks', '2024-06-03 03:50:21', '2025-01-18 04:51:52'),
-(16, 'Nestle Koko Krunch 15g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '456234', 'Crunchy and chocolatey Nestle Koko Krunch in a convenient 15g pack—perfect for snacking anytime!', 'Nestle Koko Krunch 15g', '4800361328463', '2', '6', '8', 'Nestle Koko Krunch 15g.png', 'New stocks', '2024-06-03 04:09:43', '2025-01-17 09:25:47'),
-(17, 'Oishi Crispy Patata Baked Potato Flavor 24g', 'Groceries', '', '0', '', '', '567345123', NULL, 'Oishi Crispy Patata Baked Potato Flavor', '4800194104869', '18', '7', '8', '', 'New stocks', '2024-06-03 04:32:26', '2024-06-10 15:44:42'),
-(18, 'Oishi Prawn Crackers 24g', 'Groceries', 'Test Supplier', 'pc', '', '', '568234', NULL, 'Oishi Prawn Crackers 24g', '4891208040143', '16', '7', '8', NULL, 'New stocks', '2024-06-03 04:32:52', '2025-01-17 08:44:02'),
-(19, 'Johnsons Baby Powder', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Red', '', '6783445', NULL, 'Johnsons Baby Powder', '4801010105107', '17', '35', '45', NULL, 'New stocks', '2024-06-11 06:00:04', '2025-01-20 05:25:17'),
-(20, 'Sopas Powder', 'Dry Goods', 'Test Supplier', 'pc', 'Blue', '20 g', '71232', NULL, 'SPSPWDR', NULL, '20', '25', '26', NULL, NULL, '2025-01-17 06:16:46', '2025-01-18 06:26:18'),
-(21, 'Nutella', 'Wet Goods', 'Test Supplier', 'pc', 'Brown', '100 g', '54123', NULL, 'NTLLA-00421', NULL, '63', '100', '126', 'Nutella.jpg', NULL, '2025-01-17 06:20:18', '2025-01-20 13:14:08'),
-(32, 'Nutella Choco', 'Limited Edition', 'Test Supplier', 'pc', 'Brown', '100 g', '51231', NULL, 'NTLLA-00422', NULL, '124', '124', '126', 'Nutella Choco.jpg', 'New stocks', '2025-01-17 07:40:31', '2025-01-17 09:29:09'),
-(33, 'Sopas Powder Yummy', 'Dry Goods', 'Test Supplier', 'pc', 'White', '20 g', '71235', 'Deliciously creamy Sopas Powder, perfect for a quick and comforting meal!', 'SPSPWDRYMMY', NULL, '30', '12', '26', 'Sopas Powder Yummy.jpg', 'New stocks', '2025-01-17 08:01:06', '2025-01-20 13:02:44'),
-(34, 'Stick-O Ube', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Ube', '300 g', '5678224', 'Yummy Wafer Sticks', 'STCK-UB1', NULL, '0', '100', '120', 'Stick-O Ube.jpg', NULL, '2025-01-18 04:57:15', '2025-01-18 04:57:15'),
-(35, 'Cream-O Cookies Vanilla', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Blue', '10 g', '5566213', 'Take a delicious break with chocolate cookies and vanilla-cream filled of Cream-O Cookies.', 'CRM-OVNNL', NULL, '0', '156', '160', 'Cream-O Cookies Vanilla.jpg', NULL, '2025-01-18 05:42:38', '2025-01-18 05:42:38'),
-(36, 'M.Y. San Honey Graham Crackers', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pack', 'Brown', '210 g', '09456', 'Golden Honey Grahams just the way granny used to make them. Every bite of honey-kissed goodness conjures the comfort and warmth of the home kitchen of our fondest memories.', 'MYSH-GC', NULL, '100', '200', '220', 'M.Y. San Honey Graham Crackers.jpg', 'New stocks', '2025-01-18 05:44:59', '2025-01-18 05:59:36'),
-(37, 'Magic Sarap', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pack', 'Yellow', '12 g', '87234234', 'Maggi Magic Sarap All-in-One Seasoning 8g 12pc', 'MGC-SRP', NULL, '25', '120', '123', 'Magic Sarap.jpg', 'New stocks', '2025-01-20 13:12:23', '2025-01-20 13:15:06');
+INSERT INTO `stocks` (`id`, `item`, `category`, `supplier`, `product_unit`, `color`, `size`, `barcode`, `description`, `sku`, `qr`, `quantity`, `cost`, `retail`, `image`, `update_reason`, `created_at`, `updated_at`, `expiration_date`) VALUES
+(2, 'Nomu-nomu Lychee', 'Groceries', 'Test Supplier', 'pc', '', '', '123123', 'Test', 'NMNM-001', 'Nomu-nomu Lychee', '185', '37', '45', '', 'Test', '2024-05-22 09:13:59', '2025-03-01 18:20:09', '2025-02-25'),
+(3, 'Rice per pack', 'Dry Goods', 'Test Supplier', 'pc', '', '', '4563412`3', 'Test', 'RICE-001', 'Rice (1 pack)', '66', '40', '51', '', 'Test', '2024-05-22 09:14:49', '2025-03-01 18:15:07', NULL),
+(4, 'Pod\'s Pea Snack', 'Groceries', 'Test Supplier', 'pc', '', '', '562345', 'Pod\'s Pea Snack yummy', 'PODS-001', 'Pod\'s Pea Snack', '43', '19', '24', '', 'New stocks', '2024-05-22 09:15:19', '2025-01-17 08:28:17', NULL),
+(5, 'Sopas', 'Meals', 'Test Supplier', 'pc', '', '', '376123', 'Sopas good for health hello', 'SOPAS', 'Sopas', '81', '19', '24', 'Sopas.jpg', NULL, '2024-05-22 09:15:40', '2025-01-18 05:26:39', NULL),
+(6, 'Pillows Chocolate 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '', '345712', 'Pillows Filling Chocolate Flavor 100g scrispy, delicious nack that stimulates the taste buds immensely. Oishi attractive package, suitable for watching movies, listening to music and enjoying. Snack Oishi is convenient, compact, easy to carry for outdoor activities.', 'PLLWSCHOC100G-01', 'Pillows Chocolate 100g', '94', '20', '24', NULL, 'Expired', '2024-05-22 09:16:08', '2025-01-18 07:01:36', NULL),
+(7, 'Pilllows Ube 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '45612', 'This is the best pillows ube in the market', 'PLLWSUBE100G-01', 'Pilllows Ube 100g', '96', '20', '24', 'Pilllows Ube 100g.jpg', NULL, '2024-05-22 09:16:28', '2025-01-18 04:53:21', NULL),
+(8, 'Oishi Prawn Crackers Spicy Flavor 75g', 'Groceries', '', '0', '', '', '45623', NULL, 'OISHISPCY75G-01', 'Oishi Prawn Crackers Spicy Flavor 75g', '93', '20', '25', '', 'Expired', '2024-05-22 09:16:54', '2024-06-10 17:46:33', NULL),
+(9, 'Cheetos 75g', 'Groceries', NULL, 'pc', '', '', '56231', 'Test cheetos', 'CHEETOS75G-01', 'Cheetos 75g', '85', '37', '45', NULL, NULL, '2024-05-22 09:17:31', '2025-01-17 09:23:08', NULL),
+(10, 'Piattos Cheese Flavor 125g', 'Groceries', '', '0', '', '', '673142', NULL, 'PTTSCHSE125G', 'Piattos Cheese Flavor 125g', '90', '17', '20', '', NULL, '2024-05-22 09:18:05', '2024-06-11 05:42:17', NULL),
+(11, 'Stick-O Chocolate 200G', 'Groceries', '', '0', '', '', '34512234', NULL, 'STICKOCHOCO200G', 'Stick-O Chocolate 200G', '43', '55', '70', '', 'Expired', '2024-05-22 09:18:21', '2024-06-10 16:15:03', NULL),
+(12, 'Pocky Choco', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '76457234', NULL, 'POCKYCHOCO-01', 'Pocky Choco', '25', '67', '77', NULL, 'Out of season', '2024-05-22 09:18:39', '2025-01-17 09:22:27', NULL),
+(13, 'Souper', 'Groceries', '', '0', '', '', '456123', NULL, 'SOUPER-001', 'Souper', '2', '41', '49', '', 'New stocks', '2024-05-24 11:32:59', '2024-06-10 17:46:33', NULL),
+(14, 'Roller Coaster', 'Groceries', 'Test Supplier', 'pc', '', '', '6789234', NULL, 'RLLRCSTR-001', 'Roller Coaster', '114', '7', '10', '', 'New stocks', '2024-05-24 14:06:53', '2025-01-17 09:25:47', NULL),
+(15, 'Nescafe Original Twin Pack Sugar Free', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '3456723', 'Enjoy the rich, classic taste of Nescafe Original in a sugar-free twin pack for double the delight!', 'NSCFO-TWNPCK', '4800361423601', '99', '12', '14', NULL, 'New stocks', '2024-06-03 03:50:21', '2025-01-18 04:51:52', NULL),
+(16, 'Nestle Koko Krunch 15g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '456234', 'Crunchy and chocolatey Nestle Koko Krunch in a convenient 15g pack—perfect for snacking anytime!', 'Nestle Koko Krunch 15g', '4800361328463', '2', '6', '8', 'Nestle Koko Krunch 15g.png', 'New stocks', '2024-06-03 04:09:43', '2025-01-17 09:25:47', NULL),
+(17, 'Oishi Crispy Patata Baked Potato Flavor 24g', 'Groceries', '', '0', '', '', '567345123', NULL, 'Oishi Crispy Patata Baked Potato Flavor', '4800194104869', '18', '7', '8', '', 'New stocks', '2024-06-03 04:32:26', '2024-06-10 15:44:42', NULL),
+(18, 'Oishi Prawn Crackers 24g', 'Groceries', 'Test Supplier', 'pc', '', '', '568234', NULL, 'Oishi Prawn Crackers 24g', '4891208040143', '16', '7', '8', NULL, 'New stocks', '2024-06-03 04:32:52', '2025-01-17 08:44:02', NULL),
+(19, 'Johnsons Baby Powder', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Red', '', '6783445', NULL, 'Johnsons Baby Powder', '4801010105107', '17', '35', '45', NULL, 'New stocks', '2024-06-11 06:00:04', '2025-01-20 05:25:17', NULL),
+(20, 'Sopas Powder', 'Dry Goods', 'Test Supplier', 'pc', 'Blue', '20 g', '71232', NULL, 'SPSPWDR', NULL, '20', '25', '26', NULL, NULL, '2025-01-17 06:16:46', '2025-01-18 06:26:18', NULL),
+(21, 'Nutella', 'Wet Goods', 'Test Supplier', 'pc', 'Brown', '100 g', '54123', NULL, 'NTLLA-00421', NULL, '63', '100', '126', 'Nutella.jpg', NULL, '2025-01-17 06:20:18', '2025-01-20 13:14:08', NULL),
+(32, 'Nutella Choco', 'Limited Edition', 'Test Supplier', 'pc', 'Brown', '100 g', '51231', NULL, 'NTLLA-00422', NULL, '124', '124', '126', 'Nutella Choco.jpg', 'New stocks', '2025-01-17 07:40:31', '2025-01-17 09:29:09', NULL),
+(33, 'Sopas Powder Yummy', 'Dry Goods', 'Test Supplier', 'pc', 'White', '20 g', '71235', 'Deliciously creamy Sopas Powder, perfect for a quick and comforting meal!', 'SPSPWDRYMMY', NULL, '30', '12', '26', 'Sopas Powder Yummy.jpg', 'New stocks', '2025-01-17 08:01:06', '2025-01-20 13:02:44', NULL),
+(34, 'Stick-O Ube', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Ube', '300 g', '5678224', 'Yummy Wafer Sticks', 'STCK-UB1', NULL, '0', '100', '120', 'Stick-O Ube.jpg', NULL, '2025-01-18 04:57:15', '2025-01-18 04:57:15', NULL),
+(35, 'Cream-O Cookies Vanilla', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Blue', '10 g', '5566213', 'Take a delicious break with chocolate cookies and vanilla-cream filled of Cream-O Cookies.', 'CRM-OVNNL', NULL, '0', '156', '160', 'Cream-O Cookies Vanilla.jpg', NULL, '2025-01-18 05:42:38', '2025-01-18 05:42:38', NULL),
+(36, 'M.Y. San Honey Graham Crackers', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pack', 'Brown', '210 g', '09456', 'Golden Honey Grahams just the way granny used to make them. Every bite of honey-kissed goodness conjures the comfort and warmth of the home kitchen of our fondest memories.', 'MYSH-GC', NULL, '100', '200', '220', 'M.Y. San Honey Graham Crackers.jpg', 'New stocks', '2025-01-18 05:44:59', '2025-01-18 05:59:36', NULL),
+(37, 'Magic Sarap', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '12 g', '87234234', 'Maggi Magic Sarap All-in-One Seasoning 8g 12pc', 'MGC-SRP', NULL, '25', '120', '123', NULL, 'New stocks', '2025-01-20 13:12:23', '2025-03-01 16:55:07', '2025-03-19'),
+(38, 'Milo', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pc', 'Green', '600 g', '23423645', 'Tasty and trusted, Milo brand is the world’s leading chocolate malt beverage that can be prepared with hot or cold milk or water. It offers essential vitamins and minerals to meet the nutrition and energy demands of young bodies and minds. Launched in Australia in the early 1930s, the Milo brand takes kids\' development seriously. It has long been known as an energy beverage strongly associated with sports and good health.', 'MLO - 21309', NULL, '126', '400', '420', 'Milo.png', 'Testing', '2025-03-01 16:59:35', '2025-03-01 18:20:57', '2025-06-18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_adjustment_logs`
+--
+
+CREATE TABLE `stock_adjustment_logs` (
+  `id` bigint UNSIGNED NOT NULL,
+  `stock_id` bigint UNSIGNED NOT NULL,
+  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adjustment_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` int NOT NULL,
+  `old_quantity` int NOT NULL,
+  `new_quantity` int NOT NULL,
+  `reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `stock_adjustment_logs`
+--
+
+INSERT INTO `stock_adjustment_logs` (`id`, `stock_id`, `item`, `adjustment_type`, `quantity`, `old_quantity`, `new_quantity`, `reason`, `created_at`, `updated_at`) VALUES
+(4, 2, 'Nomu-nomu Lychee', 'increase', 100, 85, 185, 'Test', '2025-03-01 18:20:09', '2025-03-01 18:20:09'),
+(5, 38, 'Milo', 'increase', 100, 26, 126, 'Testing', '2025-03-01 18:20:57', '2025-03-01 18:20:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_batches`
+--
+
+CREATE TABLE `stock_batches` (
+  `id` bigint UNSIGNED NOT NULL,
+  `stock_id` bigint UNSIGNED NOT NULL,
+  `batch_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` int NOT NULL,
+  `manufacturing_date` date NOT NULL,
+  `expiration_date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -930,10 +983,11 @@ INSERT INTO `stocks` (`id`, `item`, `category`, `supplier`, `product_unit`, `col
 
 CREATE TABLE `suppliers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact_person` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_person` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -942,9 +996,9 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` (`id`, `name`, `contact_person`, `contact_number`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'Test Supplier', 'Dev', '09317877213', 'Makati City', '2025-01-17 07:31:36', '2025-01-17 07:31:36'),
-(2, 'MSCS PrimeGoods, Inc.', 'Test Dev', '09123123143', 'Taguig', '2025-01-17 08:32:38', '2025-01-17 08:32:38');
+INSERT INTO `suppliers` (`id`, `name`, `contact_person`, `contact_number`, `email`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'Test Supplier', 'Dev Fred', '09317877213', NULL, 'Makati City', '2025-01-17 07:31:36', '2025-03-01 17:40:38'),
+(2, 'MSCS PrimeGoods, Inc.', 'Test Dev', '09123123143', 'socorinfrederick@gmail.com', 'Taguig', '2025-01-17 08:32:38', '2025-03-01 17:47:49');
 
 -- --------------------------------------------------------
 
@@ -954,12 +1008,12 @@ INSERT INTO `suppliers` (`id`, `name`, `contact_person`, `contact_number`, `addr
 
 CREATE TABLE `supplier_orders` (
   `id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `supplier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -981,9 +1035,9 @@ INSERT INTO `supplier_orders` (`id`, `item`, `batch_number`, `quantity`, `suppli
 
 CREATE TABLE `tbl_cashiers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1009,9 +1063,9 @@ INSERT INTO `tbl_cashiers` (`id`, `name`, `password`, `role`, `created_at`, `upd
 CREATE TABLE `tbl_history` (
   `id` bigint UNSIGNED NOT NULL,
   `ticket` int NOT NULL,
-  `cashier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `customer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cashier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sub_total` double NOT NULL,
   `tax` double NOT NULL,
   `cash` double NOT NULL,
@@ -1127,10 +1181,10 @@ INSERT INTO `tbl_history` (`id`, `ticket`, `cashier`, `customer`, `type`, `sub_t
 
 CREATE TABLE `tbl_menus` (
   `id` bigint UNSIGNED NOT NULL,
-  `food_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `food_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1151,8 +1205,8 @@ INSERT INTO `tbl_menus` (`id`, `food_name`, `image_name`, `price`, `category`) V
 
 CREATE TABLE `tbl_shifts` (
   `id` bigint UNSIGNED NOT NULL,
-  `cashier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `POS_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cashier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `POS_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `starting_cash` int NOT NULL,
   `closing_cash` int NOT NULL,
   `cash_in` int DEFAULT NULL,
@@ -1167,7 +1221,7 @@ CREATE TABLE `tbl_shifts` (
 
 INSERT INTO `tbl_shifts` (`id`, `cashier`, `POS_number`, `starting_cash`, `closing_cash`, `cash_in`, `cash_out`, `created_at`, `updated_at`) VALUES
 (30, 'Jeric', 'pos1', 12000, 0, NULL, NULL, '2025-01-16 15:40:32', '2025-01-16 15:40:32'),
-(43, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-01-20 05:21:41', '2025-01-20 05:21:41');
+(45, 'testdev', 'pos1', 1000, 0, NULL, NULL, '2025-03-01 16:13:11', '2025-03-01 16:13:11');
 
 -- --------------------------------------------------------
 
@@ -1177,8 +1231,8 @@ INSERT INTO `tbl_shifts` (`id`, `cashier`, `POS_number`, `starting_cash`, `closi
 
 CREATE TABLE `tickets` (
   `id` bigint UNSIGNED NOT NULL,
-  `ticket` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `food_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ticket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `food_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1191,14 +1245,21 @@ CREATE TABLE `tickets` (
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Test User', 'test@example.com', '2025-03-01 15:45:35', '$2y$12$5Zt/mbel6unU/RGtEbIbyOWDyPmceO88tr3el2lYQw6b5EbPKfW0y', '7d4xHrFBnF', '2025-03-01 15:45:35', '2025-03-01 15:45:35');
 
 --
 -- Indexes for dumped tables
@@ -1311,6 +1372,20 @@ ALTER TABLE `stocks`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `stock_adjustment_logs`
+--
+ALTER TABLE `stock_adjustment_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stock_adjustment_logs_stock_id_foreign` (`stock_id`);
+
+--
+-- Indexes for table `stock_batches`
+--
+ALTER TABLE `stock_batches`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stock_batches_stock_id_foreign` (`stock_id`);
+
+--
 -- Indexes for table `suppliers`
 --
 ALTER TABLE `suppliers`
@@ -1409,7 +1484,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1433,7 +1508,19 @@ ALTER TABLE `pending_items`
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `stock_adjustment_logs`
+--
+ALTER TABLE `stock_adjustment_logs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `stock_batches`
+--
+ALTER TABLE `stock_batches`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -1469,7 +1556,7 @@ ALTER TABLE `tbl_menus`
 -- AUTO_INCREMENT for table `tbl_shifts`
 --
 ALTER TABLE `tbl_shifts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `tickets`
@@ -1481,7 +1568,23 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `stock_adjustment_logs`
+--
+ALTER TABLE `stock_adjustment_logs`
+  ADD CONSTRAINT `stock_adjustment_logs_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `stock_batches`
+--
+ALTER TABLE `stock_batches`
+  ADD CONSTRAINT `stock_batches_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
