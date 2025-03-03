@@ -125,6 +125,20 @@
                         <canvas id="myChart" class="w-full"></canvas>
                     </div>
                 </div>
+                @if(session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('error') }}</span>
+                    </div>
+                @endif
+                <div class="w-full flex justify-end mb-4">
+                    <a href="{{ route('office.export.sales_by_items') }}" 
+                       class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd" />
+                        </svg>
+                        Export to Excel
+                    </a>
+                </div>
                 <div class="w-full p-6 bg-white mb-10">
                     <div class="w-full flex items-center py-3 border-y text-sm text-gray-400 font-medium">
                         <p class="w-[40%]">Item</p>
