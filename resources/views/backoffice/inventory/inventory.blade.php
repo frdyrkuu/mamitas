@@ -221,9 +221,13 @@
                         </p>
                         <p class="w-[10%]">
                             @php
-                                $margin = ($profit/$retail) * 100;
-                                $formatted_margin = number_format($margin, 2);
-                                echo $formatted_margin.'%';
+                                if ($retail != 0) {
+                                    $margin = ($profit/$retail) * 100;
+                                    $formatted_margin = number_format($margin, 2);
+                                    echo $formatted_margin.'%';
+                                } else {
+                                    echo '0.00%';
+                                }
                             @endphp
                         </p>
                     </a>

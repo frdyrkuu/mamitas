@@ -125,4 +125,6 @@ Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::put('/update-supplier/{id}', [OfficeController::class, 'updateSupplierDetails'])->name('office.update_supplier_details');
 
     Route::post('/update-stock', [OfficeController::class, 'updateStock'])->name('office.update_stock');
+
+    Route::get('/export-sales-by-items', [OfficeController::class, 'exportSalesByItems'])->name('office.export.sales_by_items');
 });

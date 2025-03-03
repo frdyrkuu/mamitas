@@ -16,10 +16,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
 
 use App\Models\Cms;
 use App\Models\StockBatch;
 use App\Models\StockAdjustmentLog;
+use App\Exports\SalesByItemsExport;
 
 class OfficeController extends Controller
 {
@@ -1240,6 +1242,18 @@ class OfficeController extends Controller
                 'success' => false,
                 'message' => $e->getMessage()
             ], 422);
+        }
+    }
+
+    public function exportSalesByItems()
+    {
+        try {
+            return Excel::download(
+                new SalesByItemsExport, 
+                'sales_by_items_' . date('Y-m-d_H-i-s') . '.xlsx'
+            );
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to export data: ' . $e->getMessage());
         }
     }
 }
