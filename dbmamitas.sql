@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 01, 2025 at 07:27 PM
--- Server version: 8.4.3
--- PHP Version: 8.2.9
+-- Generation Time: Mar 12, 2025 at 02:47 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -42,7 +42,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `password`, `role`, `email`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', '$2y$12$nX.kGMgJGCTnwipWz26eWOO8MnKS2GinX4HxPQMRMoRhEpWHP6jMm', 'Admin', 'fredericksocorin@gmail.com', '2024-06-10 14:59:58', '2025-03-01 15:51:04');
+(1, 'Admin', '$2y$12$BKiaZbAU0w8ChJvrENQ2MOwF.4vTVeFpB/IXiNcM7lKpH6c4rcmUW', 'Admin', 'fredericksocorin@gmail.com', '2024-06-10 14:59:58', '2025-02-18 14:01:52');
 
 -- --------------------------------------------------------
 
@@ -63,8 +63,8 @@ CREATE TABLE `batch_orders` (
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -75,8 +75,8 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -88,9 +88,9 @@ CREATE TABLE `cache_locks` (
 
 CREATE TABLE `cms` (
   `id` bigint UNSIGNED NOT NULL,
-  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `company_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -110,8 +110,8 @@ INSERT INTO `cms` (`id`, `company_name`, `company_logo`, `company_description`, 
 
 CREATE TABLE `customers` (
   `id` bigint UNSIGNED NOT NULL,
-  `ticket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ticket` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -263,7 +263,155 @@ INSERT INTO `customers` (`id`, `ticket`, `name`, `created_at`, `updated_at`) VAL
 (211, '1108', 'Customer', '2025-01-17 09:24:06', '2025-01-17 09:24:06'),
 (212, '1108', 'Customer', '2025-01-17 09:24:53', '2025-01-17 09:24:53'),
 (213, '1108', 'Customer', '2025-01-17 09:25:13', '2025-01-17 09:25:13'),
-(214, '1108', 'Customer', '2025-01-17 09:25:34', '2025-01-17 09:25:34');
+(214, '1108', 'Customer', '2025-01-17 09:25:34', '2025-01-17 09:25:34'),
+(215, '1109', 'Customer', '2025-03-05 09:04:19', '2025-03-05 09:04:19'),
+(216, '1109', 'Customer', '2025-03-05 09:04:56', '2025-03-05 09:04:56'),
+(217, '1109', 'Customer', '2025-03-05 09:05:23', '2025-03-05 09:05:23'),
+(218, '1109', 'Customer', '2025-03-05 09:07:12', '2025-03-05 09:07:12'),
+(219, '1109', 'Customer', '2025-03-05 09:07:19', '2025-03-05 09:07:19'),
+(220, '1109', 'Customer', '2025-03-05 09:07:54', '2025-03-05 09:07:54'),
+(221, '1109', 'Customer', '2025-03-05 09:08:33', '2025-03-05 09:08:33'),
+(222, '1109', 'Customer', '2025-03-05 09:09:59', '2025-03-05 09:09:59'),
+(223, '1109', 'Customer', '2025-03-05 09:10:20', '2025-03-05 09:10:20'),
+(224, '1109', 'Customer', '2025-03-05 09:10:28', '2025-03-05 09:10:28'),
+(225, '1109', 'Customer', '2025-03-05 09:10:34', '2025-03-05 09:10:34'),
+(226, '1109', 'Customer', '2025-03-05 09:11:19', '2025-03-05 09:11:19'),
+(227, '1109', 'Customer', '2025-03-05 09:11:44', '2025-03-05 09:11:44'),
+(228, '1109', 'Customer', '2025-03-05 09:11:57', '2025-03-05 09:11:57'),
+(229, '1109', 'Customer', '2025-03-05 09:12:35', '2025-03-05 09:12:35'),
+(230, '1109', 'Customer', '2025-03-05 09:12:46', '2025-03-05 09:12:46'),
+(231, '1109', 'Customer', '2025-03-05 09:13:57', '2025-03-05 09:13:57'),
+(232, '1109', 'Customer', '2025-03-05 09:13:59', '2025-03-05 09:13:59'),
+(233, '1109', 'Customer', '2025-03-05 09:14:05', '2025-03-05 09:14:05'),
+(234, '1109', 'Customer', '2025-03-05 09:14:06', '2025-03-05 09:14:06'),
+(235, '1109', 'Customer', '2025-03-05 09:14:11', '2025-03-05 09:14:11'),
+(236, '1109', 'Customer', '2025-03-05 09:14:13', '2025-03-05 09:14:13'),
+(237, '1109', 'Customer', '2025-03-05 09:14:16', '2025-03-05 09:14:16'),
+(238, '1109', 'Customer', '2025-03-05 09:14:18', '2025-03-05 09:14:18'),
+(239, '1109', 'Customer', '2025-03-05 09:14:19', '2025-03-05 09:14:19'),
+(240, '1109', 'Customer', '2025-03-05 09:14:20', '2025-03-05 09:14:20'),
+(241, '1109', 'Customer', '2025-03-05 09:14:21', '2025-03-05 09:14:21'),
+(242, '1109', 'Customer', '2025-03-05 09:14:24', '2025-03-05 09:14:24'),
+(243, '1109', 'Customer', '2025-03-05 09:15:24', '2025-03-05 09:15:24'),
+(244, '1109', 'Customer', '2025-03-05 09:15:36', '2025-03-05 09:15:36'),
+(245, '1109', 'Customer', '2025-03-05 09:15:47', '2025-03-05 09:15:47'),
+(246, '1109', 'Customer', '2025-03-05 09:16:15', '2025-03-05 09:16:15'),
+(247, '1109', 'Customer', '2025-03-05 09:16:17', '2025-03-05 09:16:17'),
+(248, '1109', 'Customer', '2025-03-05 09:16:18', '2025-03-05 09:16:18'),
+(249, '1109', 'Customer', '2025-03-05 09:16:21', '2025-03-05 09:16:21'),
+(250, '1109', 'Customer', '2025-03-05 09:16:22', '2025-03-05 09:16:22'),
+(251, '1109', 'Customer', '2025-03-05 09:16:23', '2025-03-05 09:16:23'),
+(252, '1109', 'Customer', '2025-03-05 09:16:24', '2025-03-05 09:16:24'),
+(253, '1109', 'Customer', '2025-03-05 09:16:38', '2025-03-05 09:16:38'),
+(254, '1109', 'Customer', '2025-03-05 09:16:44', '2025-03-05 09:16:44'),
+(255, '1109', 'Customer', '2025-03-05 09:16:47', '2025-03-05 09:16:47'),
+(256, '1109', 'Customer', '2025-03-05 09:16:50', '2025-03-05 09:16:50'),
+(257, '1109', 'Customer', '2025-03-05 09:16:52', '2025-03-05 09:16:52'),
+(258, '1109', 'Customer', '2025-03-05 09:17:20', '2025-03-05 09:17:20'),
+(259, '1109', 'Customer', '2025-03-05 09:19:02', '2025-03-05 09:19:02'),
+(260, '1109', 'Customer', '2025-03-05 09:19:05', '2025-03-05 09:19:05'),
+(261, '1109', 'Customer', '2025-03-05 09:19:06', '2025-03-05 09:19:06'),
+(262, '1109', 'Customer', '2025-03-05 09:19:09', '2025-03-05 09:19:09'),
+(263, '1109', 'Customer', '2025-03-05 09:19:11', '2025-03-05 09:19:11'),
+(264, '1109', 'Customer', '2025-03-05 09:21:21', '2025-03-05 09:21:21'),
+(265, '1109', 'Customer', '2025-03-05 09:22:13', '2025-03-05 09:22:13'),
+(266, '1109', 'Customer', '2025-03-05 09:24:51', '2025-03-05 09:24:51'),
+(267, '1110', 'Customer', '2025-03-05 09:26:16', '2025-03-05 09:26:16'),
+(268, '1111', 'Customer', '2025-03-05 09:26:34', '2025-03-05 09:26:34'),
+(269, '1111', 'Customer', '2025-03-05 09:26:50', '2025-03-05 09:26:50'),
+(270, '1111', 'Customer', '2025-03-05 09:27:10', '2025-03-05 09:27:10'),
+(271, '1111', 'Customer', '2025-03-05 09:27:13', '2025-03-05 09:27:13'),
+(272, '1111', 'Customer', '2025-03-05 09:27:16', '2025-03-05 09:27:16'),
+(273, '1111', 'Customer', '2025-03-05 09:28:15', '2025-03-05 09:28:15'),
+(274, '1111', 'Customer', '2025-03-05 09:28:24', '2025-03-05 09:28:24'),
+(275, '1111', 'Customer', '2025-03-05 09:29:00', '2025-03-05 09:29:00'),
+(276, '1111', 'Customer', '2025-03-05 09:29:12', '2025-03-05 09:29:12'),
+(277, '1111', 'Customer', '2025-03-05 09:30:15', '2025-03-05 09:30:15'),
+(278, '1111', 'Customer', '2025-03-05 09:30:22', '2025-03-05 09:30:22'),
+(279, '1111', 'Customer', '2025-03-05 09:30:27', '2025-03-05 09:30:27'),
+(280, '1111', 'Customer', '2025-03-05 09:31:08', '2025-03-05 09:31:08'),
+(281, '1111', 'Customer', '2025-03-05 09:32:18', '2025-03-05 09:32:18'),
+(282, '1111', 'Customer', '2025-03-05 09:33:45', '2025-03-05 09:33:45'),
+(283, '1111', 'Customer', '2025-03-05 09:33:52', '2025-03-05 09:33:52'),
+(284, '1112', 'Customer', '2025-03-05 09:34:24', '2025-03-05 09:34:24'),
+(285, '1113', 'Customer', '2025-03-05 09:34:32', '2025-03-05 09:34:32'),
+(286, '1113', 'Customer', '2025-03-05 09:35:46', '2025-03-05 09:35:46'),
+(287, '1113', 'Customer', '2025-03-05 09:35:53', '2025-03-05 09:35:53'),
+(288, '1113', 'Customer', '2025-03-05 09:35:59', '2025-03-05 09:35:59'),
+(289, '1113', 'Customer', '2025-03-05 09:36:07', '2025-03-05 09:36:07'),
+(290, '1113', 'Customer', '2025-03-05 09:36:09', '2025-03-05 09:36:09'),
+(291, '1113', 'Customer', '2025-03-05 09:36:12', '2025-03-05 09:36:12'),
+(292, '1114', 'Customer', '2025-03-05 09:37:00', '2025-03-05 09:37:00'),
+(293, '1115', 'Customer', '2025-03-05 09:37:40', '2025-03-05 09:37:40'),
+(294, '1116', 'Customer', '2025-03-05 09:38:03', '2025-03-05 09:38:03'),
+(295, '1116', 'Customer', '2025-03-05 09:38:58', '2025-03-05 09:38:58'),
+(296, '1117', 'Customer', '2025-03-05 09:39:20', '2025-03-05 09:39:20'),
+(297, '1118', 'Customer', '2025-03-05 09:41:29', '2025-03-05 09:41:29'),
+(298, '1119', 'Customer', '2025-03-05 09:42:00', '2025-03-05 09:42:00'),
+(299, '1120', 'Customer', '2025-03-05 09:44:46', '2025-03-05 09:44:46'),
+(300, '1120', 'Customer', '2025-03-05 09:44:48', '2025-03-05 09:44:48'),
+(301, '1120', 'Customer', '2025-03-05 09:44:58', '2025-03-05 09:44:58'),
+(302, '1120', 'Customer', '2025-03-05 09:45:38', '2025-03-05 09:45:38'),
+(303, '1120', 'Customer', '2025-03-05 09:45:47', '2025-03-05 09:45:47'),
+(304, '1120', 'Customer', '2025-03-05 09:47:11', '2025-03-05 09:47:11'),
+(305, '1120', 'Customer', '2025-03-05 09:49:06', '2025-03-05 09:49:06'),
+(306, '1120', 'Customer', '2025-03-05 09:49:15', '2025-03-05 09:49:15'),
+(307, '1120', 'Customer', '2025-03-05 09:49:31', '2025-03-05 09:49:31'),
+(308, '1120', 'Customer', '2025-03-05 09:49:37', '2025-03-05 09:49:37'),
+(309, '1120', 'Customer', '2025-03-05 09:49:41', '2025-03-05 09:49:41'),
+(310, '1120', 'Customer', '2025-03-05 09:49:45', '2025-03-05 09:49:45'),
+(311, '1120', 'Customer', '2025-03-05 09:49:51', '2025-03-05 09:49:51'),
+(312, '1120', 'Customer', '2025-03-05 09:51:40', '2025-03-05 09:51:40'),
+(313, '1120', 'Customer', '2025-03-05 09:52:12', '2025-03-05 09:52:12'),
+(314, '1121', 'Customer', '2025-03-05 09:52:17', '2025-03-05 09:52:17'),
+(315, '1120', 'Customer', '2025-03-05 09:52:25', '2025-03-05 09:52:25'),
+(316, '1120', 'Customer', '2025-03-05 09:52:40', '2025-03-05 09:52:40'),
+(317, '1120', 'Customer', '2025-03-05 09:54:24', '2025-03-05 09:54:24'),
+(318, '1120', 'Customer', '2025-03-05 09:54:33', '2025-03-05 09:54:33'),
+(319, '1121', 'Customer', '2025-03-05 09:54:36', '2025-03-05 09:54:36'),
+(320, '1122', 'Customer', '2025-03-05 09:54:57', '2025-03-05 09:54:57'),
+(321, '1123', 'Customer', '2025-03-05 09:56:10', '2025-03-05 09:56:10'),
+(322, '1123', 'Customer', '2025-03-05 09:56:40', '2025-03-05 09:56:40'),
+(323, '1123', 'Customer', '2025-03-05 09:57:00', '2025-03-05 09:57:00'),
+(324, '1124', 'Customer', '2025-03-05 09:57:22', '2025-03-05 09:57:22'),
+(325, '1125', 'Customer', '2025-03-05 09:57:38', '2025-03-05 09:57:38'),
+(326, '1125', 'Customer', '2025-03-05 09:58:28', '2025-03-05 09:58:28'),
+(327, '1126', 'Customer', '2025-03-05 09:59:28', '2025-03-05 09:59:28'),
+(328, '1127', 'Customer', '2025-03-05 10:00:38', '2025-03-05 10:00:38'),
+(329, '1128', 'Customer', '2025-03-05 10:02:44', '2025-03-05 10:02:44'),
+(330, '1128', 'Customer', '2025-03-05 10:03:09', '2025-03-05 10:03:09'),
+(331, '1129', 'Customer', '2025-03-05 10:05:25', '2025-03-05 10:05:25'),
+(332, '1129', 'Customer', '2025-03-05 10:06:23', '2025-03-05 10:06:23'),
+(333, '1129', 'Customer', '2025-03-05 10:06:31', '2025-03-05 10:06:31'),
+(334, '1129', 'Customer', '2025-03-05 10:07:34', '2025-03-05 10:07:34'),
+(335, '1129', 'Customer', '2025-03-05 10:07:38', '2025-03-05 10:07:38'),
+(336, '1129', 'Customer', '2025-03-05 10:07:48', '2025-03-05 10:07:48'),
+(337, '1129', 'Customer', '2025-03-05 10:10:41', '2025-03-05 10:10:41'),
+(338, '1129', 'Customer', '2025-03-05 10:11:30', '2025-03-05 10:11:30'),
+(339, '1130', 'Customer', '2025-03-05 10:11:36', '2025-03-05 10:11:36'),
+(340, '1131', 'Customer', '2025-03-05 10:12:22', '2025-03-05 10:12:22'),
+(341, '1132', 'Customer', '2025-03-05 10:16:11', '2025-03-05 10:16:11'),
+(342, '1132', 'Customer', '2025-03-05 10:16:16', '2025-03-05 10:16:16'),
+(343, '1132', 'Customer', '2025-03-05 10:16:26', '2025-03-05 10:16:26'),
+(344, '1132', 'Customer', '2025-03-05 10:17:09', '2025-03-05 10:17:09'),
+(345, '1132', 'Customer', '2025-03-05 10:17:20', '2025-03-05 10:17:20'),
+(346, '1132', 'Customer', '2025-03-05 10:18:03', '2025-03-05 10:18:03'),
+(347, '1132', 'Customer', '2025-03-05 10:18:05', '2025-03-05 10:18:05'),
+(348, '1132', 'Customer', '2025-03-05 10:18:23', '2025-03-05 10:18:23'),
+(349, '1132', 'Customer', '2025-03-05 10:19:21', '2025-03-05 10:19:21'),
+(350, '1132', 'Customer', '2025-03-05 10:19:22', '2025-03-05 10:19:22'),
+(351, '1132', 'Customer', '2025-03-05 10:19:41', '2025-03-05 10:19:41'),
+(352, '1134', 'Customer', '2025-03-05 10:24:36', '2025-03-05 10:24:36'),
+(353, '1134', 'Customer', '2025-03-05 10:24:52', '2025-03-05 10:24:52'),
+(354, '1134', 'Customer', '2025-03-05 10:25:16', '2025-03-05 10:25:16'),
+(355, '1134', 'Customer', '2025-03-05 10:25:42', '2025-03-05 10:25:42'),
+(356, '1135', 'Customer', '2025-03-05 10:26:46', '2025-03-05 10:26:46'),
+(357, '1135', 'Customer', '2025-03-05 10:28:06', '2025-03-05 10:28:06'),
+(358, '1135', 'Customer', '2025-03-05 10:28:21', '2025-03-05 10:28:21'),
+(359, '1136', 'Customer', '2025-03-05 10:47:37', '2025-03-05 10:47:37'),
+(360, '1136', 'Customer', '2025-03-05 10:48:04', '2025-03-05 10:48:04'),
+(361, '1136', 'Customer', '2025-03-05 10:48:19', '2025-03-05 10:48:19'),
+(362, '1137', 'Customer', '2025-03-05 10:49:19', '2025-03-05 10:49:19');
 
 -- --------------------------------------------------------
 
@@ -273,11 +421,11 @@ INSERT INTO `customers` (`id`, `ticket`, `name`, `created_at`, `updated_at`) VAL
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -289,13 +437,20 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `g_cashes` (
   `id` bigint UNSIGNED NOT NULL,
-  `transaction_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `charge` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `transaction_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `charge` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `g_cashes`
+--
+
+INSERT INTO `g_cashes` (`id`, `transaction_number`, `type`, `amount`, `charge`, `created_at`, `updated_at`) VALUES
+(1, '34512344235345', 'Cash In', '2000', '40', '2025-03-05 10:20:24', '2025-03-05 10:20:24');
 
 -- --------------------------------------------------------
 
@@ -305,8 +460,8 @@ CREATE TABLE `g_cashes` (
 
 CREATE TABLE `jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
@@ -320,13 +475,13 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL
@@ -340,7 +495,7 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -371,12 +526,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (50, '2025_01_20_134234_add_email_to_admins_table', 16),
 (51, '2025_01_21_172557_create_cms_table', 17),
 (52, '2025_03_02_004428_add_expiration_date_to_stocks_table', 18),
-(53, '2025_03_02_014704_add_email_to_suppliers_table', 19),
-(54, 'xxxx_xx_xx_add_email_to_suppliers_table', 19),
-(55, '2025_03_02_015806_create_stock_batches_table', 20),
-(57, '2025_03_02_020551_create_stock_adjustment_logs_table', 21),
-(58, '2025_03_02_021316_create_stock_adjustment_logs_table', 22),
-(59, '2025_03_02_021924_add_item_column_to_stock_adjustment_logs_table', 23);
+(53, '2025_03_02_014704_add_email_to_suppliers_table', 18),
+(54, '2025_03_02_015806_create_stock_batches_table', 19),
+(55, '2025_03_02_021316_create_stock_adjustment_logs_table', 20),
+(56, '2025_03_02_021924_add_item_column_to_stock_adjustment_logs_table', 21),
+(57, '2025_03_05_164218_add_item_promo_to_stocks_table', 21);
 
 -- --------------------------------------------------------
 
@@ -386,7 +540,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `orders` (
   `id` int NOT NULL,
-  `ticket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ticket` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `food_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -796,7 +950,168 @@ INSERT INTO `orders` (`id`, `ticket`, `food_name`, `created_at`, `updated_at`) V
 (409, '1108', 'Sopas Powder', '2025-01-17 09:24:06', '2025-01-17 09:24:06'),
 (410, '1108', 'Roller Coaster', '2025-01-17 09:24:53', '2025-01-17 09:24:53'),
 (411, '1108', 'Roller Coaster', '2025-01-17 09:25:13', '2025-01-17 09:25:13'),
-(412, '1108', 'Roller Coaster', '2025-01-17 09:25:34', '2025-01-17 09:25:34');
+(412, '1108', 'Roller Coaster', '2025-01-17 09:25:34', '2025-01-17 09:25:34'),
+(413, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:04:19', '2025-03-05 09:04:19'),
+(414, '1109', 'Sopas Powder Yummy', '2025-03-05 09:04:19', '2025-03-05 09:04:19'),
+(415, '1109', 'Souper', '2025-03-05 09:04:56', '2025-03-05 09:04:56'),
+(416, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:04:56', '2025-03-05 09:04:56'),
+(417, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:05:23', '2025-03-05 09:05:23'),
+(418, '1109', 'Pilllows Ube 100g', '2025-03-05 09:07:12', '2025-03-05 09:07:12'),
+(419, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:07:19', '2025-03-05 09:07:19'),
+(420, '1109', 'Magic Sarap', '2025-03-05 09:07:54', '2025-03-05 09:07:54'),
+(421, '1109', 'Magic Sarap', '2025-03-05 09:08:33', '2025-03-05 09:08:33'),
+(422, '1109', 'Magic Sarap', '2025-03-05 09:09:59', '2025-03-05 09:09:59'),
+(423, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:10:20', '2025-03-05 09:10:20'),
+(424, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:10:28', '2025-03-05 09:10:28'),
+(425, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:10:34', '2025-03-05 09:10:34'),
+(426, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:11:19', '2025-03-05 09:11:19'),
+(427, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:11:44', '2025-03-05 09:11:44'),
+(428, '1109', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:11:57', '2025-03-05 09:11:57'),
+(429, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:11:57', '2025-03-05 09:11:57'),
+(430, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:12:35', '2025-03-05 09:12:35'),
+(431, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:12:46', '2025-03-05 09:12:46'),
+(432, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:13:57', '2025-03-05 09:13:57'),
+(433, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:13:59', '2025-03-05 09:13:59'),
+(434, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:05', '2025-03-05 09:14:05'),
+(435, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:06', '2025-03-05 09:14:06'),
+(436, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:11', '2025-03-05 09:14:11'),
+(437, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:13', '2025-03-05 09:14:13'),
+(438, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:16', '2025-03-05 09:14:16'),
+(439, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:18', '2025-03-05 09:14:18'),
+(440, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:19', '2025-03-05 09:14:19'),
+(441, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:20', '2025-03-05 09:14:20'),
+(442, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:21', '2025-03-05 09:14:21'),
+(443, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:14:24', '2025-03-05 09:14:24'),
+(444, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:15:24', '2025-03-05 09:15:24'),
+(445, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:15:36', '2025-03-05 09:15:36'),
+(446, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:15:47', '2025-03-05 09:15:47'),
+(447, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:15', '2025-03-05 09:16:15'),
+(448, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:17', '2025-03-05 09:16:17'),
+(449, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:18', '2025-03-05 09:16:18'),
+(450, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:21', '2025-03-05 09:16:21'),
+(451, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:22', '2025-03-05 09:16:22'),
+(452, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:23', '2025-03-05 09:16:23'),
+(453, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:24', '2025-03-05 09:16:24'),
+(454, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:38', '2025-03-05 09:16:38'),
+(455, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:44', '2025-03-05 09:16:44'),
+(456, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:47', '2025-03-05 09:16:47'),
+(457, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:50', '2025-03-05 09:16:50'),
+(458, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:16:52', '2025-03-05 09:16:52'),
+(459, '1109', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:17:20', '2025-03-05 09:17:20'),
+(460, '1109', 'Souper', '2025-03-05 09:19:02', '2025-03-05 09:19:02'),
+(461, '1109', 'Souper', '2025-03-05 09:19:05', '2025-03-05 09:19:05'),
+(462, '1109', 'Souper', '2025-03-05 09:19:06', '2025-03-05 09:19:06'),
+(463, '1109', 'Souper', '2025-03-05 09:19:09', '2025-03-05 09:19:09'),
+(464, '1109', 'Souper', '2025-03-05 09:19:11', '2025-03-05 09:19:11'),
+(465, '1109', 'Pilllows Ube 100g', '2025-03-05 09:21:21', '2025-03-05 09:21:21'),
+(466, '1109', 'Sopas Powder Yummy', '2025-03-05 09:22:13', '2025-03-05 09:22:13'),
+(467, '1109', 'Sopas Powder Yummy', '2025-03-05 09:24:51', '2025-03-05 09:24:51'),
+(468, '1110', 'Pilllows Ube 100g', '2025-03-05 09:26:16', '2025-03-05 09:26:16'),
+(469, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:26:34', '2025-03-05 09:26:34'),
+(470, '1111', 'Oishi Crispy Patata Baked Potato Flavor 24g', '2025-03-05 09:26:50', '2025-03-05 09:26:50'),
+(471, '1111', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:27:10', '2025-03-05 09:27:10'),
+(472, '1111', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:27:13', '2025-03-05 09:27:13'),
+(473, '1111', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:27:16', '2025-03-05 09:27:16'),
+(474, '1111', 'Johnsons Baby Powder', '2025-03-05 09:28:15', '2025-03-05 09:28:15'),
+(475, '1111', 'Johnsons Baby Powder', '2025-03-05 09:28:24', '2025-03-05 09:28:24'),
+(476, '1111', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:29:00', '2025-03-05 09:29:00'),
+(477, '1111', 'Nutella', '2025-03-05 09:29:00', '2025-03-05 09:29:00'),
+(478, '1111', 'Nestle Koko Krunch 15g', '2025-03-05 09:29:00', '2025-03-05 09:29:00'),
+(479, '1111', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:29:12', '2025-03-05 09:29:12'),
+(480, '1111', 'Nutella', '2025-03-05 09:29:12', '2025-03-05 09:29:12'),
+(481, '1111', 'Nestle Koko Krunch 15g', '2025-03-05 09:29:12', '2025-03-05 09:29:12'),
+(482, '1111', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:30:15', '2025-03-05 09:30:15'),
+(483, '1111', 'Nutella', '2025-03-05 09:30:15', '2025-03-05 09:30:15'),
+(484, '1111', 'Nestle Koko Krunch 15g', '2025-03-05 09:30:15', '2025-03-05 09:30:15'),
+(485, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:30:22', '2025-03-05 09:30:22'),
+(486, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:30:27', '2025-03-05 09:30:27'),
+(487, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:31:08', '2025-03-05 09:31:08'),
+(488, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:32:18', '2025-03-05 09:32:18'),
+(489, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:33:45', '2025-03-05 09:33:45'),
+(490, '1111', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:33:52', '2025-03-05 09:33:52'),
+(491, '1112', 'Pillows Chocolate 100g', '2025-03-05 09:34:24', '2025-03-05 09:34:24'),
+(492, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:34:32', '2025-03-05 09:34:32'),
+(493, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:35:46', '2025-03-05 09:35:46'),
+(494, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:35:53', '2025-03-05 09:35:53'),
+(495, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:35:59', '2025-03-05 09:35:59'),
+(496, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:36:07', '2025-03-05 09:36:07'),
+(497, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:36:09', '2025-03-05 09:36:09'),
+(498, '1113', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:36:12', '2025-03-05 09:36:12'),
+(499, '1114', 'Nomu-nomu Lychee', '2025-03-05 09:37:00', '2025-03-05 09:37:00'),
+(500, '1115', 'Nomu-nomu Lychee', '2025-03-05 09:37:40', '2025-03-05 09:37:40'),
+(501, '1116', 'Pilllows Ube 100g', '2025-03-05 09:38:03', '2025-03-05 09:38:03'),
+(502, '1116', 'Pilllows Ube 100g', '2025-03-05 09:38:58', '2025-03-05 09:38:58'),
+(503, '1117', 'Pilllows Ube 100g', '2025-03-05 09:39:20', '2025-03-05 09:39:20'),
+(504, '1117', 'Pilllows Ube 100g', '2025-03-05 09:39:20', '2025-03-05 09:39:20'),
+(505, '1117', 'Souper', '2025-03-05 09:39:20', '2025-03-05 09:39:20'),
+(506, '1117', 'Souper', '2025-03-05 09:39:20', '2025-03-05 09:39:20'),
+(507, '1118', 'Nomu-nomu Lychee', '2025-03-05 09:41:29', '2025-03-05 09:41:29'),
+(508, '1119', 'Rice per pack', '2025-03-05 09:42:00', '2025-03-05 09:42:00'),
+(509, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:44:46', '2025-03-05 09:44:46'),
+(510, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:44:48', '2025-03-05 09:44:48'),
+(511, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:44:58', '2025-03-05 09:44:58'),
+(512, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:45:38', '2025-03-05 09:45:38'),
+(513, '1120', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 09:45:47', '2025-03-05 09:45:47'),
+(514, '1120', 'Magic Sarap', '2025-03-05 09:47:11', '2025-03-05 09:47:11'),
+(515, '1120', 'Magic Sarap+Buy 1 Pack get Spoon test', '2025-03-05 09:49:06', '2025-03-05 09:49:06'),
+(516, '1120', 'Magic Sarap+Buy 1 Pack get Spoon test', '2025-03-05 09:49:15', '2025-03-05 09:49:15'),
+(517, '1120', 'Magic Sarap', '2025-03-05 09:49:31', '2025-03-05 09:49:31'),
+(518, '1120', 'Magic Sarap', '2025-03-05 09:49:37', '2025-03-05 09:49:37'),
+(519, '1120', 'Magic Sarap', '2025-03-05 09:49:41', '2025-03-05 09:49:41'),
+(520, '1120', 'Magic Sarap', '2025-03-05 09:49:45', '2025-03-05 09:49:45'),
+(521, '1120', 'Magic Sarap', '2025-03-05 09:49:51', '2025-03-05 09:49:51'),
+(522, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:51:40', '2025-03-05 09:51:40'),
+(523, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:52:12', '2025-03-05 09:52:12'),
+(524, '1121', 'Nomu-nomu Lychee', '2025-03-05 09:52:17', '2025-03-05 09:52:17'),
+(525, '1120', 'Nutella', '2025-03-05 09:52:25', '2025-03-05 09:52:25'),
+(526, '1120', 'M.Y. San Honey Graham Crackers', '2025-03-05 09:52:40', '2025-03-05 09:52:40'),
+(527, '1120', 'Nomu-nomu Lychee', '2025-03-05 09:54:24', '2025-03-05 09:54:24'),
+(528, '1120', 'Nutella', '2025-03-05 09:54:33', '2025-03-05 09:54:33'),
+(529, '1121', 'Nutella', '2025-03-05 09:54:36', '2025-03-05 09:54:36'),
+(530, '1122', 'Magic Sarap', '2025-03-05 09:54:57', '2025-03-05 09:54:57'),
+(531, '1123', 'Magic Sarap', '2025-03-05 09:56:10', '2025-03-05 09:56:10'),
+(532, '1123', 'Magic Sarap', '2025-03-05 09:56:40', '2025-03-05 09:56:40'),
+(533, '1123', 'Magic Sarap', '2025-03-05 09:57:00', '2025-03-05 09:57:00'),
+(534, '1124', 'Nomu-nomu Lychee', '2025-03-05 09:57:22', '2025-03-05 09:57:22'),
+(535, '1125', 'Nomu-nomu Lychee', '2025-03-05 09:57:38', '2025-03-05 09:57:38'),
+(536, '1125', 'Nomu-nomu Lychee', '2025-03-05 09:58:28', '2025-03-05 09:58:28'),
+(537, '1126', 'Nomu-nomu Lychee', '2025-03-05 09:59:28', '2025-03-05 09:59:28'),
+(538, '1127', 'Nomu-nomu Lychee', '2025-03-05 10:00:38', '2025-03-05 10:00:38'),
+(539, '1128', 'Magic Sarap', '2025-03-05 10:02:44', '2025-03-05 10:02:44'),
+(540, '1128', 'Magic Sarap', '2025-03-05 10:03:09', '2025-03-05 10:03:09'),
+(541, '1129', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 10:05:25', '2025-03-05 10:05:25'),
+(542, '1129', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 10:06:23', '2025-03-05 10:06:23'),
+(543, '1129', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 10:06:31', '2025-03-05 10:06:31'),
+(544, '1129', 'Nomu-nomu Lychee', '2025-03-05 10:07:34', '2025-03-05 10:07:34'),
+(545, '1129', 'Magic Sarap + Buy 1 Pack get Spoon test', '2025-03-05 10:07:38', '2025-03-05 10:07:38'),
+(546, '1129', 'Magic Sarap', '2025-03-05 10:07:48', '2025-03-05 10:07:48'),
+(547, '1129', 'M.Y. San Honey Graham Crackers', '2025-03-05 10:10:41', '2025-03-05 10:10:41'),
+(548, '1129', 'Magic Sarap', '2025-03-05 10:10:41', '2025-03-05 10:10:41'),
+(549, '1129', 'Magic Sarap', '2025-03-05 10:11:30', '2025-03-05 10:11:30'),
+(550, '1130', 'Magic Sarap', '2025-03-05 10:11:36', '2025-03-05 10:11:36'),
+(551, '1131', 'Magic Sarap', '2025-03-05 10:12:22', '2025-03-05 10:12:22'),
+(552, '1132', 'Nomu-nomu Lychee', '2025-03-05 10:16:11', '2025-03-05 10:16:11'),
+(553, '1132', 'Magic Sarap', '2025-03-05 10:16:16', '2025-03-05 10:16:16'),
+(554, '1132', 'Magic Sarap', '2025-03-05 10:16:26', '2025-03-05 10:16:26'),
+(555, '1132', 'Nutella Choco', '2025-03-05 10:17:09', '2025-03-05 10:17:09'),
+(556, '1132', 'Nutella Choco', '2025-03-05 10:17:20', '2025-03-05 10:17:20'),
+(557, '1132', 'Nutella Choco', '2025-03-05 10:18:03', '2025-03-05 10:18:03'),
+(558, '1132', 'Nutella Choco', '2025-03-05 10:18:05', '2025-03-05 10:18:05'),
+(559, '1132', 'Nutella Choco', '2025-03-05 10:18:23', '2025-03-05 10:18:23'),
+(560, '1132', 'Nutella Choco', '2025-03-05 10:19:21', '2025-03-05 10:19:21'),
+(561, '1132', 'Nutella Choco', '2025-03-05 10:19:22', '2025-03-05 10:19:22'),
+(562, '1132', 'Nutella Choco', '2025-03-05 10:19:41', '2025-03-05 10:19:41'),
+(563, '1134', 'Nomu-nomu Lychee', '2025-03-05 10:24:36', '2025-03-05 10:24:36'),
+(564, '1134', 'Nomu-nomu Lychee', '2025-03-05 10:24:52', '2025-03-05 10:24:52'),
+(565, '1134', 'Nomu-nomu Lychee', '2025-03-05 10:25:16', '2025-03-05 10:25:16'),
+(566, '1134', 'Nomu-nomu Lychee', '2025-03-05 10:25:42', '2025-03-05 10:25:42'),
+(567, '1135', 'Nomu-nomu Lychee', '2025-03-05 10:26:46', '2025-03-05 10:26:46'),
+(568, '1135', 'Nomu-nomu Lychee', '2025-03-05 10:28:06', '2025-03-05 10:28:06'),
+(569, '1135', 'Nomu-nomu Lychee', '2025-03-05 10:28:21', '2025-03-05 10:28:21'),
+(570, '1136', 'Nomu-nomu Lychee', '2025-03-05 10:47:37', '2025-03-05 10:47:37'),
+(571, '1136', 'Nomu-nomu Lychee', '2025-03-05 10:48:04', '2025-03-05 10:48:04'),
+(572, '1136', 'Nomu-nomu Lychee', '2025-03-05 10:48:19', '2025-03-05 10:48:19'),
+(573, '1137', 'Pilllows Ube 100g', '2025-03-05 10:49:19', '2025-03-05 10:49:19');
 
 -- --------------------------------------------------------
 
@@ -805,8 +1120,8 @@ INSERT INTO `orders` (`id`, `ticket`, `food_name`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -818,8 +1133,8 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `pending_accounts` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -832,14 +1147,14 @@ CREATE TABLE `pending_accounts` (
 
 CREATE TABLE `pending_items` (
   `id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `supplier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barcode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barcode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cost` double NOT NULL,
   `retail` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -853,11 +1168,11 @@ CREATE TABLE `pending_items` (
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -866,9 +1181,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1YULtRYYYq1OvsyWkWQ8SRGeRgZiWxLVymRpUKxt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUXVGbmFZSVZtY1lFYWJVNEREMnM1MzRFR1ZINXlnM3FGZFN2MHdqeSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9iYWNrLW9mZmljZS9hZG1pbl9mb3Jnb3RfcGFzc3dvcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjEwOiJhZG1pbl9uYW1lIjtzOjU6IkFkbWluIjt9', 1739887349),
-('Efbg8pZhqKrQSQK4e8IsEFT4l3oReecaTM884z6F', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTE5UVzhFMkpnRzF3anZieERJdWJFaWNQZDVySzBEUUZLQ0VyR2ZLUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1737447332),
-('eUR2VKVsYiFa3EMi5yRb2uUdE4YMOn903z00QZiM', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVVdiV0RaN1JMRFJWaDR5cFgzc25BMkRwSEpEd0hjUDZBUWxiUE1zVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9iYWNrLW9mZmljZS9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MTA6ImFkbWluX25hbWUiO3M6NToiQWRtaW4iO30=', 1737456253);
+('EPwhdvOLGKBMpqhfbBf5cQ8sE4qNvnSWwwn9dyUp', 19, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTo4OntzOjY6Il90b2tlbiI7czo0MDoiS2NyYURPUGpvN0JxV2dWT2pEbFFIS2lEd0RVUUFyN09kaTgzdEJUayI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxOTtzOjEyOiJjYXNoaWVyX25hbWUiO3M6NzoidGVzdGRldiI7czoxMDoicG9zX251bWJlciI7czo0OiJwb3MxIjtzOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxMDoiYWRtaW5fbmFtZSI7czo1OiJBZG1pbiI7fQ==', 1741790854);
 
 -- --------------------------------------------------------
 
@@ -878,58 +1191,59 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `stocks` (
   `id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `supplier` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_unit` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `size` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barcode` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_unit` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barcode` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qr` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `retail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `retail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `update_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `expiration_date` date DEFAULT NULL
+  `expiration_date` date DEFAULT NULL,
+  `item_promo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `stocks`
 --
 
-INSERT INTO `stocks` (`id`, `item`, `category`, `supplier`, `product_unit`, `color`, `size`, `barcode`, `description`, `sku`, `qr`, `quantity`, `cost`, `retail`, `image`, `update_reason`, `created_at`, `updated_at`, `expiration_date`) VALUES
-(2, 'Nomu-nomu Lychee', 'Groceries', 'Test Supplier', 'pc', '', '', '123123', 'Test', 'NMNM-001', 'Nomu-nomu Lychee', '185', '37', '45', '', 'Test', '2024-05-22 09:13:59', '2025-03-01 18:20:09', '2025-02-25'),
-(3, 'Rice per pack', 'Dry Goods', 'Test Supplier', 'pc', '', '', '4563412`3', 'Test', 'RICE-001', 'Rice (1 pack)', '66', '40', '51', '', 'Test', '2024-05-22 09:14:49', '2025-03-01 18:15:07', NULL),
-(4, 'Pod\'s Pea Snack', 'Groceries', 'Test Supplier', 'pc', '', '', '562345', 'Pod\'s Pea Snack yummy', 'PODS-001', 'Pod\'s Pea Snack', '43', '19', '24', '', 'New stocks', '2024-05-22 09:15:19', '2025-01-17 08:28:17', NULL),
-(5, 'Sopas', 'Meals', 'Test Supplier', 'pc', '', '', '376123', 'Sopas good for health hello', 'SOPAS', 'Sopas', '81', '19', '24', 'Sopas.jpg', NULL, '2024-05-22 09:15:40', '2025-01-18 05:26:39', NULL),
-(6, 'Pillows Chocolate 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '', '345712', 'Pillows Filling Chocolate Flavor 100g scrispy, delicious nack that stimulates the taste buds immensely. Oishi attractive package, suitable for watching movies, listening to music and enjoying. Snack Oishi is convenient, compact, easy to carry for outdoor activities.', 'PLLWSCHOC100G-01', 'Pillows Chocolate 100g', '94', '20', '24', NULL, 'Expired', '2024-05-22 09:16:08', '2025-01-18 07:01:36', NULL),
-(7, 'Pilllows Ube 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '45612', 'This is the best pillows ube in the market', 'PLLWSUBE100G-01', 'Pilllows Ube 100g', '96', '20', '24', 'Pilllows Ube 100g.jpg', NULL, '2024-05-22 09:16:28', '2025-01-18 04:53:21', NULL),
-(8, 'Oishi Prawn Crackers Spicy Flavor 75g', 'Groceries', '', '0', '', '', '45623', NULL, 'OISHISPCY75G-01', 'Oishi Prawn Crackers Spicy Flavor 75g', '93', '20', '25', '', 'Expired', '2024-05-22 09:16:54', '2024-06-10 17:46:33', NULL),
-(9, 'Cheetos 75g', 'Groceries', NULL, 'pc', '', '', '56231', 'Test cheetos', 'CHEETOS75G-01', 'Cheetos 75g', '85', '37', '45', NULL, NULL, '2024-05-22 09:17:31', '2025-01-17 09:23:08', NULL),
-(10, 'Piattos Cheese Flavor 125g', 'Groceries', '', '0', '', '', '673142', NULL, 'PTTSCHSE125G', 'Piattos Cheese Flavor 125g', '90', '17', '20', '', NULL, '2024-05-22 09:18:05', '2024-06-11 05:42:17', NULL),
-(11, 'Stick-O Chocolate 200G', 'Groceries', '', '0', '', '', '34512234', NULL, 'STICKOCHOCO200G', 'Stick-O Chocolate 200G', '43', '55', '70', '', 'Expired', '2024-05-22 09:18:21', '2024-06-10 16:15:03', NULL),
-(12, 'Pocky Choco', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '76457234', NULL, 'POCKYCHOCO-01', 'Pocky Choco', '25', '67', '77', NULL, 'Out of season', '2024-05-22 09:18:39', '2025-01-17 09:22:27', NULL),
-(13, 'Souper', 'Groceries', '', '0', '', '', '456123', NULL, 'SOUPER-001', 'Souper', '2', '41', '49', '', 'New stocks', '2024-05-24 11:32:59', '2024-06-10 17:46:33', NULL),
-(14, 'Roller Coaster', 'Groceries', 'Test Supplier', 'pc', '', '', '6789234', NULL, 'RLLRCSTR-001', 'Roller Coaster', '114', '7', '10', '', 'New stocks', '2024-05-24 14:06:53', '2025-01-17 09:25:47', NULL),
-(15, 'Nescafe Original Twin Pack Sugar Free', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '3456723', 'Enjoy the rich, classic taste of Nescafe Original in a sugar-free twin pack for double the delight!', 'NSCFO-TWNPCK', '4800361423601', '99', '12', '14', NULL, 'New stocks', '2024-06-03 03:50:21', '2025-01-18 04:51:52', NULL),
-(16, 'Nestle Koko Krunch 15g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '456234', 'Crunchy and chocolatey Nestle Koko Krunch in a convenient 15g pack—perfect for snacking anytime!', 'Nestle Koko Krunch 15g', '4800361328463', '2', '6', '8', 'Nestle Koko Krunch 15g.png', 'New stocks', '2024-06-03 04:09:43', '2025-01-17 09:25:47', NULL),
-(17, 'Oishi Crispy Patata Baked Potato Flavor 24g', 'Groceries', '', '0', '', '', '567345123', NULL, 'Oishi Crispy Patata Baked Potato Flavor', '4800194104869', '18', '7', '8', '', 'New stocks', '2024-06-03 04:32:26', '2024-06-10 15:44:42', NULL),
-(18, 'Oishi Prawn Crackers 24g', 'Groceries', 'Test Supplier', 'pc', '', '', '568234', NULL, 'Oishi Prawn Crackers 24g', '4891208040143', '16', '7', '8', NULL, 'New stocks', '2024-06-03 04:32:52', '2025-01-17 08:44:02', NULL),
-(19, 'Johnsons Baby Powder', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Red', '', '6783445', NULL, 'Johnsons Baby Powder', '4801010105107', '17', '35', '45', NULL, 'New stocks', '2024-06-11 06:00:04', '2025-01-20 05:25:17', NULL),
-(20, 'Sopas Powder', 'Dry Goods', 'Test Supplier', 'pc', 'Blue', '20 g', '71232', NULL, 'SPSPWDR', NULL, '20', '25', '26', NULL, NULL, '2025-01-17 06:16:46', '2025-01-18 06:26:18', NULL),
-(21, 'Nutella', 'Wet Goods', 'Test Supplier', 'pc', 'Brown', '100 g', '54123', NULL, 'NTLLA-00421', NULL, '63', '100', '126', 'Nutella.jpg', NULL, '2025-01-17 06:20:18', '2025-01-20 13:14:08', NULL),
-(32, 'Nutella Choco', 'Limited Edition', 'Test Supplier', 'pc', 'Brown', '100 g', '51231', NULL, 'NTLLA-00422', NULL, '124', '124', '126', 'Nutella Choco.jpg', 'New stocks', '2025-01-17 07:40:31', '2025-01-17 09:29:09', NULL),
-(33, 'Sopas Powder Yummy', 'Dry Goods', 'Test Supplier', 'pc', 'White', '20 g', '71235', 'Deliciously creamy Sopas Powder, perfect for a quick and comforting meal!', 'SPSPWDRYMMY', NULL, '30', '12', '26', 'Sopas Powder Yummy.jpg', 'New stocks', '2025-01-17 08:01:06', '2025-01-20 13:02:44', NULL),
-(34, 'Stick-O Ube', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Ube', '300 g', '5678224', 'Yummy Wafer Sticks', 'STCK-UB1', NULL, '0', '100', '120', 'Stick-O Ube.jpg', NULL, '2025-01-18 04:57:15', '2025-01-18 04:57:15', NULL),
-(35, 'Cream-O Cookies Vanilla', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Blue', '10 g', '5566213', 'Take a delicious break with chocolate cookies and vanilla-cream filled of Cream-O Cookies.', 'CRM-OVNNL', NULL, '0', '156', '160', 'Cream-O Cookies Vanilla.jpg', NULL, '2025-01-18 05:42:38', '2025-01-18 05:42:38', NULL),
-(36, 'M.Y. San Honey Graham Crackers', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pack', 'Brown', '210 g', '09456', 'Golden Honey Grahams just the way granny used to make them. Every bite of honey-kissed goodness conjures the comfort and warmth of the home kitchen of our fondest memories.', 'MYSH-GC', NULL, '100', '200', '220', 'M.Y. San Honey Graham Crackers.jpg', 'New stocks', '2025-01-18 05:44:59', '2025-01-18 05:59:36', NULL),
-(37, 'Magic Sarap', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '12 g', '87234234', 'Maggi Magic Sarap All-in-One Seasoning 8g 12pc', 'MGC-SRP', NULL, '25', '120', '123', NULL, 'New stocks', '2025-01-20 13:12:23', '2025-03-01 16:55:07', '2025-03-19'),
-(38, 'Milo', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pc', 'Green', '600 g', '23423645', 'Tasty and trusted, Milo brand is the world’s leading chocolate malt beverage that can be prepared with hot or cold milk or water. It offers essential vitamins and minerals to meet the nutrition and energy demands of young bodies and minds. Launched in Australia in the early 1930s, the Milo brand takes kids\' development seriously. It has long been known as an energy beverage strongly associated with sports and good health.', 'MLO - 21309', NULL, '126', '400', '420', 'Milo.png', 'Testing', '2025-03-01 16:59:35', '2025-03-01 18:20:57', '2025-06-18');
+INSERT INTO `stocks` (`id`, `item`, `category`, `supplier`, `product_unit`, `color`, `size`, `barcode`, `description`, `sku`, `qr`, `quantity`, `cost`, `retail`, `image`, `update_reason`, `created_at`, `updated_at`, `expiration_date`, `item_promo`) VALUES
+(2, 'Nomu-nomu Lychee', 'Groceries', 'Test Supplier', 'pc', '', '', '123123', 'Test', 'NMNM-001', 'Nomu-nomu Lychee', '95', '37', '45', '', 'Pull out', '2024-05-22 09:13:59', '2025-03-05 10:48:30', NULL, NULL),
+(3, 'Rice per pack', 'Dry Goods', 'Test Supplier', 'pc', '', '', '4563412`3', 'Test', 'RICE-001', 'Rice (1 pack)', '66', '40', '51', '', NULL, '2024-05-22 09:14:49', '2025-03-05 09:42:04', NULL, NULL),
+(4, 'Pod\'s Pea Snack', 'Groceries', 'Test Supplier', 'pc', '', '', '562345', 'Pod\'s Pea Snack yummy', 'PODS-001', 'Pod\'s Pea Snack', '43', '19', '24', '', 'New stocks', '2024-05-22 09:15:19', '2025-01-17 08:28:17', NULL, NULL),
+(5, 'Sopas', 'Meals', 'Test Supplier', 'pc', '', '', '376123', 'Sopas good for health hello', 'SOPAS', 'Sopas', '81', '19', '24', 'Sopas.jpg', NULL, '2024-05-22 09:15:40', '2025-01-18 05:26:39', NULL, NULL),
+(6, 'Pillows Chocolate 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '', '345712', 'Pillows Filling Chocolate Flavor 100g scrispy, delicious nack that stimulates the taste buds immensely. Oishi attractive package, suitable for watching movies, listening to music and enjoying. Snack Oishi is convenient, compact, easy to carry for outdoor activities.', 'PLLWSCHOC100G-01', 'Pillows Chocolate 100g', '93', '20', '24', NULL, 'Expired', '2024-05-22 09:16:08', '2025-03-05 09:34:29', NULL, NULL),
+(7, 'Pilllows Ube 100g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '45612', 'This is the best pillows ube in the market', 'PLLWSUBE100G-01', 'Pilllows Ube 100g', '91', '20', '24', 'Pilllows Ube 100g.jpg', NULL, '2024-05-22 09:16:28', '2025-03-05 09:39:34', NULL, NULL),
+(8, 'Oishi Prawn Crackers Spicy Flavor 75g', 'Groceries', '', '0', '', '', '45623', NULL, 'OISHISPCY75G-01', 'Oishi Prawn Crackers Spicy Flavor 75g', '93', '20', '25', '', 'Expired', '2024-05-22 09:16:54', '2024-06-10 17:46:33', NULL, NULL),
+(9, 'Cheetos 75g', 'Groceries', NULL, 'pc', '', '', '56231', 'Test cheetos', 'CHEETOS75G-01', 'Cheetos 75g', '85', '37', '45', NULL, NULL, '2024-05-22 09:17:31', '2025-01-17 09:23:08', NULL, NULL),
+(10, 'Piattos Cheese Flavor 125g', 'Groceries', '', '0', '', '', '673142', NULL, 'PTTSCHSE125G', 'Piattos Cheese Flavor 125g', '90', '17', '20', '', NULL, '2024-05-22 09:18:05', '2024-06-11 05:42:17', NULL, NULL),
+(11, 'Stick-O Chocolate 200G', 'Groceries', '', '0', '', '', '34512234', NULL, 'STICKOCHOCO200G', 'Stick-O Chocolate 200G', '43', '55', '70', '', 'Expired', '2024-05-22 09:18:21', '2024-06-10 16:15:03', NULL, NULL),
+(12, 'Pocky Choco', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '76457234', NULL, 'POCKYCHOCO-01', 'Pocky Choco', '25', '67', '77', NULL, 'Out of season', '2024-05-22 09:18:39', '2025-01-17 09:22:27', NULL, NULL),
+(13, 'Souper', 'Groceries', '', '0', '', '', '456123', NULL, 'SOUPER-001', 'Souper', '0', '41', '49', '', 'New stocks', '2024-05-24 11:32:59', '2025-03-05 09:39:34', NULL, NULL),
+(14, 'Roller Coaster', 'Groceries', 'Test Supplier', 'pc', '', '', '6789234', NULL, 'RLLRCSTR-001', 'Roller Coaster', '114', '7', '10', '', 'New stocks', '2024-05-24 14:06:53', '2025-01-17 09:25:47', NULL, NULL),
+(15, 'Nescafe Original Twin Pack Sugar Free', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '3456723', 'Enjoy the rich, classic taste of Nescafe Original in a sugar-free twin pack for double the delight!', 'NSCFO-TWNPCK', '4800361423601', '99', '12', '14', NULL, 'New stocks', '2024-06-03 03:50:21', '2025-01-18 04:51:52', NULL, NULL),
+(16, 'Nestle Koko Krunch 15g', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', '', '', '456234', 'Crunchy and chocolatey Nestle Koko Krunch in a convenient 15g pack—perfect for snacking anytime!', 'Nestle Koko Krunch 15g', '4800361328463', '2', '6', '8', 'Nestle Koko Krunch 15g.png', 'New stocks', '2024-06-03 04:09:43', '2025-01-17 09:25:47', NULL, NULL),
+(17, 'Oishi Crispy Patata Baked Potato Flavor 24g', 'Groceries', '', '0', '', '', '567345123', NULL, 'Oishi Crispy Patata Baked Potato Flavor', '4800194104869', '18', '7', '8', '', 'New stocks', '2024-06-03 04:32:26', '2024-06-10 15:44:42', NULL, NULL),
+(18, 'Oishi Prawn Crackers 24g', 'Groceries', 'Test Supplier', 'pc', '', '', '568234', NULL, 'Oishi Prawn Crackers 24g', '4891208040143', '16', '7', '8', NULL, 'New stocks', '2024-06-03 04:32:52', '2025-01-17 08:44:02', NULL, NULL),
+(19, 'Johnsons Baby Powder', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Red', '', '6783445', NULL, 'Johnsons Baby Powder', '4801010105107', '17', '35', '45', NULL, 'New stocks', '2024-06-11 06:00:04', '2025-01-20 05:25:17', NULL, NULL),
+(20, 'Sopas Powder', 'Dry Goods', 'Test Supplier', 'pc', 'Blue', '20 g', '71232', NULL, 'SPSPWDR', NULL, '20', '25', '26', NULL, NULL, '2025-01-17 06:16:46', '2025-01-18 06:26:18', NULL, NULL),
+(21, 'Nutella', 'Wet Goods', 'Test Supplier', 'pc', 'Brown', '100 g', '54123', NULL, 'NTLLA-00421', NULL, '62', '100', '126', 'Nutella.jpg', NULL, '2025-01-17 06:20:18', '2025-03-05 09:54:42', NULL, NULL),
+(32, 'Nutella Choco', 'Limited Edition', 'Test Supplier', 'pc', 'Brown', '100 g', '51231', NULL, 'NTLLA-00422', NULL, '116', '124', '126', 'Nutella Choco.jpg', 'New stocks', '2025-01-17 07:40:31', '2025-03-05 10:19:47', NULL, NULL),
+(33, 'Sopas Powder Yummy', 'Dry Goods', 'Test Supplier', 'pc', 'White', '20 g', '71235', 'Deliciously creamy Sopas Powder, perfect for a quick and comforting meal!', 'SPSPWDRYMMY', NULL, '30', '12', '26', 'Sopas Powder Yummy.jpg', 'New stocks', '2025-01-17 08:01:06', '2025-01-20 13:02:44', NULL, NULL),
+(34, 'Stick-O Ube', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Ube', '300 g', '5678224', 'Yummy Wafer Sticks', 'STCK-UB1', NULL, '0', '100', '120', 'Stick-O Ube.jpg', NULL, '2025-01-18 04:57:15', '2025-01-18 04:57:15', NULL, NULL),
+(35, 'Cream-O Cookies Vanilla', 'Dry Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Blue', '10 g', '5566213', 'Take a delicious break with chocolate cookies and vanilla-cream filled of Cream-O Cookies.', 'CRM-OVNNL', NULL, '0', '156', '160', 'Cream-O Cookies Vanilla.jpg', NULL, '2025-01-18 05:42:38', '2025-01-18 05:42:38', NULL, NULL),
+(36, 'M.Y. San Honey Graham Crackers', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pack', 'Brown', '210 g', '09456', 'Golden Honey Grahams just the way granny used to make them. Every bite of honey-kissed goodness conjures the comfort and warmth of the home kitchen of our fondest memories.', 'MYSH-GC', NULL, '100', '200', '220', 'M.Y. San Honey Graham Crackers.jpg', 'New stocks', '2025-01-18 05:44:59', '2025-01-18 05:59:36', NULL, NULL),
+(37, 'Magic Sarap', 'Groceries', 'MSCS PrimeGoods, Inc.', 'pc', 'Yellow', '12 g', '87234234', 'Maggi Magic Sarap All-in-One Seasoning 8g 12pc', 'MGC-SRP', NULL, '15', '120', '123', 'Magic Sarap.jpg', 'New stocks', '2025-01-20 13:12:23', '2025-03-05 10:19:47', '2025-03-13', 'Buy 1 Pack get Spoon test'),
+(38, 'C2 Solo Lemon Green Tea', 'Wet Goods', 'MSCS PrimeGoods, Inc.', 'pack', 'Green', '230 ml', '5344351', 'Relax the natural way with C2 Cool & Clean, made with 100% natural tea leaves, brewed and bottled on the same day. Enjoy the refreshingly fruity goodness of C2 Lemon!\r\nC2 Green Tea ready-to-drink beverage is delicately brewed from 100% natural green tea leaves and bottled on the same day. Green Tea is known to have polyphenol antioxidants called “Catechins\". Savor the delicious taste and enjoy the refreshing goodness of C2 Green Tea ice tea', 'C2SLO-GT', NULL, '0', '300', '340', 'C2 Solo Lemon Green Tea.jpg', NULL, '2025-03-05 08:54:40', '2025-03-05 08:54:40', '2028-11-17', 'Buy 1 box get 12 ad ons.');
 
 -- --------------------------------------------------------
 
@@ -940,12 +1254,12 @@ INSERT INTO `stocks` (`id`, `item`, `category`, `supplier`, `product_unit`, `col
 CREATE TABLE `stock_adjustment_logs` (
   `id` bigint UNSIGNED NOT NULL,
   `stock_id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adjustment_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adjustment_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int NOT NULL,
   `old_quantity` int NOT NULL,
   `new_quantity` int NOT NULL,
-  `reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -967,7 +1281,7 @@ INSERT INTO `stock_adjustment_logs` (`id`, `stock_id`, `item`, `adjustment_type`
 CREATE TABLE `stock_batches` (
   `id` bigint UNSIGNED NOT NULL,
   `stock_id` bigint UNSIGNED NOT NULL,
-  `batch_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int NOT NULL,
   `manufacturing_date` date NOT NULL,
   `expiration_date` date NOT NULL,
@@ -983,11 +1297,11 @@ CREATE TABLE `stock_batches` (
 
 CREATE TABLE `suppliers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact_person` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_person` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -997,8 +1311,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `contact_person`, `contact_number`, `email`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'Test Supplier', 'Dev Fred', '09317877213', NULL, 'Makati City', '2025-01-17 07:31:36', '2025-03-01 17:40:38'),
-(2, 'MSCS PrimeGoods, Inc.', 'Test Dev', '09123123143', 'socorinfrederick@gmail.com', 'Taguig', '2025-01-17 08:32:38', '2025-03-01 17:47:49');
+(1, 'Test Supplier', 'Dev', '09317877213', 'socorinfrederick@gmail.com', 'Makati City', '2025-01-17 07:31:36', '2025-03-05 08:46:37'),
+(2, 'MSCS PrimeGoods, Inc.', 'Test Dev', '09123123143', 'socorinfrederick@gmail.com', 'Taguig City', '2025-01-17 08:32:38', '2025-03-05 08:46:23');
 
 -- --------------------------------------------------------
 
@@ -1008,12 +1322,12 @@ INSERT INTO `suppliers` (`id`, `name`, `contact_person`, `contact_number`, `emai
 
 CREATE TABLE `supplier_orders` (
   `id` bigint UNSIGNED NOT NULL,
-  `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `supplier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1035,9 +1349,9 @@ INSERT INTO `supplier_orders` (`id`, `item`, `batch_number`, `quantity`, `suppli
 
 CREATE TABLE `tbl_cashiers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1063,9 +1377,9 @@ INSERT INTO `tbl_cashiers` (`id`, `name`, `password`, `role`, `created_at`, `upd
 CREATE TABLE `tbl_history` (
   `id` bigint UNSIGNED NOT NULL,
   `ticket` int NOT NULL,
-  `cashier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `customer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cashier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sub_total` double NOT NULL,
   `tax` double NOT NULL,
   `cash` double NOT NULL,
@@ -1171,7 +1485,30 @@ INSERT INTO `tbl_history` (`id`, `ticket`, `cashier`, `customer`, `type`, `sub_t
 (91, 1105, 'Krystle', 'Alliah', 'SALE', 237.6, 32.4, 270, 270, 0, '2024-06-11 06:04:29', '2024-06-11 06:04:29'),
 (92, 1106, 'Krystle', 'Olive4801010105107', 'SALE', 73.04, 9.96, 100, 83, 17, '2024-06-11 06:07:04', '2024-06-11 06:07:04'),
 (93, 1107, 'Krystle', 'Mira', 'SALE', 39.6, 5.4, 50, 45, 5, '2024-06-11 06:07:29', '2024-06-11 06:07:29'),
-(94, 1108, 'testdev', 'Customer', 'SALE', 258.72, 35.28, 1000, 235.2, 764.8, '2025-01-17 09:25:47', '2025-01-17 09:25:47');
+(94, 1108, 'testdev', 'Customer', 'SALE', 258.72, 35.28, 1000, 235.2, 764.8, '2025-01-17 09:25:47', '2025-01-17 09:25:47'),
+(95, 1110, 'testdev', 'Customer', 'SALE', 21.12, 2.88, 28, 24, 4, '2025-03-05 09:26:22', '2025-03-05 09:26:22'),
+(96, 1112, 'testdev', 'Customer', 'SALE', 21.12, 2.88, 52, 24, 28, '2025-03-05 09:34:29', '2025-03-05 09:34:29'),
+(97, 1114, 'testdev', 'Customer', 'SALE', 39.6, 5.4, 80, 45, 35, '2025-03-05 09:37:05', '2025-03-05 09:37:05'),
+(98, 1115, 'testdev', 'Customer', 'SALE', 39.6, 5.4, 74, 45, 29, '2025-03-05 09:37:44', '2025-03-05 09:37:44'),
+(99, 1116, 'testdev', 'Customer', 'SALE', 42.24, 5.76, 80, 48, 32, '2025-03-05 09:39:04', '2025-03-05 09:39:04'),
+(100, 1117, 'testdev', 'Customer', 'SALE', 128.48, 17.52, 120, 116.8, 3.2, '2025-03-05 09:39:34', '2025-03-05 09:39:34'),
+(101, 1118, 'testdev', 'Customer', 'SALE', 39.6, 5.4, 50, 45, 5, '2025-03-05 09:41:37', '2025-03-05 09:41:37'),
+(102, 1119, 'testdev', 'Customer', 'SALE', 44.88, 6.12, 85, 51, 34, '2025-03-05 09:42:04', '2025-03-05 09:42:04'),
+(103, 1121, 'testdev', 'Customer', 'SALE', 150.48, 20.52, 770, 171, 599, '2025-03-05 09:54:42', '2025-03-05 09:54:42'),
+(104, 1122, 'testdev', 'Customer', 'SALE', 108.24, 14.76, 720, 123, 597, '2025-03-05 09:55:06', '2025-03-05 09:55:06'),
+(105, 1123, 'testdev', 'Customer', 'SALE', 324.72, 44.28, 470, 369, 101, '2025-03-05 09:57:10', '2025-03-05 09:57:10'),
+(106, 1124, 'testdev', 'Customer', 'SALE', 39.6, 5.4, 100, 45, 55, '2025-03-05 09:57:27', '2025-03-05 09:57:27'),
+(107, 1125, 'testdev', 'Customer', 'SALE', 79.2, 10.8, 100, 90, 10, '2025-03-05 09:58:44', '2025-03-05 09:58:44'),
+(108, 1126, 'testdev', 'Customer', 'SALE', 39.6, 5.4, 50, 45, 5, '2025-03-05 09:59:33', '2025-03-05 09:59:33'),
+(109, 1127, 'testdev', 'Customer', 'SALE', 39.6, 5.4, 50, 45, 5, '2025-03-05 10:00:43', '2025-03-05 10:00:43'),
+(110, 1128, 'testdev', 'Customer', 'SALE', 216.48, 29.52, 300, 246, 54, '2025-03-05 10:03:14', '2025-03-05 10:03:14'),
+(111, 1130, 'testdev', 'Customer', 'SALE', 108.24, 14.76, 500, 123, 377, '2025-03-05 10:11:41', '2025-03-05 10:11:41'),
+(112, 1131, 'testdev', 'Customer', 'SALE', 108.24, 14.76, 123, 123, 0, '2025-03-05 10:12:31', '2025-03-05 10:12:31'),
+(113, 1132, 'testdev', 'Customer', 'SALE', 1143.12, 155.88, 1300, 1299, 1, '2025-03-05 10:19:47', '2025-03-05 10:19:47'),
+(114, 1133, 'testdev', 'Customer', 'CASH IN', 0, 0, 2000, 2000, 0, '2025-03-05 10:20:24', '2025-03-05 10:20:24'),
+(115, 1134, 'testdev', 'Customer', 'SALE', 158.4, 21.6, 180, 180, 0, '2025-03-05 10:26:04', '2025-03-05 10:26:04'),
+(116, 1135, 'testdev', 'Customer', 'SALE', 118.8, 16.2, 135, 135, 0, '2025-03-05 10:28:36', '2025-03-05 10:28:36'),
+(117, 1136, 'testdev', 'Customer', 'SALE', 118.8, 16.2, 200, 135, 65, '2025-03-05 10:48:30', '2025-03-05 10:48:30');
 
 -- --------------------------------------------------------
 
@@ -1181,10 +1518,10 @@ INSERT INTO `tbl_history` (`id`, `ticket`, `cashier`, `customer`, `type`, `sub_t
 
 CREATE TABLE `tbl_menus` (
   `id` bigint UNSIGNED NOT NULL,
-  `food_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `food_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1205,8 +1542,8 @@ INSERT INTO `tbl_menus` (`id`, `food_name`, `image_name`, `price`, `category`) V
 
 CREATE TABLE `tbl_shifts` (
   `id` bigint UNSIGNED NOT NULL,
-  `cashier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `POS_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cashier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `POS_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `starting_cash` int NOT NULL,
   `closing_cash` int NOT NULL,
   `cash_in` int DEFAULT NULL,
@@ -1221,7 +1558,152 @@ CREATE TABLE `tbl_shifts` (
 
 INSERT INTO `tbl_shifts` (`id`, `cashier`, `POS_number`, `starting_cash`, `closing_cash`, `cash_in`, `cash_out`, `created_at`, `updated_at`) VALUES
 (30, 'Jeric', 'pos1', 12000, 0, NULL, NULL, '2025-01-16 15:40:32', '2025-01-16 15:40:32'),
-(45, 'testdev', 'pos1', 1000, 0, NULL, NULL, '2025-03-01 16:13:11', '2025-03-01 16:13:11');
+(77, 'testdev', 'pos1', 2000, 7528, NULL, NULL, '2025-03-05 09:52:05', '2025-03-05 10:48:30'),
+(78, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:41:22', '2025-03-12 13:41:22'),
+(79, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:42:58', '2025-03-12 13:42:58'),
+(80, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:43:34', '2025-03-12 13:43:34'),
+(81, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:43:53', '2025-03-12 13:43:53'),
+(82, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:44:05', '2025-03-12 13:44:05'),
+(83, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:48:52', '2025-03-12 13:48:52'),
+(84, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:49:02', '2025-03-12 13:49:02'),
+(85, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:49:39', '2025-03-12 13:49:39'),
+(86, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:49:53', '2025-03-12 13:49:53'),
+(87, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:50:11', '2025-03-12 13:50:11'),
+(88, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:50:18', '2025-03-12 13:50:18'),
+(89, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:50:38', '2025-03-12 13:50:38'),
+(90, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:50:44', '2025-03-12 13:50:44'),
+(91, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:50:51', '2025-03-12 13:50:51'),
+(92, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:50:57', '2025-03-12 13:50:57'),
+(93, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:00', '2025-03-12 13:51:00'),
+(94, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:08', '2025-03-12 13:51:08'),
+(95, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:13', '2025-03-12 13:51:13'),
+(96, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:17', '2025-03-12 13:51:17'),
+(97, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:29', '2025-03-12 13:51:29'),
+(98, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:35', '2025-03-12 13:51:35'),
+(99, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:43', '2025-03-12 13:51:43'),
+(100, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:49', '2025-03-12 13:51:49'),
+(101, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:51:54', '2025-03-12 13:51:54'),
+(102, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:52:06', '2025-03-12 13:52:06'),
+(103, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:52:46', '2025-03-12 13:52:46'),
+(104, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:52:58', '2025-03-12 13:52:58'),
+(105, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:53:22', '2025-03-12 13:53:22'),
+(106, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:53:31', '2025-03-12 13:53:31'),
+(107, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:53:56', '2025-03-12 13:53:56'),
+(108, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:07', '2025-03-12 13:54:07'),
+(109, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:17', '2025-03-12 13:54:17'),
+(110, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:22', '2025-03-12 13:54:22'),
+(111, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:34', '2025-03-12 13:54:34'),
+(112, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:37', '2025-03-12 13:54:37'),
+(113, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:43', '2025-03-12 13:54:43'),
+(114, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:47', '2025-03-12 13:54:47'),
+(115, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:54:57', '2025-03-12 13:54:57'),
+(116, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:55:01', '2025-03-12 13:55:01'),
+(117, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:55:04', '2025-03-12 13:55:04'),
+(118, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:55:09', '2025-03-12 13:55:09'),
+(119, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:55:19', '2025-03-12 13:55:19'),
+(120, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:55:23', '2025-03-12 13:55:23'),
+(121, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:55:25', '2025-03-12 13:55:25'),
+(122, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:56:09', '2025-03-12 13:56:09'),
+(123, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:56:17', '2025-03-12 13:56:17'),
+(124, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:56:22', '2025-03-12 13:56:22'),
+(125, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:56:39', '2025-03-12 13:56:39'),
+(126, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:56:54', '2025-03-12 13:56:54'),
+(127, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:57:10', '2025-03-12 13:57:10'),
+(128, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:57:20', '2025-03-12 13:57:20'),
+(129, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:57:31', '2025-03-12 13:57:31'),
+(130, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:57:46', '2025-03-12 13:57:46'),
+(131, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:57:56', '2025-03-12 13:57:56'),
+(132, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 13:58:50', '2025-03-12 13:58:50'),
+(133, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:01:58', '2025-03-12 14:01:58'),
+(134, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:02:10', '2025-03-12 14:02:10'),
+(135, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:02:20', '2025-03-12 14:02:20'),
+(136, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:05:06', '2025-03-12 14:05:06'),
+(137, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:09:17', '2025-03-12 14:09:17'),
+(138, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:14:23', '2025-03-12 14:14:23'),
+(139, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:14:31', '2025-03-12 14:14:31'),
+(140, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:14:54', '2025-03-12 14:14:54'),
+(141, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:10', '2025-03-12 14:15:10'),
+(142, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:16', '2025-03-12 14:15:16'),
+(143, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:22', '2025-03-12 14:15:22'),
+(144, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:26', '2025-03-12 14:15:26'),
+(145, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:30', '2025-03-12 14:15:30'),
+(146, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:32', '2025-03-12 14:15:32'),
+(147, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:33', '2025-03-12 14:15:33'),
+(148, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:15:44', '2025-03-12 14:15:44'),
+(149, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:16:03', '2025-03-12 14:16:03'),
+(150, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:17:03', '2025-03-12 14:17:03'),
+(151, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:17:11', '2025-03-12 14:17:11'),
+(152, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:17:37', '2025-03-12 14:17:37'),
+(153, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:17:43', '2025-03-12 14:17:43'),
+(154, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:17:53', '2025-03-12 14:17:53'),
+(155, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:04', '2025-03-12 14:18:04'),
+(156, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:14', '2025-03-12 14:18:14'),
+(157, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:17', '2025-03-12 14:18:17'),
+(158, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:26', '2025-03-12 14:18:26'),
+(159, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:44', '2025-03-12 14:18:44'),
+(160, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:51', '2025-03-12 14:18:51'),
+(161, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:53', '2025-03-12 14:18:53'),
+(162, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:18:58', '2025-03-12 14:18:58'),
+(163, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:19:28', '2025-03-12 14:19:28'),
+(164, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:19:47', '2025-03-12 14:19:47'),
+(165, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:19:54', '2025-03-12 14:19:54'),
+(166, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:19:58', '2025-03-12 14:19:58'),
+(167, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:20:07', '2025-03-12 14:20:07'),
+(168, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:20:09', '2025-03-12 14:20:09'),
+(169, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:20:13', '2025-03-12 14:20:13'),
+(170, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:20:18', '2025-03-12 14:20:18'),
+(171, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:20:23', '2025-03-12 14:20:23'),
+(172, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:20:33', '2025-03-12 14:20:33'),
+(173, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:21:26', '2025-03-12 14:21:26'),
+(174, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:21:33', '2025-03-12 14:21:33'),
+(175, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:21:40', '2025-03-12 14:21:40'),
+(176, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:21:55', '2025-03-12 14:21:55'),
+(177, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:22:12', '2025-03-12 14:22:12'),
+(178, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:22:35', '2025-03-12 14:22:35'),
+(179, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:22:44', '2025-03-12 14:22:44'),
+(180, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:23:06', '2025-03-12 14:23:06'),
+(181, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:23:26', '2025-03-12 14:23:26'),
+(182, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:23:59', '2025-03-12 14:23:59'),
+(183, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:24:15', '2025-03-12 14:24:15'),
+(184, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:24:48', '2025-03-12 14:24:48'),
+(185, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:25:01', '2025-03-12 14:25:01'),
+(186, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:25:38', '2025-03-12 14:25:38'),
+(187, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:25:47', '2025-03-12 14:25:47'),
+(188, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:00', '2025-03-12 14:26:00'),
+(189, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:09', '2025-03-12 14:26:09'),
+(190, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:11', '2025-03-12 14:26:11'),
+(191, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:22', '2025-03-12 14:26:22'),
+(192, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:28', '2025-03-12 14:26:28'),
+(193, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:37', '2025-03-12 14:26:37'),
+(194, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:47', '2025-03-12 14:26:47'),
+(195, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:26:58', '2025-03-12 14:26:58'),
+(196, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:27:08', '2025-03-12 14:27:08'),
+(197, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:29:07', '2025-03-12 14:29:07'),
+(198, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:29:43', '2025-03-12 14:29:43'),
+(199, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:31:24', '2025-03-12 14:31:24'),
+(200, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:31:36', '2025-03-12 14:31:36'),
+(201, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:31:43', '2025-03-12 14:31:43'),
+(202, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:31:53', '2025-03-12 14:31:53'),
+(203, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:33:12', '2025-03-12 14:33:12'),
+(204, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:33:20', '2025-03-12 14:33:20'),
+(205, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:33:22', '2025-03-12 14:33:22'),
+(206, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:34:01', '2025-03-12 14:34:01'),
+(207, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:34:03', '2025-03-12 14:34:03'),
+(208, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:34:14', '2025-03-12 14:34:14'),
+(209, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:34:33', '2025-03-12 14:34:33'),
+(210, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:34:49', '2025-03-12 14:34:49'),
+(211, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:35:09', '2025-03-12 14:35:09'),
+(212, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:35:15', '2025-03-12 14:35:15'),
+(213, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:35:21', '2025-03-12 14:35:21'),
+(214, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:35:26', '2025-03-12 14:35:26'),
+(215, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:35:38', '2025-03-12 14:35:38'),
+(216, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:37:00', '2025-03-12 14:37:00'),
+(217, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:37:16', '2025-03-12 14:37:16'),
+(218, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:38:07', '2025-03-12 14:38:07'),
+(219, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:38:44', '2025-03-12 14:38:44'),
+(220, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:38:59', '2025-03-12 14:38:59'),
+(221, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:45:39', '2025-03-12 14:45:39'),
+(222, 'testdev', 'pos1', 2000, 0, NULL, NULL, '2025-03-12 14:45:50', '2025-03-12 14:45:50');
 
 -- --------------------------------------------------------
 
@@ -1231,8 +1713,8 @@ INSERT INTO `tbl_shifts` (`id`, `cashier`, `POS_number`, `starting_cash`, `closi
 
 CREATE TABLE `tickets` (
   `id` bigint UNSIGNED NOT NULL,
-  `ticket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `food_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ticket` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `food_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1245,11 +1727,11 @@ CREATE TABLE `tickets` (
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1372,20 +1854,6 @@ ALTER TABLE `stocks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `stock_adjustment_logs`
---
-ALTER TABLE `stock_adjustment_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `stock_adjustment_logs_stock_id_foreign` (`stock_id`);
-
---
--- Indexes for table `stock_batches`
---
-ALTER TABLE `stock_batches`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `stock_batches_stock_id_foreign` (`stock_id`);
-
---
 -- Indexes for table `suppliers`
 --
 ALTER TABLE `suppliers`
@@ -1460,7 +1928,7 @@ ALTER TABLE `cms`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1472,7 +1940,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `g_cashes`
 --
 ALTER TABLE `g_cashes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1484,13 +1952,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=413;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=574;
 
 --
 -- AUTO_INCREMENT for table `pending_accounts`
@@ -1509,18 +1977,6 @@ ALTER TABLE `pending_items`
 --
 ALTER TABLE `stocks`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT for table `stock_adjustment_logs`
---
-ALTER TABLE `stock_adjustment_logs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `stock_batches`
---
-ALTER TABLE `stock_batches`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -1544,7 +2000,7 @@ ALTER TABLE `tbl_cashiers`
 -- AUTO_INCREMENT for table `tbl_history`
 --
 ALTER TABLE `tbl_history`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `tbl_menus`
@@ -1556,7 +2012,7 @@ ALTER TABLE `tbl_menus`
 -- AUTO_INCREMENT for table `tbl_shifts`
 --
 ALTER TABLE `tbl_shifts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
 -- AUTO_INCREMENT for table `tickets`
@@ -1569,22 +2025,6 @@ ALTER TABLE `tickets`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `stock_adjustment_logs`
---
-ALTER TABLE `stock_adjustment_logs`
-  ADD CONSTRAINT `stock_adjustment_logs_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `stock_batches`
---
-ALTER TABLE `stock_batches`
-  ADD CONSTRAINT `stock_batches_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
