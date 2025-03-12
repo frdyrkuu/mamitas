@@ -15,24 +15,43 @@
 <body class="w-full h-auto bg-[#fefefe] relative">
     {{-- modal pending items --}}
     <dialog id="stockModal" open
-        class="container fixed inset-0 flex items-center z-10 bg-white pt-[50px] pb-[100px] hidden">
-        <button id="closeModal" class="absolute top-3 right-3 text-xl font-bold text-gray-700 hover:text-gray-900 p-5">
+        class="container fixed inset-0 z-10 bg-white pt-[50px] pb-[100px] max-h-[90vh] overflow-y-auto">
+        <button id="closeModal" class="absolute top-3 right-3 text-xl font-bold text-gray-700 hover:text-gray-900 p-5"
+            aria-label="Close Modal">
             ✖
         </button>
-        <div class="max-w-7xl container items-center flex mx-auto space-y-[30px]">
-            <div class="relative overflow-x-auto w-full space-y-[30px]">
-                <h2 class="text-[36px] font-medium">Pending Items</h2>
+        <div class="container px-[30px] mx-auto space-y-[30px]">
+            <div class="flex gap-10 items-center place-content-between mr-20 sticky">
+                <h2 class="text-[36px] font-medium flex">Pending Items <div
+                        class="w-[20px] h-[20px] flex items-center justify-center bg-red-500 rounded-full -translate-y-[1px]">
+                        <p class="text-white text-xs">{{ $stocks_alert->count() }}</p>
+                    </div>
+                </h2>
+
+                <div class="flex justify-between items-center my-auto">
+                    <div>
+                        <button id="sortByName" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Sort
+                            by Name</button>
+                        <button id="sortByQuantity"
+                            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 ml-2">Sort by
+                            Quantity</button>
+                    </div>
+                </div>
+            </div>
+            <div class="relative overflow-x-auto w-full">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
                         <tr>
                             <th scope="col" class="px-6 py-3">Product Name</th>
                             <th scope="col" class="px-6 py-3">Status</th>
                             <th scope="col" class="px-6 py-3">Stocks</th>
+                            <th scope="col" class="px-6 py-3">Expiration Date</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBody" class="max-h-[calc(90vh-200px)] overflow-y-auto">
                         @foreach ($stocks_alert as $stock)
-                            <tr class="bg-white border-b border-gray-200">
+                            <tr class="bg-white border-b border-gray-200" data-name="{{ strtolower($stock->item) }}"
+                                data-quantity="{{ $stock->quantity }}">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     {{ $stock->item }}
                                 </th>
@@ -54,9 +73,11 @@
                                         {{ $stock->name }} has {{ $stock->quantity }} available.
                                     @endif
                                 </td>
-
                                 <td class="px-6 py-4">
                                     {{ $stock->quantity }}
+                                </td>
+                                <td class="px-6 py-4 expiration-date" data-expiration="{{ $stock->expiration_date }}">
+                                    <!-- Placeholder for expiration date -->
                                 </td>
                             </tr>
                         @endforeach
@@ -65,8 +86,6 @@
             </div>
         </div>
     </dialog>
-
-
 
     <div id="coverup" class="hidden w-full bg-main h-screen absolute z-50 opacity-30"></div>
     <form id="filterForm">
@@ -622,6 +641,85 @@
                 modal.classList.remove("flex");
             }
         });
+    </script>
+    <script>
+        function calculateDaysLeft(expirationDate) {
+            if (!expirationDate) {
+                return {
+                    text: "No expiration date given",
+                    className: ""
+                };
+            }
+
+            const today = new Date();
+            const expiration = new Date(expirationDate);
+            const timeDifference = expiration - today;
+            const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+            if (daysLeft < 0) {
+                return {
+                    text: "Expired!",
+                    className: "text-red-500 font-bold"
+                };
+            } else if (daysLeft <= 7) {
+                return {
+                    text: `${daysLeft} day(s) left`,
+                    className: "text-red-500 font-bold"
+                };
+            } else {
+                return {
+                    text: `${daysLeft} day(s) left`,
+                    className: "text-green-500 font-bold"
+                };
+            }
+        }
+
+        document.querySelectorAll('.expiration-date').forEach(cell => {
+            const expirationDate = cell.getAttribute('data-expiration');
+            const result = calculateDaysLeft(expirationDate);
+
+            // Update text content
+            cell.textContent = result.text;
+
+
+            cell.className = `px-6 py-4 expiration-date ${result.className}`;
+        });
+    </script>
+
+    <script>
+        // Function to sort rows by name (alphabetically)
+        function sortByName() {
+            const tableBody = document.getElementById('tableBody');
+            const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                const nameA = a.getAttribute('data-name');
+                const nameB = b.getAttribute('data-name');
+                return nameA.localeCompare(nameB);
+            });
+
+            // Re-append sorted rows to the table body
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+
+        // Function to sort rows by quantity (ascending order)
+        function sortByQuantity() {
+            const tableBody = document.getElementById('tableBody');
+            const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                const quantityA = parseInt(a.getAttribute('data-quantity'));
+                const quantityB = parseInt(b.getAttribute('data-quantity'));
+                return quantityA - quantityB;
+            });
+
+            // Re-append sorted rows to the table body
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+
+        // Add event listeners to buttons
+        document.getElementById('sortByName').addEventListener('click', sortByName);
+        document.getElementById('sortByQuantity').addEventListener('click', sortByQuantity);
     </script>
 
 </body>
