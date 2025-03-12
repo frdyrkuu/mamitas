@@ -58,7 +58,11 @@
         {{-- navigations --}}
         <div class="w-[6%] py-6 bg-white relative">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 mb-3">
-                <img src="{{ asset($cms->company_logo) }}" alt="">
+                @if (isset($cms) && $cms->company_logo)
+                    <img src="{{ asset($cms->company_logo) }}" alt="Company Logo">
+                @else
+                    <img src="{{ asset('images/cms/1737455694.jpg') }}" alt="Default Logo">
+                @endif
             </div>
             <a href="{{ route('dashboard') }}"
                 class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 rounded-xl bg-[#f5a7a4]">
@@ -136,11 +140,15 @@
                     @foreach ($menus as $menu)
                         <button
                             class="btn-menu menu-button flex flex-col rounded-md shadow-lg bg-[#fefefe] p-4 items-center justify-center text-sm hover:bg-green-300 hover:text-black"
-                            data-food-name="{{ $menu->item }}" data-price="{{ $menu->retail }}"
-                            @if ($menu->quantity == 0) disabled @endif>
+                            data-food-name="{{ $menu->item }}" data-promo="{{ $menu->item_promo }}"
+                            data-price="{{ $menu->retail }}" @if ($menu->quantity == 0) disabled @endif>
                             <p class="">{{ $menu->item }} {{ $menu->size }}</p>
+                            @if ($menu->item_promo)
+                                <p class="text-blue-500">+ {{ $menu->item_promo }}</p>
+                            @endif
                             <p class="font-medium mb-2">&#8369; {{ $menu->retail }}.00</p>
-                            <p class="text-xs menu-qty text-green-600 font-semibold">{{ $menu->quantity }} in stock</p>
+                            <p class="text-xs menu-qty text-green-600 font-semibold">{{ $menu->quantity }} in stock
+                            </p>
                         </button>
                     @endforeach
                     <style>
@@ -152,7 +160,7 @@
                             pointer-events: none;
                             /* Prevent click interaction */
 
-                            .menu-qty{
+                            .menu-qty {
                                 color: red;
                             }
                         }
@@ -199,7 +207,8 @@
                                 Order's Empty
                             </button>
                             <button type="submit" name="action" value="gcash"
-                                class="w-full py-4 rounded-xl bg-blue-500 text-white font-medium">Cash In / Cash Out</button>
+                                class="w-full py-4 rounded-xl bg-blue-500 text-white font-medium">Cash In / Cash
+                                Out</button>
                         </div>
                     </div>
                     <input type="hidden" name="ticket" value="{{ $ticket }}">
@@ -428,14 +437,15 @@
                 // Update display with item counts and totals
                 Object.keys(itemCounts).forEach((itemName) => {
                     var item = itemCounts[itemName];
+                    var promo = $(this).data('promo');
 
                     var orderDiv = $('<div></div>').addClass(
                         'w-full flex items-center text-sm py-2 overflow-x-hidden');
                     var firstDiv = $('<div></div>').addClass('w-[73%] flex flex-col justify-center');
                     var secondDiv = $('<div></div>').addClass('w-[20%] flex items-center justify-between');
                     var deleteDiv = $('<div></div>').addClass('w-[7%] flex items-center justify-center');
-
-                    var orderedFoodElement = $('<p></p>').text(itemName).addClass('text-xs');
+                  
+                    var orderedFoodElement = $('<p></p>').text(itemName).text(promo).addClass('text-xs');
                     var orderedFoodCount = $('<p></p>').text('₱' + item.price.toFixed(2) + ' x ' + item
                         .count).addClass('text-xs');
                     firstDiv.append(orderedFoodElement);
@@ -479,10 +489,12 @@
             // Event listener for button clicks
             $('#foods').on('click', '.menu-button', function() {
                 let foodName = $(this).data('food-name');
+                let promo = $(this).data('promo');
                 let price = parseFloat($(this).data('price'));
 
                 if (foodName && !isNaN(price)) {
-                    addToOrders(foodName, price);
+    
+                    addToOrders(foodName, price, promo);
                     updateOrdersDisplay();
                     keepFocus(); // Ensure the input field stays focused
                 } else {

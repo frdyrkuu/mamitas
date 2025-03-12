@@ -161,6 +161,15 @@
                         </div>
 
                         <div class="w-full flex items-center justify-between gap-5 mb-10">
+                            <div class="w-full">
+                                <label for="" class="text-gray-500">Product Ad-ons Promo</label>
+                                <textarea id="message" rows="4" name="item_promo"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Write your product promo here..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="w-full flex items-center justify-between gap-5 mb-10">
                             <div class="w-1/3">
                                 <label for="" class="text-gray-500">Color</label>
                                 <input type="text" name="color"
