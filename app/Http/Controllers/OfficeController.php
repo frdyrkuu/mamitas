@@ -375,13 +375,13 @@ class OfficeController extends Controller
     {
         $cms = DB::table('cms')->first();
         $item = Stocks::paginate(10);
-        
+
         // Get logs with item names
         $adjustmentLogs = DB::table('stock_adjustment_logs')
             ->orderBy('created_at', 'desc')
             ->get();
-
-        return view('backoffice.inventory.stocks_adjustment', compact('item', 'adjustmentLogs', 'cms'));
+        $stocks_alert = Stocks::where('quantity', '<=', 20)->get();
+        return view('backoffice.inventory.stocks_adjustment', compact('item', 'adjustmentLogs', 'cms', 'stocks_alert'));
     }
 
     public function filterItems(Request $request)
@@ -810,7 +810,7 @@ class OfficeController extends Controller
         $suppliers = Supplier::all();
         // Get the specific supplier we want to edit
         $supplier = Supplier::select('id', 'name', 'contact_person', 'contact_number', 'address')
-                            ->findOrFail($id);
+            ->findOrFail($id);
 
         return view('backoffice.suppliers.edit_supplier', compact('suppliers', 'supplier'));
     }
@@ -819,7 +819,7 @@ class OfficeController extends Controller
     {
         $suppliers = Supplier::all();
         $supplier = Supplier::select('id', 'name', 'contact_person', 'contact_number', 'address', 'email')
-                            ->findOrFail($id);
+            ->findOrFail($id);
 
         return view('backoffice.suppliers.edit_supplier', compact('suppliers', 'supplier'));
     }
@@ -998,9 +998,7 @@ class OfficeController extends Controller
         return response()->json($suppliers);
     }
 
-    public function supplierLiveSearch($key)
-    {
-    }
+    public function supplierLiveSearch($key) {}
 
     public function pendingItems()
     {
@@ -1170,7 +1168,7 @@ class OfficeController extends Controller
 
         try {
             $supplier = Supplier::findOrFail($id);
-            
+
             $supplier->update([
                 'name' => $request->suppliers_name,
                 'contact_person' => $request->contact_person,
@@ -1201,7 +1199,7 @@ class OfficeController extends Controller
             $stock = Stocks::findOrFail($request->product_id);
             $itemName = $stock->item; // Get the item name
             $oldQuantity = $stock->quantity;
-            
+
             // Calculate new quantity
             if ($request->adjustment_type === 'increase') {
                 $newQuantity = $oldQuantity + $request->quantity;
@@ -1237,7 +1235,6 @@ class OfficeController extends Controller
                 'message' => 'Stock adjusted successfully',
                 'new_quantity' => $newQuantity
             ]);
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
@@ -1251,7 +1248,7 @@ class OfficeController extends Controller
     {
         try {
             return Excel::download(
-                new SalesByItemsExport, 
+                new SalesByItemsExport,
                 'sales_by_items_' . date('Y-m-d_H-i-s') . '.xlsx'
             );
         } catch (\Exception $e) {
