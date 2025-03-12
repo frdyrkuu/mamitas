@@ -512,6 +512,7 @@ class OfficeController extends Controller
             'image' => $imageName, // Use the image name here, not the full $image object
             'profit' => $profit,
             'expiration_date' => $request->input('expiration_date'),
+            'item_promo' => $request->input('item_promo')
         ];
 
 
@@ -554,7 +555,8 @@ class OfficeController extends Controller
             'cost' => $request->input('cost'),
             'retail' => $request->input('retail'),
             'description' => $request->input('item_description'),
-            'expiration_date' => $request->input('expiration_date')
+            'expiration_date' => $request->input('expiration_date'),
+            'item_promo' => $request->input('item_promo')
         ];
 
         // Only update image if a new one is uploaded

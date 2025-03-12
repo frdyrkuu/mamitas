@@ -25,6 +25,7 @@ class Stocks extends Model
         'image',
         'update_reason',
         'expiration_date',
+        'item_promo',
     ];
 
     public function ticket()
