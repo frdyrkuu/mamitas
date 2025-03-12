@@ -15,7 +15,7 @@
 <body class="w-full h-auto bg-[#fefefe] relative">
     {{-- modal pending items --}}
     <dialog id="stockModal" open
-        class="container fixed inset-0 z-10 bg-white pt-[50px] pb-[100px] max-h-[90vh] overflow-y-auto">
+        class="container fixed inset-0 z-10 bg-white pt-[50px] pb-[100px] max-h-[90vh] overflow-y-auto hidden">
         <button id="closeModal" class="absolute top-3 right-3 text-xl font-bold text-gray-700 hover:text-gray-900 p-5"
             aria-label="Close Modal">
             ✖
@@ -620,13 +620,50 @@
         const modal = document.getElementById("stockModal");
         const openModalBtn = document.getElementById("openModal");
         const closeModalBtn = document.getElementById("closeModal");
-
+        const urlParams = new URLSearchParams(window.location.search);
         // Show modal
         openModalBtn.addEventListener("click", function(event) {
             event.preventDefault(); // Prevent page navigation
             modal.classList.remove("hidden");
             modal.classList.add("flex");
         });
+
+
+
+        // Check if 'opendialog' exists in the query parameters
+        if (urlParams.has('opendialog')) {
+            // Open the modal
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+
+            // Get the value of the 'opendialog' parameter
+            const itemName = decodeURIComponent(urlParams.get('opendialog'));
+
+            // Find the corresponding row in the table
+            const rows = document.querySelectorAll('#tableBody tr');
+            let targetRow = null;
+
+            rows.forEach(row => {
+                const rowName = row.getAttribute('data-name'); // Assuming 'data-name' contains the item name
+                if (rowName === itemName.toLowerCase()) { // Case-insensitive comparison
+                    targetRow = row;
+                }
+            });
+
+            // If the target row is found, highlight it and scroll into view
+            if (targetRow) {
+                // Highlight the row by adding a CSS class
+                targetRow.classList.add('highlight');
+
+                // Scroll the row into view
+                targetRow.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } else {
+                console.warn(`Item "${itemName}" not found in the table.`);
+            }
+        }
 
         // Close modal on button click
         closeModalBtn.addEventListener("click", function() {

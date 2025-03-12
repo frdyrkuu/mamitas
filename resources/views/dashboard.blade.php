@@ -103,23 +103,27 @@
             <div id="alertsDiv"
                 class="w-[300px] h-[300px] overflow-y-auto hidden rounded-xl absolute bottom-7 left-24 text-xs bg-white border-2 border-main">
                 @foreach ($alerts as $alert)
-                    @php
-                        $quantity = $alert->quantity;
-                    @endphp
-                    <div class="w-full flex flex-col px-2 py-1 border-b">
-                        <p>
-                            @php
-                                if ($quantity >= 1) {
-                                    echo '<p class="font-medium">Critically Low Amount</p>';
-                                } else {
-                                    echo '<p class="font-medium">No stocks</p>';
-                                }
-                            @endphp
-                        </p>
-                        <p>{{ $alert->item }} is only <span class="font-medium">{{ $alert->quantity }}</span>
-                            remaining in stock.</p>
-                    </div>
+                    <a href="/back-office/stocks_adjustments/?opendialog={{ $alert->item }}" target="_blank">
+
+                        @php
+                            $quantity = $alert->quantity;
+                        @endphp
+                        <div class="w-full flex flex-col px-2 py-1 border-b">
+                            <p>
+                                @php
+                                    if ($quantity >= 1) {
+                                        echo '<p class="font-medium">Critically Low Amount</p>';
+                                    } else {
+                                        echo '<p class="font-medium">No stocks</p>';
+                                    }
+                                @endphp
+                            </p>
+                            <p>{{ $alert->item }} is only <span class="font-medium">{{ $alert->quantity }}</span>
+                                remaining in stock.</p>
+                        </div>
+                    </a>
                 @endforeach
+
             </div>
         </div>
         {{-- POS --}}
@@ -444,7 +448,7 @@
                     var firstDiv = $('<div></div>').addClass('w-[73%] flex flex-col justify-center');
                     var secondDiv = $('<div></div>').addClass('w-[20%] flex items-center justify-between');
                     var deleteDiv = $('<div></div>').addClass('w-[7%] flex items-center justify-center');
-                  
+
                     var orderedFoodElement = $('<p></p>').text(itemName).text(promo).addClass('text-xs');
                     var orderedFoodCount = $('<p></p>').text('₱' + item.price.toFixed(2) + ' x ' + item
                         .count).addClass('text-xs');
@@ -493,7 +497,7 @@
                 let price = parseFloat($(this).data('price'));
 
                 if (foodName && !isNaN(price)) {
-    
+
                     addToOrders(foodName, price, promo);
                     updateOrdersDisplay();
                     keepFocus(); // Ensure the input field stays focused
