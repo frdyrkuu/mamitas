@@ -15,6 +15,7 @@ use App\Models\Shift;
 use Illuminate\Support\Facades\Mail;
 
 use App\Mail\AdminPasswordResetRequest;
+use App\Models\Cms;
 
 class AuthController extends Controller
 {
@@ -83,7 +84,7 @@ class AuthController extends Controller
         $name = $request->input('cashier_name');
         $password = $request->input('password');
         $role = "Cashier";
-
+        $cmsData = Cms::first(); // This will get the first CMS entry
         $hashedPassword = Hash::make($password);
 
         $data = ([
@@ -100,7 +101,8 @@ class AuthController extends Controller
 
         $cashiers = Authentication::all();
         $pending = PendingAccount::all();
-        return view('backoffice/cashiers/cashiers', ['cashiers' => $cashiers, 'pendings' => $pending])->with('success', 'Cashier added successfully!');
+
+        return view('backoffice/cashiers/cashiers', ['cashiers' => $cashiers, 'pendings' => $pending,   'cms' => $cmsData])->with('success', 'Cashier added successfully!');
     }
 
     public function addAdmin()
