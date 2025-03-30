@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
 use App\Models\Cms;
+use App\Models\GcashTransaction;
 
 class POSController extends Controller
 {
@@ -370,6 +371,8 @@ class POSController extends Controller
             ->latest()
             ->first();
 
+        $gcash = GcashTransaction::all();
+
         $shift_start = $shift->created_at;
 
         $date_today = Carbon::today();
@@ -424,7 +427,8 @@ class POSController extends Controller
                 'cashOutPayments' => $cash_out_payments,
                 'cashInCharge' => $cash_in_charge,
                 'cashOutCharge' => $cash_out_charge,
-                'cms' => $cmsData  // Add this line
+                'cms' => $cmsData,  // Add this line
+                'gcash' => $gcash
             ]);
         }
     }

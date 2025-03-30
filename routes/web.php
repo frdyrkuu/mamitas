@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\POSController;
+use App\Http\Controllers\GcashTransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminLoggedIn;
 use App\Http\Middleware\isCashierLoggedIn;
@@ -43,6 +44,7 @@ Route::middleware([isCashierLoggedIn::class])->group(function () {
     Route::post('/gcash', [POSController::class, 'gCash'])->name('gcash');
     Route::get('/add-item', [POSController::class, 'addItem'])->name('add_item');
     Route::post('/add-to-pending', [POSController::class, 'toPendingItems'])->name('to_pending');
+
 });
 
 Route::get('/back-office/login', [OfficeController::class, 'adminLogin'])->name('office.login');
@@ -127,4 +129,6 @@ Route::middleware([IsAdminLoggedIn::class])->group(function () {
     Route::post('/update-stock', [OfficeController::class, 'updateStock'])->name('office.update_stock');
 
     Route::get('/export-sales-by-items', [OfficeController::class, 'exportSalesByItems'])->name('office.export.sales_by_items');
+
+    Route::post('/gcash-transactions', [GcashTransactionController::class, 'store']);
 });

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Dashboard</title>
 </head>
-<body class="w-full h-screen bg-[#ffd962]">
+
+<body class="w-full h-auto bg-[#ffd962]">
     {{-- <div id="cash_management" class="bg-main rounded-md w-1/5 mx-auto hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50" id="scanner">
         <form action="{{route('cash_management')}}" method="POST" class="p-4 text-sm">
             @csrf
@@ -34,30 +36,32 @@
         {{-- navigations --}}
         <div class="w-[6%] py-6 bg-white">
             <div class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 mb-3">
-                 <img src="{{ asset($cms->company_logo) }}" alt="">
+                <img src="{{ asset($cms->company_logo) }}" alt="">
             </div>
-            <a href="{{route('dashboard')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
-                <img src="{{asset('images/products-new.png')}}" alt="Home Icon" class="w-1/3">
+            <a href="{{ route('dashboard') }}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
+                <img src="{{ asset('images/products-new.png') }}" alt="Home Icon" class="w-1/3">
                 <p class="text-xs text-[#565857]">Home</p>
             </a>
-            <a href="{{route('cashier')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 rounded-xl bg-[#f5a7a4]">
-                <img src="{{asset('images/cashier-red.png')}}" alt="Cashier Icon" class="w-1/3">
+            <a href="{{ route('cashier') }}"
+                class="flex w-2/3 mx-auto flex-col items-center justify-center py-4 rounded-xl bg-[#f5a7a4]">
+                <img src="{{ asset('images/cashier-red.png') }}" alt="Cashier Icon" class="w-1/3">
                 <p class="text-xs text-[#e5231a]">Cashier</p>
             </a>
-            <a href="{{route('history')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
-                <img src="{{asset('images/history-new.png')}}" alt="Cashier Icon" class="w-1/3">
+            <a href="{{ route('history') }}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
+                <img src="{{ asset('images/history-new.png') }}" alt="Cashier Icon" class="w-1/3">
                 <p class="text-xs text-[#565857]">History</p>
             </a>
-            <a href="{{route('orders')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
-                <img src="{{asset('images/order-new.png')}}" alt="Cashier Icon" class="w-1/3">
+            <a href="{{ route('orders') }}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
+                <img src="{{ asset('images/order-new.png') }}" alt="Cashier Icon" class="w-1/3">
                 <p class="text-xs text-[#565857]">Orders</p>
             </a>
-            <a href="{{route('inventory')}}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
-                <img src="{{asset('images/inv-new.png')}}" alt="Cashier Icon" class="w-1/3">
+            <a href="{{ route('inventory') }}" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
+                <img src="{{ asset('images/inv-new.png') }}" alt="Cashier Icon" class="w-1/3">
                 <p class="text-xs text-[#565857]">Inventory</p>
             </a>
-            <a href="{{route('office.login')}}" target="__blank" class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
-                <img src="{{asset('images/backoffice-new.png')}}" alt="Cashier Icon" class="w-1/3">
+            <a href="{{ route('office.login') }}" target="__blank"
+                class="flex w-2/3 mx-auto flex-col items-center justify-center py-4">
+                <img src="{{ asset('images/backoffice-new.png') }}" alt="Cashier Icon" class="w-1/3">
                 <p class="text-xs text-[#565857]">Office</p>
             </a>
         </div>
@@ -71,9 +75,11 @@
                 <div class="w-1/4 flex gap-10 items-center justify-end">
                     <form action="{{ route('end-shift') }}" method="POST" class="w-full">
                         @csrf
-                        <button class="w-full py-2 border-2 border-main rounded-lg text-main hover:bg-main hover:text-white ease-in-out duration-100">End shift</button>
+                        <button
+                            class="w-full py-2 border-2 border-main rounded-lg text-main hover:bg-main hover:text-white ease-in-out duration-100">End
+                            shift</button>
                     </form>
-                    <a class="px-10 text-main underline" href="{{route('welcome')}}">Break</a>
+                    <a class="px-10 text-main underline" href="{{ route('welcome') }}">Break</a>
                 </div>
             </div>
             <div class="w-full flex gap-[20px]">
@@ -82,19 +88,20 @@
                     <div class="w-full flex gap-[20px] flex-wrap items-center mb-5">
                         <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
-                                <p class="text-center text-5xl font-bold">&#8369;{{$shift->starting_cash}}</p>
+                                <p class="text-center text-5xl font-bold">&#8369;{{ $shift->starting_cash }}</p>
                                 <p class="text-center text-lg">Starting Cash</p>
                             </div>
                         </div>
                         <div class="w-[28%] py-8 rounded-lg shadow-lg bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
-                                <p class="text-center text-5xl font-bold">&#8369;{{$shift->cash_in ?? 0}}</p>
+                                <p class="text-center text-5xl font-bold">&#8369;{{ $shift->cash_in ?? 0 }}</p>
                                 <p class="text-center text-lg">Total Pay Ins</p>
                             </div>
                         </div>
                         <div class="w-[28%] py-8 rounded-lg shadow-lg bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
-                                <p class="text-center text-5xl font-bold">&#8369;{{$cashInPayments - $cashOutPayments ?? 0}}</p>
+                                <p class="text-center text-5xl font-bold">
+                                    &#8369;{{ $cashInPayments - $cashOutPayments ?? 0 }}</p>
                                 <p class="text-center text-lg">GCash Payments</p>
                             </div>
                         </div>
@@ -102,26 +109,30 @@
                     <div class="w-full flex gap-[20px] justify-wrap items-center mb-5">
                         <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
-                                <p class="text-center text-5xl font-bold">&#8369;{{$cash ?? 0}}</p>
+                                <p class="text-center text-5xl font-bold">&#8369;{{ $cash ?? 0 }}</p>
                                 <p class="text-center text-lg">Cash Payments</p>
                             </div>
                         </div>
                         <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border hidden">
                             <div class="flex flex-col gap-5">
-                                <p class="text-center text-5xl font-bold">&#8369;{{$shift->cash_out ?? 0}}</p>
+                                <p class="text-center text-5xl font-bold">&#8369;{{ $shift->cash_out ?? 0 }}</p>
                                 <p class="text-center text-lg">Total Petty Cash</p>
                             </div>
                         </div>
                         <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
-                                <p class="text-center text-5xl font-bold">&#8369;{{$cashOutCharge + $cashInCharge ?? 0}}</p>
+                                <p class="text-center text-5xl font-bold">
+                                    &#8369;{{ $cashOutCharge + $cashInCharge ?? 0 }}</p>
                                 <p class="text-center text-lg">GCash Charges</p>
                             </div>
                         </div>
                     </div>
                     <div class="w-[40%] py-10 block mx-auto">
                         <div>
-                            <p class="text-center text-5xl font-bold mb-2 text-main">&#8369;{{((($shift->closing_cash + $shift->cash_in) - $cashOutPayments) - $shift->cash_out) + $shift->starting_cash + $cashInCharge + $cashOutCharge}}.00</p>
+                            {{-- + $shift->starting_cash --}}
+                            <p class="text-center text-5xl font-bold mb-2 text-main">
+                                &#8369;{{ $shift->closing_cash + $shift->cash_in - $cashOutPayments + $cashInCharge + $cashOutCharge }}.00
+                            </p>
                             <p class="text-center text-lg">Expected Cash</p>
                         </div>
                     </div>
@@ -144,6 +155,28 @@
                             </div>
                         @endforeach
                     </div>
+                </div>
+
+            </div>
+            <div id="parent" class="w-1/2 shadow-xl bg-[#f5f5f5] rounded-xl h-auto flex flex-col px-[30px] mx-auto py-[30px]">
+                <p class="font-semibold p-4">Gcash Payment Transactions</p>
+                <div class="w-full flex py-2 bg-[#bebebe] px-4">
+                    <p class="font-medium w-1/4">Time</p>
+                    <p class="font-medium w-1/4 text-center">Transaction #</p>
+                    <p class="font-medium w-1/4 text-center">Type</p>
+                    <p class="font-medium w-1/4 text-right">Total</p>
+                </div>
+                <div id="child" class="w-full h-fit flex-1 overflow-y-auto rounded-bl-xl rounded-br-xl">
+                    <!-- GCash Transactions -->
+                    @foreach ($gcash as $transaction)
+                        <div class="w-full flex py-2 border-b px-4 hover:bg-gray-100 bg-blue-50">
+                            <p class="w-1/4">{{ \Carbon\Carbon::parse($transaction->created_at)->format('h:i a') }}
+                            </p>
+                            <p class="w-1/4 text-center">{{ $transaction->reference_number }}</p>
+                            <p class="w-1/4 text-center">GCash</p>
+                            <p class="w-1/4 text-right">&#8369; {{ number_format($transaction->amount, 2) }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             {{-- <div class="w-full col-span-3 row-span-2 bg-white rounded-xl px-5 py-3">
@@ -317,36 +350,37 @@
         </div>
     </div>
     <script>
-        document.getElementById('pay').addEventListener('input', function (e) {
+        document.getElementById('pay').addEventListener('input', function(e) {
             let value = e.target.value;
             // Remove all non-digit characters
             e.target.value = value.replace(/\D/g, '');
-            });
+        });
 
-            document.getElementById('pay1').addEventListener('input', function (e) {
+        document.getElementById('pay1').addEventListener('input', function(e) {
             let value = e.target.value;
             // Remove all non-digit characters
             e.target.value = value.replace(/\D/g, '');
-            });
+        });
 
-        function setAmount(amount){
+        function setAmount(amount) {
             event.preventDefault()
             var cash = document.getElementById('cash')
             cash.value = amount
         }
 
-        function openCashManagement(){
+        function openCashManagement() {
             var cash_management = document.getElementById('cash_management')
             var main = document.getElementById('main')
 
-            
+
             cash_management.classList.toggle('hidden')
-            if(!cash_management.classList.contains('hidden')){
+            if (!cash_management.classList.contains('hidden')) {
                 main.style.filter = 'blur(5px)'
-            } else{
+            } else {
                 main.style.filter = 'blur(0)'
             }
         }
     </script>
 </body>
+
 </html>
