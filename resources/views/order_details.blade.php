@@ -69,7 +69,7 @@
             @endphp
             @foreach ($foods as $food)
                 @php
-    
+
                     // Get the price from the $foodPrices array based on the food name
                     $price = $foodPrices[$food->food_name] ?? 0; // Default to 0 if the price is not found
                     $total = $price * $food->count;
@@ -547,57 +547,133 @@
     <script>
         $(document).ready(function() {
             var pay = {{ $pay }};
-            var new_total = pay;
+            var new_total = pay; // Initialize new_total with the initial pay value
 
-            // Handle GCash Payment
-            window.handleGcashPayment = function() {
-                // Simulate GCash payment process
-                let cashAmount = parseFloat(new_total); // GCash pays the exact amount
-                let change = 0; // No change for GCash payments
+            // Handle discount selection
+            $('#discount_select').on('change', function() {
+                var discount_type = $(this).val();
+                console.log(discount_type);
 
-                // Show SweetAlert confirmation
-                Swal.fire({
-                    title: 'Confirm GCash Payment',
-                    text: 'Has the customer already sent the payment via GCash?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#00a859', // Green color for GCash
-                    confirmButtonText: 'Yes, payment sent',
-                    cancelButtonText: 'No, cancel',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Update receipt values
-                        $('#receipt_amount_tendered').text('₱ ' + cashAmount.toFixed(2));
-                        $('#receipt_change').text('₱ ' + change.toFixed(2));
+                if (discount_type == 'senior_citizen' || discount_type == 'pwd') {
+                    $('#discount').text('20%');
+                    new_total = pay - (pay * 0.20); // Update new_total value
+                    $('#total').text(new_total);
+                    $('#payInput').val(new_total)
+                } else {
+                    new_total = pay; // Reset to original pay if no discount is applied
+                }
+            });
 
-                        // Enable the Pay button
-                        $('#submitButton').prop('disabled', false);
-                        $('#submitButton').removeClass('bg-gray-500');
-                        $('#submitButton').addClass('bg-main');
+            // Handle calculator button clicks
+            var submit = document.getElementById('submitButton');
 
-                        // Set the cash input value to the total amount
-                        $('#cash').val(cashAmount);
+            if (submit.disabled) {
+                submit.classList.remove('bg-proceed');
+                submit.classList.add('bg-gray-500');
+            }
 
-                        // Show success message
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'GCash payment confirmed. Proceed to complete the transaction.',
-                            icon: 'success',
-                            confirmButtonColor: '#00a859',
-                        });
+            document.querySelectorAll('.calc-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.getAttribute('data-val');
+                    var cash_disp = document.getElementById('cash');
+
+                    if (value === "del") {
+                        // Remove the last character from the input value
+                        cash_disp.value = cash_disp.value.slice(0, -1);
                     } else {
-                        // Show cancellation message
-                        Swal.fire({
-                            title: 'Cancelled',
-                            text: 'GCash payment was not confirmed.',
-                            icon: 'info',
-                            confirmButtonColor: '#00a859',
-                        });
+                        // Concatenate the new value to the existing value of the input element
+                        cash_disp.value += value;
                     }
-                });
-            };
 
-            // Rest of the existing JavaScript logic...
+                    // Trigger the input event to update the button state
+                    cash_disp.dispatchEvent(new Event('input'));
+                });
+            });
+
+            // Handle manual input in the cash field
+            $('#cash').on('input', function() {
+                var cash = $(this).val();
+                var cashVal = parseFloat(cash) || 0;
+
+                if (cash === '') { // Check if cash input is empty
+                    submit.disabled = true; // Disable submit button
+                    submit.classList.remove('bg-main');
+                    submit.classList.add('bg-gray-500');
+                    return; // Exit function early if cash input is empty
+                }
+
+                if (isNaN(cashVal)) {
+                    console.log("Please enter a valid number.");
+                    submit.disabled = true;
+                    submit.classList.remove('bg-main');
+                    submit.classList.add('bg-gray-500');
+                } else if (cashVal < new_total) {
+                    console.log("The entered cash is less than the total.");
+                    submit.classList.remove('bg-main');
+                    submit.classList.add('bg-gray-500');
+                    submit.disabled = true;
+                } else {
+                    console.log("The entered cash is greater than or equal to the total.");
+                    submit.disabled = false;
+                    submit.classList.remove('bg-gray-500');
+                    submit.classList.add('bg-main');
+                }
+
+                // Update receipt values
+                updateReceiptValues(cashVal);
+            });
+
+            // Update for quick cash buttons
+            window.setAmount = function(amount) {
+                $('#cash').val(amount);
+                $('#cash').trigger('input'); // Trigger input event to update button state
+            }
+
+            $('#submitButton').on('click', async function(event) {
+                event.preventDefault();
+
+                // Get the cash amount and calculate change right before showing receipt
+                let cashAmount = parseFloat($('#cash').val()) || 0;
+                let total = parseFloat(new_total) || parseFloat(pay);
+                let change = Math.max(0, cashAmount - total);
+
+                $('#receipt_amount_tendered').text('₱ ' + cashAmount.toFixed(2));
+                $('#receipt_change').text('₱ ' + change.toFixed(2));
+
+                document.getElementById('success_popup').classList.remove('hidden');
+                document.getElementById('coverup').classList.remove('hidden');
+
+                try {
+                    $('#receipt').removeClass('hidden');
+
+                    await new Promise(resolve => setTimeout(resolve, 200));
+
+                 
+                    const canvas = await html2canvas(document.getElementById('receipt'), {
+                        scale: 2,
+                        useCORS: true,
+                        logging: true
+                    });
+
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/jpeg', 1.0);
+                    link.download = 'receipt-{{ $ticket }}.jpg';
+                    link.click();
+
+                   
+                    $('#receipt').addClass('hidden');
+
+                   
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                 
+                    document.getElementById('paymentForm').submit();
+
+                } catch (error) {
+                    console.error('Error generating receipt:', error);
+                    document.getElementById('paymentForm').submit();
+                }
+            });
         });
     </script>
 </body>
