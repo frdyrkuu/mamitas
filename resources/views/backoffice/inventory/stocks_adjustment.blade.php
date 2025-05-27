@@ -13,11 +13,30 @@
 </head>
 
 <body class="w-full h-auto bg-[#fefefe] relative">
+    <style> /* Add this to your existing CSS */
+        .body-blur {
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .body-blur::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 10;
+            pointer-events: none;
+        }</style>
     {{-- modal pending items --}}
     <dialog id="stockModal" open
-        class="container fixed inset-0 z-10 bg-white pt-[50px] pb-[100px] max-h-[90vh] overflow-y-auto hidden">
-        <button id="closeModal" class="absolute top-3 right-3 text-xl font-bold text-gray-700 hover:text-gray-900 p-5"
-            aria-label="Close Modal">
+        class="container fixed inset-0 z-10 bg-[#DEDEDE] pt-[50px] pb-[100px] max-h-[90vh] overflow-y-auto hidden">
+        <button id="closeModal" class="absolute top-3 right-3 text-xl font-bold text-gray-700 hover:text-gray-900 p-5" 
+            aria-label="closeModal">
             ✖
         </button>
         <div class="container px-[30px] mx-auto space-y-[30px]">
@@ -35,6 +54,7 @@
                         <button id="sortByQuantity"
                             class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 ml-2">Sort by
                             Quantity</button>
+                            
                     </div>
                 </div>
             </div>
@@ -46,6 +66,7 @@
                             <th scope="col" class="px-6 py-3">Status</th>
                             <th scope="col" class="px-6 py-3">Stocks</th>
                             <th scope="col" class="px-6 py-3">Expiration Date</th>
+                            
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="max-h-[calc(90vh-200px)] overflow-y-auto">
@@ -86,11 +107,11 @@
             </div>
         </div>
     </dialog>
-
+    
     <div id="coverup" class="hidden w-full bg-main h-screen absolute z-50 opacity-30"></div>
     <form id="filterForm">
         <div id="filterModal"
-            class="hidden py-1 w-1/3 bg-[#f0f0f0] shadow-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-2xl">
+            class="hidden py-1 w-1/3 bg-[#f0f0f0] shadow-3xl absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-2xl">
             <div class="flex py-3 px-5 justify-between items-center">
                 <p class="font-medium">Filter Items</p>
                 <button onclick="closeFilter(event)">
@@ -218,6 +239,11 @@
                 </a>
             </div>
             <div class="w-full relative">
+                <a href="{{ route('office.cms') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/cms.png') }}" alt="" class="w-[30px] h-auto">
+                </a>
+            </div>
+            <div class="w-full relative">
                 <form id="logoutForm" action="{{ route('office.logout') }}" method="POST">
                     @csrf
                     <a href="#" id="logoutLink" class="w-full flex items-center justify-center h-auto py-4">
@@ -260,7 +286,7 @@
                     {{-- add notifications here --}}
 
                     {{-- Notification Button --}}
-                    <a id="openModal" class="text-red-500 flex cursor-pointer" href="#">
+                    <a id="openModal" class="text-red-500 flex cursor-pointer" href="">
                         Pending Items
                         <div
                             class="w-[20px] h-[20px] flex items-center justify-center bg-red-500 rounded-full -translate-y-[12px]">
@@ -372,11 +398,12 @@
     </div>
     {{-- Stock Adjustment Modal --}}
     <div id="adjustmentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50">
-        <div class="bg-white w-1/2 mx-auto mt-20 rounded-lg p-6">
+        <div class="bg-white w-1/3 mx-auto mt-1 rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">Stock Adjustment</h2>
                 <button onclick="closeAdjustmentModal()" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
+                    
                 </button>
             </div>
 
@@ -616,46 +643,44 @@
         });
     </script>
 
-    <script>
+ <script>
         const modal = document.getElementById("stockModal");
         const openModalBtn = document.getElementById("openModal");
         const closeModalBtn = document.getElementById("closeModal");
         const urlParams = new URLSearchParams(window.location.search);
+        
         // Show modal
         openModalBtn.addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent page navigation
+            event.preventDefault();
             modal.classList.remove("hidden");
             modal.classList.add("flex");
+            document.body.classList.add("body-blur");
         });
-
-
-
+        
         // Check if 'opendialog' exists in the query parameters
         if (urlParams.has('opendialog')) {
             // Open the modal
             modal.classList.remove("hidden");
             modal.classList.add("flex");
-
+            document.body.classList.add("body-blur");
+            
             // Get the value of the 'opendialog' parameter
             const itemName = decodeURIComponent(urlParams.get('opendialog'));
-
+            
             // Find the corresponding row in the table
             const rows = document.querySelectorAll('#tableBody tr');
             let targetRow = null;
-
+            
             rows.forEach(row => {
-                const rowName = row.getAttribute('data-name'); // Assuming 'data-name' contains the item name
-                if (rowName === itemName.toLowerCase()) { // Case-insensitive comparison
+                const rowName = row.getAttribute('data-name');
+                if (rowName === itemName.toLowerCase()) {
                     targetRow = row;
                 }
             });
-
-            // If the target row is found, highlight it and scroll into view
+            
+            // If the target row is found, highlight it
             if (targetRow) {
-                // Highlight the row by adding a CSS class
                 targetRow.classList.add('highlight');
-
-                // Scroll the row into view
                 targetRow.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
@@ -664,18 +689,30 @@
                 console.warn(`Item "${itemName}" not found in the table.`);
             }
         }
-
+        
         // Close modal on button click
         closeModalBtn.addEventListener("click", function() {
             modal.classList.add("hidden");
             modal.classList.remove("flex");
+            document.body.classList.remove("body-blur");
+            
+            // Remove highlight from any rows
+            document.querySelectorAll('.highlight').forEach(el => {
+                el.classList.remove('highlight');
+            });
         });
-
+        
         // Close modal when clicking outside the content
         modal.addEventListener("click", function(event) {
             if (event.target === modal) {
                 modal.classList.add("hidden");
                 modal.classList.remove("flex");
+                document.body.classList.remove("body-blur");
+                
+                // Remove highlight from any rows
+                document.querySelectorAll('.highlight').forEach(el => {
+                    el.classList.remove('highlight');
+                });
             }
         });
     </script>

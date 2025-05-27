@@ -85,9 +85,9 @@
     <!-- Receipt Template -->
     <div id="receipt" class="hidden w-[80mm] px-5 py-5 bg-white absolute top-0 left-1/2 transform -translate-x-1/2">
         <img src="{{ asset('images/receipt-logo.png') }}" alt="Logo" class="block mx-auto pt-3 pb-8 w-auto">
-        <p class="text-center text-lg font-semibold">MAMATID</p>
-        <p class="text-center">MAMITA'S MAMATID #31 JP RIZAL ST.</p>
-        <p class="text-center mb-7">MAMATID, CABUYAO CITY LAGUNA PHILIPPINES</p>
+        <p class="text-center text-lg font-semibold">CARMONA</p>
+        <p class="text-center">PHASE 4, TERRAVERDE RESIDENCES, B26 L10</p>
+        <p class="text-center mb-7">BANCAL, CARMONA, CAVITE PHILIPPINES</p>
 
         <div class="w-full">
             <p class="text-xs font-medium mb-2">{{ $time }}</p>

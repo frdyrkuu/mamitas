@@ -86,19 +86,19 @@
                 <div class="w-[60%] shadow-xl bg-[#f5f5f5] rounded-xl p-4">
                     <p class="mb-2 font-semibold">Cash drawer details</p>
                     <div class="w-full flex gap-[20px] flex-wrap items-center mb-5">
-                        <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
+                        <div class="w-[49%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{ $shift->starting_cash }}</p>
                                 <p class="text-center text-lg">Starting Cash</p>
                             </div>
                         </div>
-                        <div class="w-[28%] py-8 rounded-lg shadow-lg bg-[#e5e5e5] border">
+                        <div class="w-[28%] py-8 rounded-lg shadow-lg bg-[#e5e5e5] border hidden">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{ $shift->cash_in ?? 0 }}</p>
                                 <p class="text-center text-lg">Total Pay Ins</p>
                             </div>
                         </div>
-                        <div class="w-[28%] py-8 rounded-lg shadow-lg bg-[#e5e5e5] border">
+                        <div class="w-[48%] py-8 rounded-lg shadow-lg bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">
                                     &#8369;{{ $cashInPayments - $cashOutPayments ?? 0 }}</p>
@@ -107,19 +107,19 @@
                         </div>
                     </div>
                     <div class="w-full flex gap-[20px] justify-wrap items-center mb-5">
-                        <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
+                        <div class="w-[50%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{ $cash ?? 0 }}</p>
                                 <p class="text-center text-lg">Cash Payments</p>
                             </div>
                         </div>
-                        <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border hidden">
+                        <div class="w-[50%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border hidden">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">&#8369;{{ $shift->cash_out ?? 0 }}</p>
                                 <p class="text-center text-lg">Total Petty Cash</p>
                             </div>
                         </div>
-                        <div class="w-[28%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
+                        <div class="w-[50%] rounded-lg shadow-lg py-8 bg-[#e5e5e5] border">
                             <div class="flex flex-col gap-5">
                                 <p class="text-center text-5xl font-bold">
                                     &#8369;{{ $cashOutCharge + $cashInCharge ?? 0 }}</p>
@@ -174,7 +174,7 @@
                             </p>
                             <p class="w-1/4 text-center">{{ $transaction->reference_number }}</p>
                             <p class="w-1/4 text-center">GCash</p>
-                            <p class="w-1/4 text-right">&#8369; {{ number_format($transaction->amount, 2) }}</p>
+                            <p class="w-1/4 text-right">&#8369; {{ number_format($transaction->amount, 2    ) }}</p>
                         </div>
                     @endforeach
                 </div>

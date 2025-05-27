@@ -158,7 +158,7 @@
                             <div class="w-1/2">
                                 <label for="" class="text-gray-500">Quantity</label>
                                 <input type="text" name="item_quantity" value="{{ $item->quantity }}"
-                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" readonly>
+                                    class="w-full mt-1 px-2 py-1 outline-none border-b-2 bg-slate-50 border-[#eaeaea] focus:border-b-2 focus:border-main" recquired>
                             </div>
                           
                         </div>

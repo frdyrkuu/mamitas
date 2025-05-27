@@ -1,0 +1,72 @@
+# <IfModule mod_rewrite.c>
+#     RewriteEngine on
+
+#     # =============================================
+#     # 1. Disabled SSL (commented out)
+#     # RewriteCond %{HTTPS} off
+#     # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#     # =============================================
+
+#     # =============================================
+#     # 2. Maintenance Mode Logic with Session Check
+#     RewriteCond %{REQUEST_URI} !^/public/maintenance\.html$ [NC]
+#     RewriteCond %{REQUEST_URI} !^/back-office/login [NC]
+#     RewriteCond %{REQUEST_URI} !\.(css|js|jpg|png|gif|ico) [NC]
+#     # Check for Laravel session cookie (change 'laravel_session' if you use a different name)
+#     RewriteCond %{HTTP_COOKIE} !laravel_session [NC]
+#     RewriteRule ^(.*)$ /public/maintenance.html [R=503,L]
+#     ErrorDocument 503 /public/maintenance.html
+#     # =============================================
+
+#     # =============================================
+#     # 3. Admin Redirect to index.php
+#     RewriteCond %{REQUEST_URI} ^/back-office/login [NC]
+#     RewriteRule ^(.*)$ public/index.php [L]
+#     # =============================================
+
+#     # =============================================
+#     # 4. Normal Redirect to public/ folder
+#     RewriteCond %{REQUEST_URI} !^/public/
+#     RewriteRule ^(.*)$ public/$1 [L]
+#     # =============================================
+
+#     # Block access to sensitive files
+#     <FilesMatch "^\.">
+#         Order allow,deny
+#         Deny from all
+#     </FilesMatch>
+    
+#     <FilesMatch "(\.env|\.env\.example|composer\.(json|lock)|\.git(ignore|attributes)|\.htaccess)">
+#         Order allow,deny
+#         Deny from all
+#     </FilesMatch>
+    
+#     Options -Indexes
+# </IfModule>
+
+# Deny access to all files except public/
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Redirect all requests to public/ unless they're already going there
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+    
+    # Block access to sensitive files
+    <FilesMatch "^\.">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    # Specific file protections
+    <FilesMatch "(\.env|\.env.example|composer\.json|composer\.lock|\.gitignore|\.gitattributes|\.htaccess)">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    # Prevent directory listing
+    Options -Indexes
+</IfModule>

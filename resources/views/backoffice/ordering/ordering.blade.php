@@ -163,7 +163,7 @@
                 <input id="item_quantity_submit" type="hidden" name="item_quantity" value="">
                 {{-- <input id="batch_number" type="hidden" name="batch_number" value="{{$newBn}}"> --}}
                 <button id="add_to_order" type="submit"
-                    class="w-full py-2 rounded-lg border-2 border-main text-main">Confirm Order</button>
+                    class="w-full py-2 rounded-lg border-2 border-main text-main">Add to Order</button>
                 {{-- </form> --}}
             </div>
         </div>

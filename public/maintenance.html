@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mamitas | Comming Soon</title>
+
+    <script src="https://nextparticle.nextco.de/nextparticle.min.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body class="overflow-x-hidden">
+    <main class="h-[100dvh] flex justify-center items-center bg-black p-20">
+        <div>
+            <img src="http://mamitas.shop/images/logo-transparent.png" alt="Logo" width="741" height="222" id="logo2" data-particle-gap="4"
+                data-gravity="0.08" data-density="0" data-noise="-10" data-mouse-force="120" data-width="100vw"
+                data-height="100vh" data-max-width="80%" particle-size="1.5" data-init-position="random"
+                data-init-direction="random" data-fade-position="random" data-fade-direction="random" />
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            new NextParticle({
+                image: document.getElementById("logo2"),
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        });
+    </script>
+    
+</body>
+
+</html>

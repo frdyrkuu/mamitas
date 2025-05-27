@@ -159,46 +159,46 @@ class POSController extends Controller
         $ticket = $lastTicket->ticket + 1;
         $action = $request->input('btn');
 
-        if ($amount >= 1 && $amount <= 500) {
+        if ($amount >= 1 && $amount <= 100) {
+            $charge = 1;
+        } elseif ($amount >= 101 && $amount <= 200)  {
+            $charge = 2;
+        } elseif ($amount >= 201 && $amount <= 300) {
+            $charge = 3;
+        } elseif ($amount >= 301 && $amount <= 400) {
+            $charge = 4;
+        } elseif ($amount >= 401 && $amount <= 500) {
+            $charge = 5;
+        } elseif ($amount >= 501 && $amount <= 600) {
+            $charge = 6;
+        } elseif ($amount >= 601 && $amount <= 700) {
+            $charge = 7;
+        } elseif ($amount >= 701 && $amount <= 800) {
+            $charge = 8;
+        } elseif ($amount >= 801 && $amount <= 900) {
+            $charge = 9;
+        } elseif ($amount >= 901 && $amount <= 1000) {
             $charge = 10;
-        } elseif ($amount >= 501 && $amount <= 1000) {
+        } elseif ($amount >= 1001 && $amount <= 1100) {
+            $charge = 11;
+        } elseif ($amount >= 1101 && $amount <= 1200) {
+            $charge = 12;
+        } elseif ($amount >= 1201 && $amount <= 1300) {
+            $charge = 13;
+        } elseif ($amount >= 1301 && $amount <= 1400) {
+            $charge = 14;
+        } elseif ($amount >= 1401 && $amount <= 1500) {
+            $charge = 15;
+        } elseif ($amount >= 1501 && $amount <= 1600) {
+            $charge = 16;
+        } elseif ($amount >= 1601 && $amount <= 1700) {
+            $charge = 17;
+        } elseif ($amount >= 1701 && $amount <= 1800) {
+            $charge = 18;
+        } elseif ($amount >= 1801 && $amount <= 1900) {
+            $charge = 19;
+        } elseif ($amount >= 1901 && $amount <= 2000) {
             $charge = 20;
-        } elseif ($amount >= 1001 && $amount <= 1500) {
-            $charge = 30;
-        } elseif ($amount >= 1501 && $amount <= 2000) {
-            $charge = 40;
-        } elseif ($amount >= 2001 && $amount <= 2500) {
-            $charge = 50;
-        } elseif ($amount >= 2501 && $amount <= 3000) {
-            $charge = 60;
-        } elseif ($amount >= 3001 && $amount <= 3500) {
-            $charge = 70;
-        } elseif ($amount >= 3501 && $amount <= 4000) {
-            $charge = 80;
-        } elseif ($amount >= 4001 && $amount <= 4500) {
-            $charge = 90;
-        } elseif ($amount >= 4501 && $amount <= 5000) {
-            $charge = 100;
-        } elseif ($amount >= 5001 && $amount <= 5500) {
-            $charge = 110;
-        } elseif ($amount >= 5501 && $amount <= 6000) {
-            $charge = 120;
-        } elseif ($amount >= 6001 && $amount <= 6500) {
-            $charge = 130;
-        } elseif ($amount >= 6501 && $amount <= 7000) {
-            $charge = 140;
-        } elseif ($amount >= 7001 && $amount <= 7500) {
-            $charge = 150;
-        } elseif ($amount >= 7501 && $amount <= 8000) {
-            $charge = 160;
-        } elseif ($amount >= 8001 && $amount <= 8500) {
-            $charge = 170;
-        } elseif ($amount >= 8501 && $amount <= 9000) {
-            $charge = 180;
-        } elseif ($amount >= 9001 && $amount <= 9500) {
-            $charge = 190;
-        } elseif ($amount >= 9501 && $amount <= 10000) {
-            $charge = 200;
         } else {
             // Handle cases where the amount is outside the expected range
             $charge = "Invalid amount";

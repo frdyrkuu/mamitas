@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/5bf9be4e76.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
     @vite('resources/css/app.css')
     <title>Back Office</title>
 </head>
@@ -155,6 +156,11 @@
                 </a>
             </div>
             <div class="w-full relative">
+                <a href="{{ route('office.cms') }}" class="w-full flex items-center justify-center h-auto py-4">
+                    <img src="{{ asset('images/cms.png') }}" alt="" class="w-[30px] h-auto">
+                </a>
+            </div>
+            <div class="w-full relative">
                 <form id="logoutForm" action="{{ route('office.logout') }}" method="POST">
                     @csrf
                     <a href="#" id="logoutLink" class="w-full flex items-center justify-center h-auto py-4">
@@ -195,8 +201,8 @@
                         filter</button>
                     <button onclick="window.location.href='{{ route('office.create_item') }}'"
                         class="px-5 bg-[#4d4d4d] font-medium uppercase text-xs py-2 text-white">Add Item</button>
-                    <div class="w-[120px] flex items-center relative">
-                        <button onclick="window.location.href='{{ route('office.pending_items') }}'"
+                    <div class="w-[120px] flex items-center relative hidden">
+                        <button onclick="window.location.href='{{ route('office.pending_items')}}'"
                             class="w-full font-medium uppercase text-xs py-2 text-main">Pending Items</button>
                         <div
                             class="w-[25px] h-[25px] flex items-center justify-center rounded-full bg-main border border-white absolute -top-2 -right-2">
